@@ -1,3 +1,3 @@
-import {UnderConstruction} from 'tomo-cli'
+import {UnderConstruction} from 'tomo-cli';
 
 export default UnderConstruction;

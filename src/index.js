@@ -6,7 +6,7 @@ import {render} from 'ink';
 import meow from 'meow';
 import read from 'read-pkg';
 import getStdin from 'get-stdin';
-import updateNotifier from 'update-notifier';
+// import updateNotifier from 'update-notifier';
 import UI from './main';
 
 // Notify updater
