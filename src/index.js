@@ -29,7 +29,7 @@ const help = `
 
     ${dim.bold('Commands')}
 
-        ???, ...
+        copy, enum, scan, ...
 
 
     ${dim.bold('Terms')}
@@ -41,8 +41,10 @@ const help = `
     ${dim.bold('Options')}
 
         --version, -v           Print version
-        --ignore-warnings, -i   Ignore warning messages [Default: false]
-        --debug                 Show debug data [Default: false]	
+        --ignore-warnings,      Ignore warning messages [Default: false]
+        --debug                 Show debug data [Default: false]
+        --ip,               -i  IP address [Default: 127.0.0.1]
+        --port,             -p  Port [Default: 80]
 `;
 const options = {
     help,
@@ -59,12 +61,21 @@ const options = {
         },
         ignoreWarnings: {
             type: 'boolean',
-            default: false,
-            alias: 'i'
+            default: false
         },
         debug: {
             type: 'boolean',
             default: false
+        },
+        ip: {
+            type: 'string',
+            default: '127.0.0.1',
+            alias: 'i'
+        },
+        port: {
+            type: 'number',
+            default: 80,
+            alias: 'p'
         }
     }
 };

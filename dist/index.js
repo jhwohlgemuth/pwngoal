@@ -14,7 +14,7 @@ console.log(b),process.exit()},help=`
 
     ${_chalk.dim.bold("Commands")}
 
-        ???, ...
+        copy, enum, scan, ...
 
 
     ${_chalk.dim.bold("Terms")}
@@ -26,6 +26,8 @@ console.log(b),process.exit()},help=`
     ${_chalk.dim.bold("Options")}
 
         --version, -v           Print version
-        --ignore-warnings, -i   Ignore warning messages [Default: false]
-        --debug                 Show debug data [Default: false]	
-`,options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1,alias:"i"},debug:{type:"boolean",default:!1}}},{input,flags}=(0,_meow.default)(options);("version"===input[0]||flags.version)&&showVersion(),(0,_asyncToGenerator2.default)(function*(){const a=yield(0,_getStdin.default)();(0,_ink.render)(_react.default.createElement(_main.default,{input:input,flags:flags,stdin:a}),{exitOnCtrlC:!0})})();
+        --ignore-warnings,      Ignore warning messages [Default: false]
+        --debug                 Show debug data [Default: false]
+        --ip,               -i  IP address [Default: 127.0.0.1]
+        --port,             -p  Port [Default: 80]
+`,options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},ip:{type:"string",default:"127.0.0.1",alias:"i"},port:{type:"number",default:80,alias:"p"}}},{input,flags}=(0,_meow.default)(options);("version"===input[0]||flags.version)&&showVersion(),(0,_asyncToGenerator2.default)(function*(){const a=yield(0,_getStdin.default)();(0,_ink.render)(_react.default.createElement(_main.default,{input:input,flags:flags,stdin:a}),{exitOnCtrlC:!0})})();
