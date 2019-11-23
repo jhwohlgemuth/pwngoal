@@ -74,10 +74,7 @@ export default {
             {
                 text: 'Copy command to clipboard',
                 task: async () => {
-                    const cmd = `find / -path /proc -prune -o '(' -type f -or -type d ')' \
-                    '(' '(' -user  www-data -perm -u=w ')' -or \
-                        '(' -group www-data -perm -g=w ')' -or \
-                        '('                 -perm -o=w ')' ')' -print 2> /dev/null`;
+                    const cmd = `find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user  www-data -perm -u=w ')' -or '(' -group www-data -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null`;
                     await clipboard.write(cmd);
                 },
                 condition: () => true
