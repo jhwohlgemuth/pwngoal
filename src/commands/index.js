@@ -1,15 +1,14 @@
 import {EOL} from 'os';
 import {promisify} from 'util';
-import {appendFile, writeFile} from 'fs-extra';
+import {appendFile} from 'fs-extra';
 import execa from 'execa';
 import clipboard from 'clipboardy';
 import commandExists from 'command-exists';
 
 const append = promisify(appendFile);
-const write = promisify(writeFile);
 
 export default {
-    copy: {
+    copy: {/* eslint-disable max-len */
         'reverse shell (python)': [
             {
                 text: 'Copy Python reverse shell to clipboard',
@@ -80,12 +79,12 @@ export default {
                 condition: () => true
             }
         ]
-    },
+    }, /* eslint-enable max-len */
     scan: {
         port: [
             {
                 text: 'Scan TCP ports with nmap',
-                task: async ({ip}) => {
+                task: async () => {
 
                 },
                 condition: () => true,
@@ -102,7 +101,7 @@ export default {
         ports: [
             {
                 text: 'Scan TCP ports with masscan',
-                task: async ({ip}) => {
+                task: async () => {
 
                 },
                 condition: () => true,
@@ -116,7 +115,7 @@ export default {
                         .split(EOL)
                         .filter(line => line.includes('/tcp'))
                         .map(line => line.split('/')[0]);
-                    for (let port of ports) {
+                    for (const port of ports) {
                         const cmd = await execa('nmap', [ip, '-p', port, '-A']);
                         await append('results.txt', cmd.stdout);
                     }
