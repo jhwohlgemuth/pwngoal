@@ -25,7 +25,8 @@ const descriptions = {
     'reverse shell (ruby)': `Copy one-line reverse shell written in ${bold.red('Ruby')}`,
     'reverse shell (bash)': `Copy one-line reverse shell written in ${bold.bgBlack.white(' Bash ')}`,
     'reverse shell (awk)': `Copy one-line reverse shell written in ${bold.bgBlack.white(' awk ')}`,
-    'find files/folders with write access (linux)': `Find locations with ${bold('write')} access during Linux ${bold.cyan('privilege escalation')}`
+    'find files/folders with write access (linux)': `Find locations with ${bold('write')} access during Linux ${bold.cyan('privilege escalation')}`,
+    'python trick for enhanced shell (linux)': `Spawn a TTY shell with ${bold.yellow('Python')}`
 };
 /**
  * Main tomo UI component

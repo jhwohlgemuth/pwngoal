@@ -69,6 +69,16 @@ export default {
                 condition: () => true
             }
         ],
+        'spawn a TTY shell (linux)': [
+            {
+                text: 'Copy command to clipboard',
+                task: async () => {
+                    const cmd = `python -c 'import pty;pty.spawn("/bin/bash")`;
+                    await clipboard.write(cmd);
+                },
+                condition: () => true
+            }
+        ],
         'find files/folders with write access (linux)': [
             {
                 text: 'Copy command to clipboard',
