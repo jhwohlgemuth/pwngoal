@@ -1,6 +1,6 @@
 {
-  "name": "penny-cli",
-  "version": "0.0.6",
+  "name": "pwngoal",
+  "version": "0.0.0",
   "description": "",
   "license": "MIT",
   "bin": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jhwohlgemuth/penny-cli.git"
+    "url": "git+https://github.com/jhwohlgemuth/pwngoal.git"
   },
   "author": "Jason Wohlgemuth <jhwohlgemuth@gmail.com> (omaha.js.org)",
   "engines": {
@@ -63,6 +63,7 @@
     "clipboardy": "^2.1.0",
     "command-exists": "^1.2.8",
     "common-tags": "^1.8.0",
+    "conf": "^6.2.0",
     "core-js": "^3.1.4",
     "delay": "4.3.0",
     "execa": "^3.3.0",
@@ -128,7 +129,7 @@
     "watch": "1.0.2"
   },
   "bugs": {
-    "url": "https://github.com/jhwohlgemuth/penny-cli/issues"
+    "url": "https://github.com/jhwohlgemuth/pwngoal/issues"
   },
-  "homepage": "https://github.com/jhwohlgemuth/penny-cli#readme"
+  "homepage": "https://github.com/jhwohlgemuth/pwngoal#readme"
 }
