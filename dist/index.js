@@ -7,9 +7,9 @@ const showVersion=()=>{const a=(0,_path.join)(__dirname,".."),{version:b}=_readP
 console.log(b),process.exit()},help=`
     ${_chalk.dim.bold("Usage")}
 
-        ${(0,_chalk.cyan)(">")} penny [commands] [terms] [options]
+        ${(0,_chalk.cyan)(">")} pwngoal [commands] [terms] [options]
         
-        ${(0,_chalk.cyan)(">")} penny version
+        ${(0,_chalk.cyan)(">")} pwngoal version
 
 
     ${_chalk.dim.bold("Commands")}

@@ -22,9 +22,9 @@ const showVersion = () => {
 const help = `
     ${dim.bold('Usage')}
 
-        ${cyan('>')} penny [commands] [terms] [options]
+        ${cyan('>')} pwngoal [commands] [terms] [options]
         
-        ${cyan('>')} penny version
+        ${cyan('>')} pwngoal version
 
 
     ${dim.bold('Commands')}
