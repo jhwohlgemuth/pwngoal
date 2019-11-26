@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Conf from 'conf';
 import {bold} from 'chalk';
 // import figures from 'figures';
 import {is} from 'ramda';
 import {Color, Text} from 'ink';
+import Table from 'ink-table';
 import {
     ErrorBoundary,
     SubCommandSelect,
     TaskList,
-    UnderConstruction,
+    // UnderConstruction,
     Warning,
     getIntendedInput
 } from 'tomo-cli';
 import commands from './commands';
+
+const store = new Conf();
 
 const descriptions = {
     enum: 'Enumerate stuff',
@@ -57,6 +61,7 @@ export default class UI extends Component {
     render() {
         const {done, flags} = this.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, showWarning} = this.state;
+        const data = store.get('data') || [];
         return <ErrorBoundary>
             {showWarning ?
                 <Warning callback={this.updateWarning}>
@@ -71,7 +76,7 @@ export default class UI extends Component {
                             items={Object.keys(commands[intendedCommand]).map(command => ({label: command, value: command}))}
                             onSelect={this.updateTerms}>
                         </SubCommandSelect> :
-                        <UnderConstruction/>
+                        <Table data={data}/>
             }
         </ErrorBoundary>;
     }

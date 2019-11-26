@@ -1,11 +1,17 @@
 import {EOL} from 'os';
-import {promisify} from 'util';
-import {appendFile} from 'fs-extra';
+// import {promisify} from 'util';
+// import {appendFile} from 'fs-extra';
 import execa from 'execa';
+import Conf from 'conf';
 import clipboard from 'clipboardy';
 import commandExists from 'command-exists';
 
-const append = promisify(appendFile);
+// const append = promisify(appendFile);
+
+const PRIMARY_SCANNER = 'masscan';
+const SECONDARY_SCANNER = 'nmap';
+
+const store = new Conf();
 
 export default {
     copy: {/* eslint-disable max-len */
@@ -110,49 +116,59 @@ export default {
         ],
         ports: [
             {
-                text: 'Scan TCP ports with masscan',
+                text: 'Clear saved data',
+                task: async () => {
+                    store.clear();
+                },
+                condition: () => true
+            },
+            {
+                text: `Find open ports with ${PRIMARY_SCANNER}`,
                 task: async () => {
 
                 },
-                condition: () => true,
-                optional: () => commandExists.sync('masscan')
+                condition: () => commandExists.sync(PRIMARY_SCANNER),
+                optional: () => commandExists.sync(PRIMARY_SCANNER)
             },
             {
-                text: 'Scan TCP ports with nmap',
+                text: `Find open ports with ${SECONDARY_SCANNER}`,
                 task: async ({ip}) => {
-                    const {stdout} = await execa('nmap', [ip]);
+                    const {stdout} = await execa('nmap', [ip, '--open']);
                     const ports = stdout
                         .split(EOL)
                         .filter(line => line.includes('/tcp'))
                         .map(line => line.split('/')[0]);
-                    for (const port of ports) {
-                        const cmd = await execa('nmap', [ip, '-p', port, '-A']);
-                        await append('results.txt', cmd.stdout);
-                    }
+                    store.set('ports', ports);
                 },
-                condition: () => true,
+                condition: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
+                optional: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER)
+            },
+            {
+                text: 'Enumerate services with nmap',
+                task: async ({ip}) => {
+                    const data = [];
+                    const ports = store.get('ports');
+                    for (const port of ports) {
+                        const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
+                        stdout
+                            .split(EOL)
+                            .filter(line => line.includes('/tcp'))
+                            .map(line => line.split(' ').filter(Boolean))
+                            .forEach(([,, service, ...version]) => {
+                                data.push({port, service, version: version.join(' ')});
+                            });
+                    }
+                    store.set('data', data);
+                },
+                condition: () => commandExists.sync('nmap'),
                 optional: () => commandExists.sync('nmap')
             },
             {
                 text: 'You need to install masscan or nmap to run a scan...',
                 task: async () => {},
                 condition: () => false,
-                optional: () => !(commandExists.sync('masscan') || commandExists.sync('nmap'))
+                optional: () => !(commandExists.sync(PRIMARY_SCANNER) || commandExists.sync(SECONDARY_SCANNER))
             }
-        ]
-    },
-    enum: {
-        web: [
-
-        ],
-        snmp: [
-
-        ],
-        smb: [
-
-        ],
-        smtp: [
-
         ]
     }
 };
