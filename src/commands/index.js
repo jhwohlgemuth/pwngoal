@@ -149,7 +149,7 @@ export default {
                 text: 'Enumerate services with nmap',
                 task: async ({ip}) => {
                     const data = [];
-                    const ports = store.get('ports');
+                    const ports = store.get('ports') || [];
                     for (const port of ports) {
                         const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
                         stdout
