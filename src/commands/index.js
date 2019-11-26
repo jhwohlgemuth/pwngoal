@@ -11,7 +11,9 @@ import commandExists from 'command-exists';
 const PRIMARY_SCANNER = 'masscan';
 const SECONDARY_SCANNER = 'nmap';
 
-const store = new Conf();
+const store = new Conf({
+    projectName: 'pwngoal'
+});
 
 export default {
     copy: {/* eslint-disable max-len */

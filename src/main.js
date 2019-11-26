@@ -16,7 +16,9 @@ import {
 } from 'tomo-cli';
 import commands from './commands';
 
-const store = new Conf();
+const store = new Conf({
+    projectName: 'pwngoal'
+});
 
 const descriptions = {
     enum: 'Enumerate stuff',
