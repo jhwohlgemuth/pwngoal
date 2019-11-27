@@ -21,6 +21,7 @@ export const debug = async val => {
 export const getGateway = async (networkInterface = 'tap0') => {
     const {stdout} = await execa('ip', ['route']);
     const [gateway] = stdout
+        .split(EOL)
         .filter(includes('via'))
         .filter(includes(networkInterface))
         .map(line => line.split(' ')[2]);
@@ -37,6 +38,7 @@ export const getOpenPortsWithNmap = async ip => {
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
     const {stdout} = await execa('masscan', [ip, '-e', networkInterface, '--router-ip', getGateway(), '-p', '0-65535', '--rate', rate]);
+    debug(stdout);
     const ports = stdout
         .split(EOL)
         .filter(includes('open port'))
