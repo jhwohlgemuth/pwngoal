@@ -43,7 +43,7 @@ export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => 
     debug(`stdout: ${stdout}`);
     const ports = stdout
         .split(EOL)
-        .filter(includes('Discovered'))
+        .filter(includes('/tcp'))
         .map(getPort)
         .sort((a, b) => a - b);
     debug({ports});
