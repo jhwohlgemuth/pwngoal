@@ -38,11 +38,14 @@ export const getOpenPortsWithNmap = async ip => {
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
     const gateway = await getGateway();
+    debug({ip, rate, networkInterface, gateway});
     const {stdout} = await execa('masscan', [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate]);
+    debug(`stdout: ${stdout}`);
     const ports = stdout
         .split(EOL)
         .filter(includes('Discovered'))
         .map(getPort)
         .sort((a, b) => a - b);
+    debug({ports});
     return ports || [];
 };
