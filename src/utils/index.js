@@ -41,7 +41,7 @@ export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => 
     const {stdout} = await execa('masscan', [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate]);
     const ports = stdout
         .split(EOL)
-        .filter(includes('open port'))
+        .filter(includes('Discovered'))
         .map(getPort)
         .sort((a, b) => a - b);
     return ports || [];
