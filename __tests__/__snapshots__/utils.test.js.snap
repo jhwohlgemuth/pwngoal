@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Network utilities can execute masscan scan and parse results 1`] = `
+Array [
+  "135",
+  "139",
+  "445",
+  "1025",
+  "3389",
+]
+`;
+
+exports[`Network utilities can execute masscan scan and parse results 2`] = `
+Array [
+  Array [
+    "ip",
+    Array [
+      "route",
+    ],
+  ],
+  Array [
+    "masscan",
+    Array [
+      "127.0.0.1",
+      "-e",
+      "tap0",
+      "--router-ip",
+      undefined,
+      "-p",
+      "0-65535",
+      "--rate",
+      500,
+    ],
+  ],
+]
+`;
+
+exports[`Network utilities can execute nmap scan and parse results 1`] = `
+Array [
+  "22",
+  "445",
+  "631",
+  "3031",
+  "3283",
+  "5900",
+]
+`;
+
+exports[`Network utilities can execute nmap scan and parse results 2`] = `
+Array [
+  Array [
+    "nmap",
+    Array [
+      "127.0.0.1",
+      "--open",
+      "-p",
+      "0-65535",
+    ],
+  ],
+]
+`;

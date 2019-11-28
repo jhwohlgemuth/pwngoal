@@ -1,4 +1,3 @@
-
 import clipboard from 'clipboardy';
 
 export default {/* eslint-disable max-len */

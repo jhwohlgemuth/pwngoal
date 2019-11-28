@@ -10,17 +10,23 @@ const includes = str => line => line.includes(str);
 const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
 
 export const debug = async val => {
-    const timestamp = new Date().toISOString().replace(/T/, ' ')
-        .replace(/\..+/, '');
     const savepath = join(homedir(), '.pwngoal');
-    await mkdirp(savepath);
-    await append(`${savepath}/debug`, `[${timestamp}]${EOL}`);
-    await append(`${savepath}/debug`, format(val));
-    await append(`${savepath}/debug`, `${EOL}${EOL}`);
+    const timestamp = new Date()
+        .toISOString()
+        .replace(/T/, ' ')
+        .replace(/\..+/, '');
+    try {
+        await mkdirp(savepath);
+        await append(`${savepath}/debug`, `[${timestamp}]${EOL}`);
+        await append(`${savepath}/debug`, format(val));
+        await append(`${savepath}/debug`, `${EOL}${EOL}`);
+    } catch (_) {
+        /* do nothing */
+    }
 };
 export const getGateway = async (networkInterface = 'tap0') => {
     const {stdout} = await execa('ip', ['route']);
-    const [gateway] = stdout
+    const [gateway] = (stdout || '')
         .split(EOL)
         .filter(includes('via'))
         .filter(includes(networkInterface))
@@ -29,11 +35,11 @@ export const getGateway = async (networkInterface = 'tap0') => {
 };
 export const getOpenPortsWithNmap = async ip => {
     const {stdout} = await execa('nmap', [ip, '--open', '-p', '0-65535']);
-    const ports = stdout
+    const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
         .map(getPort);
-    return ports || [];
+    return ports;
 };
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
@@ -41,11 +47,11 @@ export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => 
     debug({ip, rate, networkInterface, gateway});
     const {stdout} = await execa('masscan', [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate]);
     debug(`stdout: ${stdout}`);
-    const ports = stdout
+    const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
         .map(getPort)
         .sort((a, b) => a - b);
     debug({ports});
-    return ports || [];
+    return ports;
 };
