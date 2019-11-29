@@ -76,7 +76,7 @@ export default {
                             data.push({port, service, version: version.join(' ')});
                         });
                 }
-                store.set('data', data);
+                store.set(ip, data);
                 debug(data);
             },
             condition: () => commandExists.sync('nmap'),

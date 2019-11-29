@@ -5,6 +5,7 @@ import {bold} from 'chalk';
 import {play} from 'figures';
 import {is} from 'ramda';
 import {Box, Color, Text} from 'ink';
+import InkBox from 'ink-box';
 import Table from 'ink-table';
 import {
     ErrorBoundary,
@@ -14,7 +15,7 @@ import {
     Warning,
     getIntendedInput
 } from 'tomo-cli';
-import {getElapsedTime} from './utils';
+import {debug, getElapsedTime} from './utils';
 import commands from './commands';
 
 const store = new Conf({
@@ -58,12 +59,34 @@ const TerminalCommand = () => {
     }, []);
     return <UnderConstruction />;
 };
-const NoCommand = ({store}) => {
-    const data = store.get('data') || [];
+const NoCommand = ({options, store}) => {
+    const {ip} = options;
+    const data = store.get(ip) || [];
     useEffect(() => {
 
     }, []);
-    return <Table data={data}/>;
+    const NoResults = ({ip}) => {
+        const isValid = value => (typeof value === 'string') && value.length > 0;
+        return <Box flexDirection={'column'}>
+            <Box>
+                <Text>No results for </Text>
+                <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
+            </Box>
+            {isValid(ip) ? <Fragment></Fragment> : <Box marginLeft={1}>↳  <Color dim>Did you mean to use "pwngoal --help"?</Color></Box>}
+        </Box>;
+    };
+    NoResults.propTypes = {
+        ip: PropTypes.string
+    };
+    return data.length === 0 ? <NoResults ip={ip}/> : <Fragment>
+        <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
+            <Color bold cyan>{ip}</Color>
+        </InkBox>
+        <Table data={data}/>
+        <Box marginBottom={2} marginLeft={1}>
+            ↳  <Color dim>Try "pwngoal suggest" to get some suggestiongs on what to do next</Color>
+        </Box>
+    </Fragment>;
 };
 const descriptions = {
     enum: 'Enumerate stuff',

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pwngoal interface can render with empty IP 1`] = `
+"No results for [31m[1mnothing[22m[39m
+ ↳  [2mDid you mean to use \\"pwngoal --help\\"?[22m"
+`;
+
+exports[`pwngoal interface can render with no results 1`] = `"No results for [31m[1mnot an actual ip[22m[39m"`;

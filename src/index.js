@@ -69,7 +69,7 @@ const options = {
         },
         ip: {
             type: 'string',
-            default: '127.0.0.1',
+            default: '',
             alias: 'i'
         },
         port: {
