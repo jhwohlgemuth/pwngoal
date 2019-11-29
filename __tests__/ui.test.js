@@ -6,7 +6,7 @@ describe('pwngoal interface', () => {
     it('can render', () => {
         expect(true).toBe(true);
         const {lastFrame} = render(<UI />);
-        console.log(lastFrame());
+        // console.log(lastFrame());
         // expect(lastFrame()).toMatchSnapshot();
     });
 });

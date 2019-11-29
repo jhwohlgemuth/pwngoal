@@ -10,6 +10,7 @@ import {
     ErrorBoundary,
     SubCommandSelect,
     TaskList,
+    UnderConstruction,
     Warning,
     getIntendedInput
 } from 'tomo-cli';
@@ -19,6 +20,10 @@ import commands from './commands';
 const store = new Conf({
     projectName: 'pwngoal'
 });
+const isTerminal = command => [
+    'show',
+    'suggest'
+].includes(command);
 const AnimatedIndicator = ({complete, elapsed}) => {
     const Active = () => <Color cyan>{play}</Color>;
     const Inactive = () => <Color dim>{play}</Color>;
@@ -46,6 +51,19 @@ const Timer = () => {
         <AnimatedIndicator elapsed={elapsed} complete={complete}/>
         <Text> {elapsed}</Text>
     </Box>;
+};
+const TerminalCommand = () => {
+    useEffect(() => {
+
+    }, []);
+    return <UnderConstruction />;
+};
+const NoCommand = ({store}) => {
+    const data = store.get('data') || [];
+    useEffect(() => {
+
+    }, []);
+    return <Table data={data}/>;
 };
 const descriptions = {
     enum: 'Enumerate stuff',
@@ -90,7 +108,6 @@ export default class UI extends Component {
     render() {
         const {done, flags} = this.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, showWarning} = this.state;
-        const data = store.get('data') || [];
         return <ErrorBoundary>
             {showWarning ?
                 <Warning callback={this.updateWarning}>
@@ -102,13 +119,15 @@ export default class UI extends Component {
                         <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
                     </Fragment> :
                     hasCommand ?
-                        <SubCommandSelect
-                            command={intendedCommand}
-                            descriptions={descriptions}
-                            items={Object.keys(commands[intendedCommand]).map(command => ({label: command, value: command}))}
-                            onSelect={this.updateTerms}>
-                        </SubCommandSelect> :
-                        <Table data={data}/>
+                        (isTerminal(intendedCommand) ?
+                            <TerminalCommand command={intendedCommand} store={store} options={flags} done={done}/> :
+                            <SubCommandSelect
+                                command={intendedCommand}
+                                descriptions={descriptions}
+                                items={Object.keys(commands[intendedCommand]).map(command => ({label: command, value: command}))}
+                                onSelect={this.updateTerms}>
+                            </SubCommandSelect>) :
+                        <NoCommand store={store} options={flags} done={done}/>
             }
         </ErrorBoundary>;
     }
@@ -133,6 +152,21 @@ export default class UI extends Component {
         });
     }
 }
+AnimatedIndicator.propTypes = {
+    complete: PropTypes.bool,
+    elapsed: PropTypes.string
+};
+NoCommand.propTypes = {
+    done: PropTypes.func,
+    options: PropTypes.object,
+    store: PropTypes.object
+};
+TerminalCommand.propTypes = {
+    command: PropTypes.string,
+    done: PropTypes.func,
+    options: PropTypes.object,
+    store: PropTypes.object
+};
 UI.propTypes = {
     input: PropTypes.array,
     flags: PropTypes.object,
@@ -142,8 +176,4 @@ UI.propTypes = {
 UI.defaultProps = {
     input: [],
     flags: {}
-};
-AnimatedIndicator.propTypes = {
-    complete: PropTypes.bool,
-    elapsed: PropTypes.string
 };
