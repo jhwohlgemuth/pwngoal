@@ -11,7 +11,7 @@ describe('copy commands', () => {
             ip: '127.0.0.1',
             port: 4444
         };
-        for (let [choice, [{task, condition}]] of Object.entries(commands.copy)) {
+        for (const [choice, [{task, condition}]] of Object.entries(commands.copy)) {
             await task(options);
             expect(choice).toMatchSnapshot();
             expect(condition()).toEqual(true);

@@ -1,6 +1,7 @@
 module.exports = {
     parser: 'babel-eslint',
     parserOptions: {
+        ecmaVersion: 2020,
         ecmaFeatures: {
             jsx: true
         }
@@ -16,7 +17,8 @@ module.exports = {
         'plugin:react/recommended'
     ],
     globals: {
-        cy: true
+        cy: true,
+        BigInt: true
     },
     rules: {
         'compat/compat': 'off',

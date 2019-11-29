@@ -1,25 +1,52 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import Conf from 'conf';
 import {bold} from 'chalk';
-// import figures from 'figures';
+import {play} from 'figures';
 import {is} from 'ramda';
-import {Color, Text} from 'ink';
+import {Box, Color, Text} from 'ink';
 import Table from 'ink-table';
 import {
     ErrorBoundary,
     SubCommandSelect,
     TaskList,
-    // UnderConstruction,
     Warning,
     getIntendedInput
 } from 'tomo-cli';
+import {getElapsedTime} from './utils';
 import commands from './commands';
 
 const store = new Conf({
     projectName: 'pwngoal'
 });
-
+const AnimatedIndicator = ({complete, elapsed}) => {
+    const Active = () => <Color cyan>{play}</Color>;
+    const Inactive = () => <Color dim>{play}</Color>;
+    const gate = Number(elapsed.split(':')[2]) % 3;
+    return complete ? <Color dim>runtime</Color> : <Box>
+        {gate === 0 ? <Active /> : <Inactive />}
+        {gate === 1 ? <Active /> : <Inactive />}
+        {gate === 2 ? <Active /> : <Inactive />}
+    </Box>;
+};
+const Timer = () => {
+    const [start] = process.hrtime();
+    const [complete, setComplete] = useState(false);
+    const [elapsed, setElapsed] = useState('00:00:00');
+    useEffect(() => {
+        const id = setInterval(() => {
+            setElapsed(getElapsedTime(start));
+        }, 1000);
+        global.PWNGOAL_CALLBACK = () => {
+            setComplete(true);
+            clearInterval(id);
+        };
+    }, []);
+    return <Box marginTop={1} marginLeft={1}>
+        <AnimatedIndicator elapsed={elapsed} complete={complete}/>
+        <Text> {elapsed}</Text>
+    </Box>;
+};
 const descriptions = {
     enum: 'Enumerate stuff',
     scan: 'Scan stuff',
@@ -70,7 +97,10 @@ export default class UI extends Component {
                     <Text>Did you mean <Color bold green>{intendedCommand} {intendedTerms.join(' ')}</Color>?</Text>
                 </Warning> :
                 (hasCommand && hasTerms) ?
-                    <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList> :
+                    <Fragment>
+                        <Timer />
+                        <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
+                    </Fragment> :
                     hasCommand ?
                         <SubCommandSelect
                             command={intendedCommand}
@@ -112,4 +142,8 @@ UI.propTypes = {
 UI.defaultProps = {
     input: [],
     flags: {}
+};
+AnimatedIndicator.propTypes = {
+    complete: PropTypes.bool,
+    elapsed: PropTypes.string
 };

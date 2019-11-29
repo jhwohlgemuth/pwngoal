@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Network utilities can execute masscan scan and parse results 1`] = `
+exports[`Utilities can execute masscan scan and parse results 1`] = `
 Array [
   "135",
   "139",
@@ -10,7 +10,7 @@ Array [
 ]
 `;
 
-exports[`Network utilities can execute masscan scan and parse results 2`] = `
+exports[`Utilities can execute masscan scan and parse results 2`] = `
 Array [
   Array [
     "ip",
@@ -35,7 +35,7 @@ Array [
 ]
 `;
 
-exports[`Network utilities can execute nmap scan and parse results 1`] = `
+exports[`Utilities can execute nmap scan and parse results 1`] = `
 Array [
   "22",
   "445",
@@ -46,7 +46,7 @@ Array [
 ]
 `;
 
-exports[`Network utilities can execute nmap scan and parse results 2`] = `
+exports[`Utilities can execute nmap scan and parse results 2`] = `
 Array [
   Array [
     "nmap",

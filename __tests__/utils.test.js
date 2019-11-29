@@ -1,21 +1,40 @@
+import sinon from 'sinon';
 import execa from 'execa';
-import {getOpenPortsWithMasscan, getOpenPortsWithNmap} from '../src/utils';
+import {getElapsedTime, getOpenPortsWithMasscan, getOpenPortsWithNmap} from '../src/utils';
 
 jest.mock('execa', () => jest.fn());
 jest.mock('../src/utils', () => {
-    const {getOpenPortsWithMasscan, getOpenPortsWithNmap} = jest.requireActual('../src/utils');
+    const {getElapsedTime, getOpenPortsWithMasscan, getOpenPortsWithNmap} = jest.requireActual('../src/utils');
     return {
         __esModule: true,
         debug: jest.fn(),
+        getElapsedTime,
         getGateway: jest.fn(() => 'something something 10.11.0.1 via tap0'),
         getOpenPortsWithMasscan,
         getOpenPortsWithNmap
     };
 });
 
-describe('Network utilities', () => {
+const clock = sinon.useFakeTimers();
+
+describe('Utilities', () => {
     beforeEach(() => {
         execa.mockClear();
+    });
+    afterEach(() => {
+        clock.restore();
+    });
+    it('can get get elapsed time', () => {
+        const SECOND = 1000;
+        const HOUR = 60 * 60 * SECOND; // eslint-disable-line no-magic-numbers
+        const [start] = process.hrtime();
+        expect(getElapsedTime(start)).toEqual('00:00:00');
+        clock.tick(59 * SECOND); // eslint-disable-line no-magic-numbers
+        expect(getElapsedTime(start)).toEqual('00:00:59');
+        clock.tick(2 * SECOND);
+        expect(getElapsedTime(start)).toEqual('00:01:01');
+        clock.tick(HOUR);
+        expect(getElapsedTime(start)).toEqual('01:01:01');
     });
     it('can execute masscan scan and parse results', async () => {
         execa.mockImplementation(async () => {
@@ -56,7 +75,7 @@ describe('Network utilities', () => {
                 3283/tcp open  netassistant
                 5900/tcp open  vnc
                 
-                Nmap done: 1 IP address (1 host up) scanned in 10.20 seconds`
+                Nmap done: 1 IP address (1 host up) scanned in 10.20 seconds`;
             return {stdout};
         });
         const ports = await getOpenPortsWithNmap('127.0.0.1');

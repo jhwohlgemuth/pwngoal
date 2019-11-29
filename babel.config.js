@@ -11,6 +11,7 @@ module.exports = {
     plugins: [
         'ramda',
         '@babel/transform-runtime',
+        '@babel/plugin-syntax-bigint',
         '@babel/proposal-class-properties',
         '@babel/proposal-optional-chaining',
         '@babel/proposal-export-default-from',

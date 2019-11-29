@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import {join} from 'path';
-import React from 'react';
+import React, {Fragment} from 'react';
 import {cyan, dim} from 'chalk';
 import {render} from 'ink';
 import meow from 'meow';
@@ -79,10 +79,13 @@ const options = {
         }
     }
 };
-
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
 (async () => {
     const stdin = await getStdin();
-    render(<UI input={input} flags={flags} stdin={stdin}/>, {exitOnCtrlC: true});
+    const done = () => typeof global.PWNGOAL_CALLBACK === 'function' && global.PWNGOAL_CALLBACK();
+    const Main = () => <Fragment>
+        <UI input={input} flags={flags} done={done} stdin={stdin}/>
+    </Fragment>;
+    render(<Main />, {exitOnCtrlC: true});
 })();
