@@ -36,8 +36,8 @@ export default {
     ports: [
         {
             text: 'Clear saved data',
-            task: async () => {
-                store.clear();
+            task: async ({ip}) => {
+                store.delete(ip);
             },
             condition: () => true
         },
