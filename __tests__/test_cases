@@ -1,0 +1,16 @@
+not done
+--------
+pwngoal
+pwngoal show -i exists
+pwngoal show exists
+pwngoal scan ports -i exists
+
+done
+----
+pwngoal copy
+pwngoal scan
+pwngoal scan prts
+pwngoal show
+pwngoal show -i doesNotExist
+pwngoal show doesNotExist
+pwngoal show useThis -i notThis

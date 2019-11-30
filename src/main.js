@@ -1,93 +1,20 @@
 import React, {Component, Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import Conf from 'conf';
 import {bold} from 'chalk';
 import {play} from 'figures';
 import {is} from 'ramda';
 import {Box, Color, Text} from 'ink';
-import InkBox from 'ink-box';
-import Table from 'ink-table';
 import {
     ErrorBoundary,
     SubCommandSelect,
     TaskList,
     UnderConstruction,
     Warning,
+    dict,
     getIntendedInput
 } from 'tomo-cli';
-import {debug, getElapsedTime} from './utils';
-import commands from './commands';
+import {getElapsedTime} from './utils';
 
-const store = new Conf({
-    projectName: 'pwngoal'
-});
-const isTerminal = command => [
-    'show',
-    'suggest'
-].includes(command);
-const AnimatedIndicator = ({complete, elapsed}) => {
-    const Active = () => <Color cyan>{play}</Color>;
-    const Inactive = () => <Color dim>{play}</Color>;
-    const gate = Number(elapsed.split(':')[2]) % 3;
-    return complete ? <Color dim>runtime</Color> : <Box>
-        {gate === 0 ? <Active /> : <Inactive />}
-        {gate === 1 ? <Active /> : <Inactive />}
-        {gate === 2 ? <Active /> : <Inactive />}
-    </Box>;
-};
-const Timer = () => {
-    const [start] = process.hrtime();
-    const [complete, setComplete] = useState(false);
-    const [elapsed, setElapsed] = useState('00:00:00');
-    useEffect(() => {
-        const id = setInterval(() => {
-            setElapsed(getElapsedTime(start));
-        }, 1000);
-        global.PWNGOAL_CALLBACK = () => {
-            setComplete(true);
-            clearInterval(id);
-        };
-    }, []);
-    return <Box marginTop={1} marginLeft={1}>
-        <AnimatedIndicator elapsed={elapsed} complete={complete}/>
-        <Text> {elapsed}</Text>
-    </Box>;
-};
-const TerminalCommand = () => {
-    useEffect(() => {
-
-    }, []);
-    return <UnderConstruction />;
-};
-const NoCommand = ({options, store}) => {
-    const {ip} = options;
-    const data = store.get(ip) || [];
-    useEffect(() => {
-
-    }, []);
-    const NoResults = ({ip}) => {
-        const isValid = value => (typeof value === 'string') && value.length > 0;
-        return <Box flexDirection={'column'}>
-            <Box>
-                <Text>No results for </Text>
-                <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
-            </Box>
-            {isValid(ip) ? <Fragment></Fragment> : <Box marginLeft={1}>↳  <Color dim>Did you mean to use "pwngoal --help"?</Color></Box>}
-        </Box>;
-    };
-    NoResults.propTypes = {
-        ip: PropTypes.string
-    };
-    return data.length === 0 ? <NoResults ip={ip}/> : <Fragment>
-        <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
-            <Color bold cyan>{ip}</Color>
-        </InkBox>
-        <Table data={data}/>
-        <Box marginBottom={2} marginLeft={1}>
-            ↳  <Color dim>Try "pwngoal suggest" to get some suggestiongs on what to do next</Color>
-        </Box>
-    </Fragment>;
-};
 const descriptions = {
     enum: 'Enumerate stuff',
     scan: 'Scan stuff',
@@ -110,12 +37,19 @@ const descriptions = {
 export default class UI extends Component {
     constructor(props) {
         super(props);
-        const {flags, input} = props;
+        const {commands, flags, input} = props;
         const {ignoreWarnings} = flags;
         const [command, ...terms] = input;
+        const isTerminal = command => Object.entries(commands)
+            .filter(([, value]) => (typeof value === 'string'))
+            .map(([name]) => name)
+            .includes(command);
         const hasCommand = is(String)(command);
+        const isTerminalCommand = hasCommand && isTerminal(command);
         const hasTerms = terms.length > 0;
-        const {intendedCommand, intendedTerms} = hasCommand ? getIntendedInput(commands, command, terms) : {};
+        const {intendedCommand, intendedTerms} = (hasCommand && !isTerminalCommand) ?
+            getIntendedInput(commands, command, terms) :
+            {intendedCommand: command, intendedTerms: terms};
         const compare = (term, index) => (term !== terms[index]);
         const showWarning = ((command !== intendedCommand) || (hasTerms && intendedTerms.map(compare).some(Boolean))) && !ignoreWarnings;
         this.state = {
@@ -123,34 +57,73 @@ export default class UI extends Component {
             hasCommand,
             showWarning,
             intendedTerms,
-            intendedCommand
+            intendedCommand,
+            isTerminalCommand
         };
         this.updateWarning = this.updateWarning.bind(this);
         this.updateTerms = this.updateTerms.bind(this);
     }
     render() {
-        const {done, flags} = this.props;
-        const {hasCommand, hasTerms, intendedCommand, intendedTerms, showWarning} = this.state;
+        const {commands, done, flags, store, terminalCommands} = this.props;
+        const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = this.state;
+        const TerminalCommand = () => {
+            const lookup = dict(terminalCommands || {});
+            const Command = lookup.has(intendedCommand) ? lookup.get(intendedCommand) : UnderConstruction;
+            return <Command done={done} options={flags} store={store} terms={intendedTerms}/>;
+        };
+        const Timer = () => {
+            const [start] = process.hrtime();
+            const [complete, setComplete] = useState(false);
+            const [elapsed, setElapsed] = useState('00:00:00');
+            const AnimatedIndicator = ({complete, elapsed}) => {
+                const Active = () => <Color cyan>{play}</Color>;
+                const Inactive = () => <Color dim>{play}</Color>;
+                const gate = Number(elapsed.split(':')[2]) % 3;
+                return complete ? <Color dim>runtime</Color> : <Box>
+                    {gate === 0 ? <Active /> : <Inactive />}
+                    {gate === 1 ? <Active /> : <Inactive />}
+                    {gate === 2 ? <Active /> : <Inactive />}
+                </Box>;
+            };
+            AnimatedIndicator.propTypes = {
+                complete: PropTypes.bool,
+                elapsed: PropTypes.string
+            };
+            useEffect(() => {
+                const id = setInterval(() => {
+                    setElapsed(getElapsedTime(start));
+                }, 1000); // eslint-disable-line no-magic-numbers
+                global._pwngoal_callback = () => {// eslint-disable-line camelcase
+                    setComplete(true);
+                    clearInterval(id);
+                };
+            }, []);
+            return <Box marginTop={1} marginLeft={1}>
+                <AnimatedIndicator elapsed={elapsed} complete={complete}/>
+                <Text> {elapsed}</Text>
+            </Box>;
+        };
         return <ErrorBoundary>
             {showWarning ?
                 <Warning callback={this.updateWarning}>
                     <Text>Did you mean <Color bold green>{intendedCommand} {intendedTerms.join(' ')}</Color>?</Text>
                 </Warning> :
                 (hasCommand && hasTerms) ?
-                    <Fragment>
-                        <Timer />
-                        <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
-                    </Fragment> :
+                    isTerminalCommand ?
+                        <TerminalCommand/> :
+                        (<Fragment>
+                            <Timer/>
+                            <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
+                        </Fragment>) :
                     hasCommand ?
-                        (isTerminal(intendedCommand) ?
-                            <TerminalCommand command={intendedCommand} store={store} options={flags} done={done}/> :
+                        (isTerminalCommand ?
+                            <TerminalCommand/> :
                             <SubCommandSelect
                                 command={intendedCommand}
                                 descriptions={descriptions}
                                 items={Object.keys(commands[intendedCommand]).map(command => ({label: command, value: command}))}
-                                onSelect={this.updateTerms}>
-                            </SubCommandSelect>) :
-                        <NoCommand store={store} options={flags} done={done}/>
+                                onSelect={this.updateTerms}/>) :
+                        <UnderConstruction/>
             }
         </ErrorBoundary>;
     }
@@ -175,26 +148,14 @@ export default class UI extends Component {
         });
     }
 }
-AnimatedIndicator.propTypes = {
-    complete: PropTypes.bool,
-    elapsed: PropTypes.string
-};
-NoCommand.propTypes = {
-    done: PropTypes.func,
-    options: PropTypes.object,
-    store: PropTypes.object
-};
-TerminalCommand.propTypes = {
-    command: PropTypes.string,
-    done: PropTypes.func,
-    options: PropTypes.object,
-    store: PropTypes.object
-};
 UI.propTypes = {
-    input: PropTypes.array,
-    flags: PropTypes.object,
+    commands: PropTypes.object,
     done: PropTypes.func,
-    stdin: PropTypes.string
+    flags: PropTypes.object,
+    input: PropTypes.array,
+    stdin: PropTypes.string,
+    store: PropTypes.object,
+    terminalCommands: PropTypes.object
 };
 UI.defaultProps = {
     input: [],

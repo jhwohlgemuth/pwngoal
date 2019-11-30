@@ -1,8 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`pwngoal interface can render with empty IP 1`] = `
-"No results for [31m[1mnothing[22m[39m
- ↳  [2mDid you mean to use \\"pwngoal --help\\"?[22m"
+exports[`pwngoal copy will auto-suggest terms 1`] = `
+"[33m[39m
+[33m ┌─────────┐[39m
+ [33m│[39m [33moops...[39m [33m│[39m
+[33m └─────────┘[39m
+    ↳ Did you mean [32m[1mcopy spawn a TTY shell (linux)[22m[39m?
+
+      [2mPress [22m[1mENTER[22m[2m to continue[22m
+"
 `;
 
-exports[`pwngoal interface can render with no results 1`] = `"No results for [31m[1mnot an actual ip[22m[39m"`;
+exports[`pwngoal copy will prompt for term when not provided 1`] = `
+"
+ [36mCopy one-line reverse shell written in [1m[33mPython[36m[22m[39m
+
+ [36m[1m→[22m[39m [39m[36m[1mreverse shell (python)[22m[39m[39m
+   reverse shell (php)
+   reverse shell (perl)
+   reverse shell (ruby)
+   reverse shell (bash)
+   reverse shell (awk)
+   spawn a TTY shell (linux)
+   find files/folders with write access (linux)
+"
+`;
+
+exports[`pwngoal scan will auto-suggest terms 1`] = `
+"[33m[39m
+[33m ┌─────────┐[39m
+ [33m│[39m [33moops...[39m [33m│[39m
+[33m └─────────┘[39m
+    ↳ Did you mean [32m[1mscan ports[22m[39m?
+
+      [2mPress [22m[1mENTER[22m[2m to continue[22m
+"
+`;
+
+exports[`pwngoal scan will prompt for term when not provided 1`] = `
+"
+ [36mScan a port with nmap[39m
+
+ [36m[1m→[22m[39m [39m[36m[1mport[22m[39m[39m
+   ports
+"
+`;
+
+exports[`pwngoal show --ip doesNotExist 1`] = `"No results for [31m[1mdoesNotExist[22m[39m"`;
+
+exports[`pwngoal show can render with no input 1`] = `
+"No results for [31m[1mnothing[22m[39m
+ ↳  [2mDid you mean to use “pwngoal --help”?[22m"
+`;
+
+exports[`pwngoal show doesNotExist 1`] = `"No results for [31m[1mdoesNotExist[22m[39m"`;
+
+exports[`pwngoal show ipPassedAsTerm --ip doesNotExist 1`] = `"No results for [31m[1mipPassedAsTerm[22m[39m"`;

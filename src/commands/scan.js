@@ -55,7 +55,7 @@ export default {
             text: `Find open ports with ${SECONDARY_SCANNER}`,
             task: async ({ip}) => {
                 const ports = await getOpenPortsWithNmap(ip);
-                store.set('ports', ports);
+                store.set('tcp.ports', ports);
                 debug(ports);
             },
             condition: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
@@ -65,7 +65,7 @@ export default {
             text: 'Enumerate services with nmap',
             task: async ({ip}) => {
                 const data = [];
-                const ports = store.get('ports') || [];
+                const ports = store.get('tcp.ports') || [];
                 for (const port of ports) {
                     const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
                     stdout

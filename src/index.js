@@ -2,16 +2,26 @@
 import {join} from 'path';
 import React, {Fragment} from 'react';
 import {cyan, dim} from 'chalk';
-import {render} from 'ink';
+import Conf from 'conf';
 import meow from 'meow';
 import read from 'read-pkg';
 import getStdin from 'get-stdin';
+import {render} from 'ink';
 // import updateNotifier from 'update-notifier';
+import {UnderConstruction} from 'tomo-cli';
 import UI from './main';
+import commands from './commands';
+import {ShowCommand} from './components';
 
 // Notify updater
 // const pkg = require(`../package.json`);
 // updateNotifier({pkg}).notify();
+
+const projectName = 'pwngoal';
+const terminalCommands = {
+    show: ShowCommand,
+    suggest: UnderConstruction
+};
 
 const showVersion = () => {
     const cwd = join(__dirname, '..');
@@ -22,14 +32,14 @@ const showVersion = () => {
 const help = `
     ${dim.bold('Usage')}
 
-        ${cyan('>')} pwngoal [commands] [terms] [options]
+        ${cyan('>')} ${projectName} [commands] [terms] [options]
         
-        ${cyan('>')} pwngoal version
+        ${cyan('>')} ${projectName} version
 
 
     ${dim.bold('Commands')}
 
-        copy, enum, scan, ...
+        copy, scan, ...
 
 
     ${dim.bold('Terms')}
@@ -82,10 +92,18 @@ const options = {
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
 (async () => {
+    const done = () => typeof global._pwngoal_callback === 'function' && global._pwngoal_callback();
     const stdin = await getStdin();
-    const done = () => typeof global.PWNGOAL_CALLBACK === 'function' && global.PWNGOAL_CALLBACK();
+    const store = new Conf({projectName});
     const Main = () => <Fragment>
-        <UI input={input} flags={flags} done={done} stdin={stdin}/>
+        <UI
+            commands={commands}
+            done={done}
+            flags={flags}
+            input={input}
+            stdin={stdin}
+            store={store}
+            terminalCommands={terminalCommands}/>
     </Fragment>;
-    render(<Main />, {exitOnCtrlC: true});
+    render(<Main/>, {exitOnCtrlC: true});
 })();
