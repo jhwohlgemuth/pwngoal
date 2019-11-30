@@ -75,8 +75,9 @@ export default {
                         .split(EOL)
                         .filter(line => line.includes('/tcp'))
                         .map(line => line.split(' ').filter(Boolean))
-                        .forEach(([,, service, ...version]) => {
-                            data.push({port, service, version: version.join(' ')});
+                        .forEach(([,, service, ...versionInformation]) => {
+                            const version = versionInformation.join(' ').substring(0, 57).concat('...');
+                            data.push({port, service, version});
                         });
                 }
                 store.set(ip, data);
