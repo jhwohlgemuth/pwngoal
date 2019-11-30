@@ -46,7 +46,7 @@ export default {
             task: async ({ip}) => {
                 const ports = await getOpenPortsWithMasscan(ip);
                 store.set('ports', ports);
-                await debug('boot');
+                debug({ports});
             },
             condition: () => commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(PRIMARY_SCANNER)
@@ -56,7 +56,7 @@ export default {
             task: async ({ip}) => {
                 const ports = await getOpenPortsWithNmap(ip);
                 store.set('tcp.ports', ports);
-                debug(ports);
+                debug({ports});
             },
             condition: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER)
@@ -66,6 +66,7 @@ export default {
             task: async ({ip}) => {
                 const data = [];
                 const ports = store.get('tcp.ports') || [];
+                debug({ports})
                 for (const port of ports) {
                     const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
                     stdout
@@ -77,7 +78,7 @@ export default {
                         });
                 }
                 store.set(ip, data);
-                debug(data);
+                debug({data});
             },
             condition: () => commandExists.sync('nmap'),
             optional: () => commandExists.sync('nmap')
