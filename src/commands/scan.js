@@ -76,7 +76,7 @@ export default {
                         .filter(line => line.includes('/tcp'))
                         .map(line => line.split(' ').filter(Boolean))
                         .forEach(([,, service, ...versionInformation]) => {
-                            const version = versionInformation.join(' ').substring(0, 57).concat('...');
+                            const version = versionInformation.join(' ');
                             data.push({port, service, version});
                         });
                 }

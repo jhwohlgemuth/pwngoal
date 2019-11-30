@@ -8,7 +8,16 @@ export const ShowCommand = ({options, store, terms}) => {
     const {ip} = options;
     const [firstTerm] = terms;
     const value = firstTerm || ip;
-    const data = store.get(value) || [];
+    const truncate = (str, len) => {
+        const {length} = str;
+        return length < 60 ? str : str.substring(0, len).concat('...');
+    };
+    const data = (store.get(value) || []).map(row => {
+        const {version} = row;
+        return Object.assign(row, {
+            version: truncate(version, 57)
+        });
+    });
     const NoResults = ({ip}) => {
         const isValid = value => (typeof value === 'string') && value.length > 0;
         return <Box flexDirection={'column'}>
