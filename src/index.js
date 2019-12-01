@@ -11,6 +11,7 @@ import {render} from 'ink';
 import {UnderConstruction} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
+import descriptions from './descriptions';
 import {ShowCommand} from './components';
 
 // Notify updater
@@ -109,6 +110,7 @@ const {input, flags} = meow(options);
     const Main = () => <Fragment>
         <UI
             commands={commands}
+            descriptions={descriptions}
             done={done}
             flags={flags}
             input={input}

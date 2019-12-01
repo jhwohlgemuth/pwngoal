@@ -3,6 +3,7 @@ import {render} from 'ink-testing-library';
 import UI from '../src/main';
 import {ShowCommand} from '../src/components';
 import commands from '../src/commands';
+import descriptions from '../src/descriptions';
 
 describe('pwngoal', () => {
     describe('copy', () => {
@@ -11,13 +12,23 @@ describe('pwngoal', () => {
         it('will prompt for term when not provided', () => {
             const terms = [];
             const options = {};
-            const {lastFrame} = render(<UI commands={commands} input={[command, ...terms]} flags={options} store={store}/>);
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                input={[command, ...terms]}
+                flags={options}
+                store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
         it('will auto-suggest terms', () => {
             const terms = ['spawn a tty shell'];
             const options = {};
-            const {lastFrame} = render(<UI commands={commands} input={[command, ...terms]} flags={options} store={store}/>);
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                input={[command, ...terms]}
+                flags={options}
+                store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
     });
@@ -27,13 +38,23 @@ describe('pwngoal', () => {
         it('will prompt for term when not provided', () => {
             const terms = [];
             const options = {};
-            const {lastFrame} = render(<UI commands={commands} input={[command, ...terms]} flags={options} store={store}/>);
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                input={[command, ...terms]}
+                flags={options}
+                store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
         it('will auto-suggest terms', () => {
             const terms = ['pts'];
             const options = {};
-            const {lastFrame} = render(<UI commands={commands} input={[command, ...terms]} flags={options} store={store}/>);
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                input={[command, ...terms]}
+                flags={options}
+                store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
     });

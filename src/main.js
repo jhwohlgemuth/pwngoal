@@ -1,6 +1,5 @@
 import React, {Component, Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
-import {bold} from 'chalk';
 import {play} from 'figures';
 import {is} from 'ramda';
 import {Box, Color, Text} from 'ink';
@@ -15,20 +14,6 @@ import {
     getIntendedInput
 } from 'tomo-cli';
 
-const descriptions = {
-    enum: 'Enumerate stuff',
-    scan: 'Scan stuff',
-    port: `Scan a port with nmap`,
-    ports: `Perform a full TCP port scan with masscan (or nmap)`,
-    'reverse shell (php)': `Copy one-line reverse shell written in ${bold.magenta('PHP')}`,
-    'reverse shell (python)': `Copy one-line reverse shell written in ${bold.yellow('Python')}`,
-    'reverse shell (perl)': `Copy one-line reverse shell written in ${bold.blue('Perl')}`,
-    'reverse shell (ruby)': `Copy one-line reverse shell written in ${bold.red('Ruby')}`,
-    'reverse shell (bash)': `Copy one-line reverse shell written in ${bold.bgBlack.white(' Bash ')}`,
-    'reverse shell (awk)': `Copy one-line reverse shell written in ${bold.bgBlack.white(' awk ')}`,
-    'find files/folders with write access (linux)': `Find locations with ${bold('write')} access during Linux ${bold.cyan('privilege escalation')}`,
-    'spawn a TTY shell (linux)': `Spawn a TTY shell with ${bold.yellow('Python')}`
-};
 /**
  * Main tomo UI component
  * @param {Object} props Component props
@@ -64,7 +49,7 @@ export default class UI extends Component {
         this.updateTerms = this.updateTerms.bind(this);
     }
     render() {
-        const {commands, done, flags, store, terminalCommands} = this.props;
+        const {commands, descriptions, done, flags, store, terminalCommands} = this.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = this.state;
         const TerminalCommand = () => {
             const lookup = dict(terminalCommands || {});
@@ -150,6 +135,7 @@ export default class UI extends Component {
 }
 UI.propTypes = {
     commands: PropTypes.object,
+    descriptions: PropTypes.object,
     done: PropTypes.func,
     flags: PropTypes.object,
     input: PropTypes.array,
