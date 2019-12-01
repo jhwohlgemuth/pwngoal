@@ -22,7 +22,7 @@ module.exports = {
     },
     rules: {
         'compat/compat': 'off',
-        'complexity': ['error', 7],
+        'complexity': ['warn', 12],
         'valid-jsdoc': 'off',
         'no-magic-numbers': ['warn', {
             ignore: [-1, 0, 1, 2, 3, 10, 100]

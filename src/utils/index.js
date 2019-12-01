@@ -11,10 +11,9 @@ const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
 
 export const debug = async (data, title = '') => {
     const savepath = join(homedir(), '.pwngoal');
-    const timestamp = new Date()
-        .toISOString()
-        .replace(/T/, ' ')
-        .replace(/\..+/, '');
+    const [date] = (new Date()).toISOString().split('T');
+    const time = new Date().toLocaleTimeString('en-US', {hour12: false});
+    const timestamp = `${date} ${time}`;
     try {
         await mkdirp(savepath);
         await append(`${savepath}/debug`, `[${timestamp}] ${title}${EOL}`);

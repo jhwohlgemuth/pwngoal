@@ -13,6 +13,11 @@ import {
 const store = new Conf({
     projectName: 'pwngoal'
 });
+const shouldPerformEnumeration = () => {
+    const tcp = store.get('tcp.ports') || [];
+    const udp = store.get('udp.ports') || [];
+    return [...tcp, ...udp].length > 0;
+};
 
 const PRIMARY_SCANNER = 'masscan';
 const SECONDARY_SCANNER = 'nmap';
@@ -52,7 +57,7 @@ export default {
                 store.set('tcp.ports', ports);
                 await debug({ports}, `TCP ports from ${PRIMARY_SCANNER}`);
             },
-            condition: () => commandExists.sync(PRIMARY_SCANNER),
+            condition: ({udpOnly}) => !udpOnly && commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(PRIMARY_SCANNER)
         },
         {
@@ -62,7 +67,7 @@ export default {
                 store.set('tcp.ports', ports);
                 await debug({ports}, `TCP ports from ${SECONDARY_SCANNER}`);
             },
-            condition: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
+            condition: ({udpOnly}) => !udpOnly && commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER)
         },
         {
@@ -72,29 +77,33 @@ export default {
                 store.set('udp.ports', ports);
                 await debug({ports}, `UDP ports from nmap`);
             },
-            condition: ({udp}) => udp && commandExists.sync('nmap') && isElevated(),
-            optional: ({udp}) => udp && commandExists.sync('nmap')
+            condition: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap') && isElevated(),
+            optional: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap')
         },
         {
             text: 'Enumerate services with nmap',
-            task: async ({ip, udp}) => {
+            task: async ({ip, udp, udpOnly}) => {
                 const data = [];
                 const ports = store.get('tcp.ports') || [];
                 await debug({ports}, 'TCP ports passed to enumeration');
-                for (const port of ports) {
-                    const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
-                    stdout
-                        .split(EOL)
-                        .filter(line => line.includes('/tcp'))
-                        .map(line => line.split(' ').filter(Boolean))
-                        .forEach(([,, service, ...versionInformation]) => {
-                            const protocol = 'TCP';
-                            const version = versionInformation.join(' ');
-                            data.push({protocol, port, service, version});
-                        });
+                if (!udpOnly) {
+                    for (const port of ports) {
+                        const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
+                        stdout
+                            .split(EOL)
+                            .filter(line => line.includes('/tcp'))
+                            .map(line => line.split(' ').filter(Boolean))
+                            .forEach(([,, service, ...versionInformation]) => {
+                                const protocol = 'TCP';
+                                const version = versionInformation.join(' ');
+                                data.push({protocol, port, service, version});
+                            });
+                    }
                 }
-                if (udp && await isElevated()) {
-                    for (const port of (store.get('udp.ports') || [])) {
+                if ((udp || udpOnly) && await isElevated()) {
+                    const ports = store.get('udp.ports') || [];
+                    await debug({ports}, 'UDP ports passed to enumeration');
+                    for (const port of ports) {
                         const {stdout} = await execa('nmap', [ip, '-p', port, '-sV', '-sU']);
                         stdout
                             .split(EOL)
@@ -107,10 +116,29 @@ export default {
                             });
                     }
                 }
+                if (await commandExists('amap')) {
+                    const shouldScanWithAmap = ({service, version}) => {
+                        const hasUnknownService = service === 'unknown' || service.includes('?');
+                        const hasNoVersionInformation = version.length === 0;
+                        return hasUnknownService || hasNoVersionInformation;
+                    };
+                    for (const {port} of data.filter(shouldScanWithAmap)) {
+                        const {stdout} = await execa('amap', ['-qAH', ip, port]);
+                        const index = data.findIndex(row => row.port === port);
+                        await debug(port, 'Port scanned with amap');
+                        const version = stdout
+                            .split(EOL)
+                            .filter(line => line.includes('matches'))
+                            .map(line => line.split(' ').filter(Boolean))
+                            .flatMap(([,,,, service]) => service)
+                            .join(' | ');
+                        data[index].version = version || '???';
+                    }
+                }
                 store.set(ip, data);
                 await debug({data}, 'Results of enumeration');
             },
-            condition: () => commandExists.sync('nmap'),
+            condition: () => commandExists.sync('nmap') && shouldPerformEnumeration(),
             optional: () => commandExists.sync('nmap')
         },
         {
