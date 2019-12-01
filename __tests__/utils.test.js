@@ -1,6 +1,5 @@
-import sinon from 'sinon';
 import execa from 'execa';
-import {getElapsedTime, getOpenPortsWithMasscan, getOpenPortsWithNmap} from '../src/utils';
+import {getOpenPortsWithMasscan, getOpenPortsWithNmap} from '../src/utils';
 
 jest.mock('execa', () => jest.fn());
 jest.mock('../src/utils', () => {
@@ -15,26 +14,9 @@ jest.mock('../src/utils', () => {
     };
 });
 
-const clock = sinon.useFakeTimers();
-
 describe('Utilities', () => {
     beforeEach(() => {
         execa.mockClear();
-    });
-    afterEach(() => {
-        clock.restore();
-    });
-    it('can get get elapsed time', () => {
-        const SECOND = 1000;
-        const HOUR = 60 * 60 * SECOND; // eslint-disable-line no-magic-numbers
-        const [start] = process.hrtime();
-        expect(getElapsedTime(start)).toEqual('00:00:00');
-        clock.tick(59 * SECOND); // eslint-disable-line no-magic-numbers
-        expect(getElapsedTime(start)).toEqual('00:00:59');
-        clock.tick(2 * SECOND);
-        expect(getElapsedTime(start)).toEqual('00:01:01');
-        clock.tick(HOUR);
-        expect(getElapsedTime(start)).toEqual('01:01:01');
     });
     it('can execute masscan scan and parse results', async () => {
         execa.mockImplementation(async () => {

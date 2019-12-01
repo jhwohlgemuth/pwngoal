@@ -23,17 +23,6 @@ export const debug = async (data, title = '') => {
         /* do nothing */
     }
 };
-export const getElapsedTime = (start, initial = [0, 0, 0]) => {
-    const SECONDS_PER_MINUTE = 60;
-    const MINUTES_PER_HOUR = SECONDS_PER_MINUTE;
-    const after = (initial[0] * MINUTES_PER_HOUR * SECONDS_PER_MINUTE) + (initial[1] * SECONDS_PER_MINUTE) + initial[2];
-    const total = process.hrtime()[0] + after - start;
-    const seconds = total % SECONDS_PER_MINUTE;
-    const minutes = Math.floor((total / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR);
-    const hours = Math.floor(total / MINUTES_PER_HOUR / SECONDS_PER_MINUTE);
-    const format = val => val.toString().padStart(2, '0');
-    return `${format(hours)}:${format(minutes)}:${format(seconds)}`;
-};
 export const getGateway = async (networkInterface = 'tap0') => {
     const {stdout} = await execa('ip', ['route']);
     const [gateway] = (stdout || '')

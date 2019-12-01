@@ -11,9 +11,9 @@ import {
     UnderConstruction,
     Warning,
     dict,
+    getElapsedTime,
     getIntendedInput
 } from 'tomo-cli';
-import {getElapsedTime} from './utils';
 
 const descriptions = {
     enum: 'Enumerate stuff',
