@@ -14,7 +14,7 @@ console.log(b),process.exit()},help=`
 
     ${_chalk.dim.bold("Commands")}
 
-        copy, scan, ...
+        copy, scan, show
 
 
     ${_chalk.dim.bold("Terms")}
@@ -30,4 +30,6 @@ console.log(b),process.exit()},help=`
         --debug                 Show debug data [Default: false]
         --ip,               -i  IP address [Default: 127.0.0.1]
         --port,             -p  Port [Default: 80]
-`,options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"}}},{input,flags}=(0,_meow.default)(options);("version"===input[0]||flags.version)&&showVersion(),(0,_asyncToGenerator2.default)(function*(){const a=()=>"function"==typeof global._pwngoal_callback&&global._pwngoal_callback(),b=yield(0,_getStdin.default)(),c=new _conf.default({projectName});(0,_ink.render)(_react.default.createElement(()=>_react.default.createElement(_react.Fragment,null,_react.default.createElement(_main.default,{commands:_commands.default,done:a,flags:flags,input:input,stdin:b,store:c,terminalCommands:terminalCommands})),null),{exitOnCtrlC:!0})})();
+        --udp               -u  Include UDP ports in scan [Default: false]
+        --udp-only              Only scan UDP ports [Default: false]
+`,options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1}}},{input,flags}=(0,_meow.default)(options);("version"===input[0]||flags.version)&&showVersion(),(0,_asyncToGenerator2.default)(function*(){const a=()=>"function"==typeof global._pwngoal_callback&&global._pwngoal_callback(),b=yield(0,_getStdin.default)(),c=new _conf.default({projectName});(0,_ink.render)(_react.default.createElement(()=>_react.default.createElement(_react.Fragment,null,_react.default.createElement(_main.default,{commands:_commands.default,done:a,flags:flags,input:input,stdin:b,store:c,terminalCommands:terminalCommands})),null),{exitOnCtrlC:!0})})();

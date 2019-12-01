@@ -9,7 +9,7 @@ const append = promisify(appendFile);
 const includes = str => line => line.includes(str);
 const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
 
-export const debug = async val => {
+export const debug = async (data, title = '') => {
     const savepath = join(homedir(), '.pwngoal');
     const timestamp = new Date()
         .toISOString()
@@ -17,9 +17,9 @@ export const debug = async val => {
         .replace(/\..+/, '');
     try {
         await mkdirp(savepath);
-        await append(`${savepath}/debug`, `[${timestamp}]${EOL}`);
-        await append(`${savepath}/debug`, format(val));
-        await append(`${savepath}/debug`, `${EOL}${EOL}`);
+        await append(`${savepath}/debug`, `[${timestamp}] ${title}${EOL}`);
+        await append(`${savepath}/debug`, format(data));
+        await append(`${savepath}/debug`, `${EOL}`);
     } catch (_) {
         /* do nothing */
     }
@@ -49,6 +49,14 @@ export const getOpenPortsWithNmap = async ip => {
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
+        .map(getPort);
+    return ports;
+};
+export const getOpenUdpPortsWithNmap = async ip => {
+    const {stdout} = await execa('nmap', [ip, '--open', '-sU', '-T4', '--max-retries', 1]);
+    const ports = (stdout || '')
+        .split(EOL)
+        .filter(includes('/udp'))
         .map(getPort);
     return ports;
 };

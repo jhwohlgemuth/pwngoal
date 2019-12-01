@@ -73,6 +73,7 @@
     "ink-select-input": "3.1.2",
     "ink-spinner": "3.0.1",
     "ink-table": "^2.0.1",
+    "is-elevated": "^3.0.0",
     "meow": "5.0.0",
     "prop-types": "15.7.2",
     "ramda": "^0.26.1",

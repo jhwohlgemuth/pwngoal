@@ -39,7 +39,7 @@ const help = `
 
     ${dim.bold('Commands')}
 
-        copy, scan, ...
+        copy, scan, show
 
 
     ${dim.bold('Terms')}
@@ -55,6 +55,8 @@ const help = `
         --debug                 Show debug data [Default: false]
         --ip,               -i  IP address [Default: 127.0.0.1]
         --port,             -p  Port [Default: 80]
+        --udp               -u  Include UDP ports in scan [Default: false]
+        --udp-only              Only scan UDP ports [Default: false]
 `;
 const options = {
     help,
@@ -86,6 +88,15 @@ const options = {
             type: 'number',
             default: 80,
             alias: 'p'
+        },
+        udp: {
+            type: 'boolean',
+            default: false,
+            alias: 'u'
+        },
+        udpOnly: {
+            type: 'boolean',
+            default: false
         }
     }
 };

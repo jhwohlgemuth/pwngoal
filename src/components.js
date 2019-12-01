@@ -5,17 +5,18 @@ import InkBox from 'ink-box';
 import Table from 'ink-table';
 
 export const ShowCommand = ({options, store, terms}) => {
+    const MAX_LENGTH = 60;
     const {ip} = options;
     const [firstTerm] = terms;
     const value = firstTerm || ip;
     const truncate = (str, len) => {
         const {length} = str;
-        return length < 60 ? str : str.substring(0, len).concat('...');
+        return length < MAX_LENGTH ? str : str.substring(0, len).concat('...');
     };
     const data = (store.get(value) || []).map(row => {
         const {version} = row;
         return Object.assign(row, {
-            version: truncate(version, 57)
+            version: truncate(version, MAX_LENGTH - '...'.length)
         });
     });
     const NoResults = ({ip}) => {
