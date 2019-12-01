@@ -37,7 +37,7 @@ export const ShowCommand = ({options, store, terms}) => {
         </InkBox>
         <Table data={data}/>
         <Box marginBottom={2} marginLeft={1}>
-            ↳  <Color dim>Try &ldquo;pwngoal suggest&rdquo; to get some suggestions on what to do next</Color>
+            ↳ <Color dim>Try &ldquo;pwngoal suggest&rdquo; to get some suggestions on what to do next</Color>
         </Box>
     </Fragment>;
 };
