@@ -1,14 +1,12 @@
 #!/usr/bin/env node
-import {join} from 'path';
 import React, {Fragment} from 'react';
 import {cyan, dim} from 'chalk';
 import Conf from 'conf';
 import meow from 'meow';
-import read from 'read-pkg';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
 // import updateNotifier from 'update-notifier';
-import {UnderConstruction} from 'tomo-cli';
+import {UnderConstruction, showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import descriptions from './descriptions';
@@ -24,12 +22,6 @@ const terminalCommands = {
     suggest: UnderConstruction
 };
 
-const showVersion = () => {
-    const cwd = join(__dirname, '..');
-    const {version} = read.sync({cwd});
-    console.log(version); // eslint-disable-line no-console
-    process.exit();
-};
 const help = `
     ${dim.bold('Usage')}
 
