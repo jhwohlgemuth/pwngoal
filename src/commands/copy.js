@@ -74,8 +74,8 @@ export default {/* eslint-disable max-len */
     'find files/folders with write access (linux)': [
         {
             text: 'Copy command to clipboard',
-            task: async () => {
-                const cmd = `find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user  www-data -perm -u=w ')' -or '(' -group www-data -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null`;
+            task: async ({user, group}) => {
+                const cmd = `find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user ${user} -perm -u=w ')' -or '(' -group ${group} -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null`;
                 await clipboard.write(cmd);
             },
             condition: () => true

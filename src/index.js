@@ -58,6 +58,8 @@ const help = `
         --port,             -p  Port [Default: 80]
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
+        --user                  User name for functions that need it [Default: 'user']
+        --group                 Group name for functions that need it [Default: 'user']
 `;
 const options = {
     help,
@@ -98,6 +100,14 @@ const options = {
         udpOnly: {
             type: 'boolean',
             default: false
+        },
+        user: {
+            type: 'string',
+            default: 'USER'
+        },
+        group: {
+            type: 'string',
+            default: 'GROUP'
         }
     }
 };

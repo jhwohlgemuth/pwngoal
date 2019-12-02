@@ -22,7 +22,10 @@ describe('pwngoal', () => {
         });
         it('will auto-suggest terms', () => {
             const terms = ['spawn a tty shell'];
-            const options = {};
+            const options = {
+                user: 'USER',
+                group: 'GROUP'
+            };
             const {lastFrame} = render(<UI
                 commands={commands}
                 descriptions={descriptions}
