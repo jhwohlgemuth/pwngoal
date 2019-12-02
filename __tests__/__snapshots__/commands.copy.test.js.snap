@@ -40,7 +40,7 @@ Array [
     "python -c 'import pty;pty.spawn(\\"/bin/bash\\")",
   ],
   Array [
-    "find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user  www-data -perm -u=w ')' -or '(' -group www-data -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null",
+    "find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user USER -perm -u=w ')' -or '(' -group GROUP -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null",
   ],
 ]
 `;
