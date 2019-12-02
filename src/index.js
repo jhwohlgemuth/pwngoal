@@ -10,7 +10,7 @@ import {UnderConstruction, showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import descriptions from './descriptions';
-import {ShowCommand} from './components';
+import ShowCommand from './components/ShowCommand';
 
 // Notify updater
 // const pkg = require(`../package.json`);

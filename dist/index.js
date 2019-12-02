@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-"use strict";var _interopRequireWildcard=require("@babel/runtime/helpers/interopRequireWildcard"),_interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_asyncToGenerator2=_interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator")),_path=require("path"),_react=_interopRequireWildcard(require("react")),_chalk=require("chalk"),_conf=_interopRequireDefault(require("conf")),_meow=_interopRequireDefault(require("meow")),_readPkg=_interopRequireDefault(require("read-pkg")),_getStdin=_interopRequireDefault(require("get-stdin")),_ink=require("ink"),_tomoCli=require("tomo-cli"),_main=_interopRequireDefault(require("./main")),_commands=_interopRequireDefault(require("./commands")),_descriptions=_interopRequireDefault(require("./descriptions")),_components=require("./components");// import updateNotifier from 'update-notifier';
+"use strict";var _interopRequireWildcard=require("@babel/runtime/helpers/interopRequireWildcard"),_interopRequireDefault=require("@babel/runtime/helpers/interopRequireDefault"),_asyncToGenerator2=_interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator")),_react=_interopRequireWildcard(require("react")),_chalk=require("chalk"),_conf=_interopRequireDefault(require("conf")),_meow=_interopRequireDefault(require("meow")),_getStdin=_interopRequireDefault(require("get-stdin")),_ink=require("ink"),_tomoCli=require("tomo-cli"),_main=_interopRequireDefault(require("./main")),_commands=_interopRequireDefault(require("./commands")),_descriptions=_interopRequireDefault(require("./descriptions")),_ShowCommand=_interopRequireDefault(require("./components/ShowCommand"));// import updateNotifier from 'update-notifier';
 // Notify updater
 // const pkg = require(`../package.json`);
 // updateNotifier({pkg}).notify();
-const projectName="pwngoal",terminalCommands={show:_components.ShowCommand,suggest:_tomoCli.UnderConstruction},help=`
+const projectName="pwngoal",terminalCommands={show:_ShowCommand.default,suggest:_tomoCli.UnderConstruction},help=`
     ${_chalk.dim.bold("Usage")}
 
         ${(0,_chalk.cyan)(">")} ${"pwngoal"} [commands] [terms] [options]

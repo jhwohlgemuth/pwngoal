@@ -4,7 +4,7 @@ import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
 
-export const ShowCommand = ({options, store, terms}) => {
+const ShowCommand = ({options, store, terms}) => {
     const MAX_LENGTH = 60;
     const {ip} = options;
     const [firstTerm] = terms;
@@ -48,3 +48,4 @@ ShowCommand.propTypes = {
     store: PropTypes.object,
     terms: PropTypes.array
 };
+export default ShowCommand;

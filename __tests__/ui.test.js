@@ -1,9 +1,9 @@
 import React from 'react';
 import {render} from 'ink-testing-library';
 import UI from '../src/main';
-import {ShowCommand} from '../src/components';
 import commands from '../src/commands';
 import descriptions from '../src/descriptions';
+import ShowCommand from '../src/components/ShowCommand.js';
 
 describe('pwngoal', () => {
     describe('copy', () => {
