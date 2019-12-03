@@ -32,7 +32,7 @@ const help = `
 
     ${dim.bold('Commands')}
 
-        copy, scan, show
+        copy, scan, show, version
 
 
     ${dim.bold('Terms')}

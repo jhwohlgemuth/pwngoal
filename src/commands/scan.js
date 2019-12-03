@@ -13,6 +13,7 @@ import {
 const store = new Conf({
     projectName: 'pwngoal'
 });
+const makeKey = ip => ip.split('.').join('_');
 const shouldPerformEnumeration = () => {
     const tcp = store.get('tcp.ports') || [];
     const udp = store.get('udp.ports') || [];
@@ -44,7 +45,8 @@ export default {
         {
             text: 'Clear saved data',
             task: async ({ip}) => {
-                store.delete(ip);
+                store.clear();
+                store.delete(makeKey(ip));
                 store.delete('tcp.ports');
                 store.delete('udp.ports');
             },
@@ -135,7 +137,7 @@ export default {
                         data[index].version = version || '???';
                     }
                 }
-                store.set(ip, data);
+                store.set(makeKey(ip), data);
                 await debug({data}, 'Results of enumeration');
             },
             condition: () => commandExists.sync('nmap') && shouldPerformEnumeration(),

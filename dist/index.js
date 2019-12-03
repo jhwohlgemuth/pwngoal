@@ -13,7 +13,7 @@ const projectName="pwngoal",terminalCommands={show:_ShowCommand.default,suggest:
 
     ${_chalk.dim.bold("Commands")}
 
-        copy, scan, show
+        copy, scan, show, version
 
 
     ${_chalk.dim.bold("Terms")}

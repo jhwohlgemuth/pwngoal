@@ -11,4 +11,4 @@ global._pwngoal_callback=()=>{c(!0),clearInterval(b)}},[]),_react.default.create
      * @param {Object} args Function options
      * @param {string} args.value Intended term
      * @return {undefined} Returns nothing
-     */updateTerms({value:a}){this.setState({hasTerms:!0,intendedTerms:[a]})}}exports.default=UI,UI.propTypes={commands:_propTypes.default.object,descriptions:_propTypes.default.object,done:_propTypes.default.func,flags:_propTypes.default.object,input:_propTypes.default.array,stdin:_propTypes.default.string,store:_propTypes.default.object,terminalCommands:_propTypes.default.object},UI.defaultProps={input:[],flags:{}};
+     */updateTerms({value:a}){this.setState({hasTerms:!0,intendedTerms:[a]})}}exports.default=UI,UI.propTypes={commands:_propTypes.default.object,descriptions:_propTypes.default.object,done:_propTypes.default.func,flags:_propTypes.default.object,input:_propTypes.default.array,stdin:_propTypes.default.string,store:_propTypes.default.oneOfType([_propTypes.default.array,_propTypes.default.object]),terminalCommands:_propTypes.default.object},UI.defaultProps={input:[],flags:{}};

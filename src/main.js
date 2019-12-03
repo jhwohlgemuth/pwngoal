@@ -140,7 +140,7 @@ UI.propTypes = {
     flags: PropTypes.object,
     input: PropTypes.array,
     stdin: PropTypes.string,
-    store: PropTypes.object,
+    store: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     terminalCommands: PropTypes.object
 };
 UI.defaultProps = {
