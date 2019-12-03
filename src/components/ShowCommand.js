@@ -6,10 +6,9 @@ import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
 import {SubCommandSelect} from 'tomo-cli';
+import {descriptions, projectName} from '../cli';
 
-const store = new Conf({
-    projectName: 'pwngoal'
-});
+const store = new Conf({projectName});
 
 const MAX_LENGTH = 60;
 const truncate = (str, len) => {
@@ -60,7 +59,7 @@ const SelectTarget = ({store}) => {
     };
     return target ?
         <DisplayTable data={target} title={title}/> :
-        <SubCommandSelect descriptions={{}} items={items} onSelect={onSelect}/>;
+        <SubCommandSelect descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})} items={items} onSelect={onSelect}/>;
 };
 const ShowCommand = ({options, store, terms}) => {
     const {ip} = options;
