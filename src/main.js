@@ -25,12 +25,12 @@ export default class UI extends Component {
         const {commands, flags, input} = props;
         const {ignoreWarnings} = flags;
         const [command, ...terms] = input;
-        const isTerminal = command => Object.entries(commands)
+        const isCustom = command => Object.entries(commands)
             .filter(([, value]) => (typeof value === 'string'))
             .map(([name]) => name)
             .includes(command);
         const hasCommand = is(String)(command);
-        const isTerminalCommand = hasCommand && isTerminal(command);
+        const isTerminalCommand = hasCommand && isCustom(command);
         const hasTerms = terms.length > 0;
         const {intendedCommand, intendedTerms} = (hasCommand && !isTerminalCommand) ?
             getIntendedInput(commands, command, terms) :
@@ -51,7 +51,7 @@ export default class UI extends Component {
     render() {
         const {commands, descriptions, done, flags, store, terminalCommands} = this.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = this.state;
-        const TerminalCommand = () => {
+        const CustomCommand = () => {
             const lookup = dict(terminalCommands || {});
             const Command = lookup.has(intendedCommand) ? lookup.get(intendedCommand) : UnderConstruction;
             return <Command done={done} options={flags} store={store} terms={intendedTerms}/>;
@@ -95,14 +95,14 @@ export default class UI extends Component {
                 </Warning> :
                 (hasCommand && hasTerms) ?
                     isTerminalCommand ?
-                        <TerminalCommand/> :
+                        <CustomCommand/> :
                         (<Fragment>
                             <Timer/>
                             <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
                         </Fragment>) :
                     hasCommand ?
                         (isTerminalCommand ?
-                            <TerminalCommand/> :
+                            <CustomCommand/> :
                             <SubCommandSelect
                                 command={intendedCommand}
                                 descriptions={descriptions}

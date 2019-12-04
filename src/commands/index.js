@@ -3,7 +3,7 @@ import scan from './scan';
 
 export default {
     copy,
-    show: 'terminal',
+    show: 'custom',
     scan,
-    suggest: 'terminal'
+    suggest: 'custom'
 };
