@@ -19,6 +19,29 @@ const shouldPerformEnumeration = () => {
     const udp = store.get('udp.ports') || [];
     return [...tcp, ...udp].length > 0;
 };
+const shouldScanWithAmap = ({service, version}) => {
+    const hasUnknownService = service === 'unknown' || service.includes('?');
+    const hasNoVersionInformation = version.length === 0;
+    return hasUnknownService || hasNoVersionInformation;
+};
+const enumerate = async (ip, ports, type = 'tcp') => {
+    const data = [];
+    for (const port of ports) {
+        const nmapArguments = [ip, '-p', port, '-sV'].concat(type === 'udp' ? '-sU' : []);
+        const {stdout} = await execa('nmap', nmapArguments);
+        await debug(stdout, `nmap ${nmapArguments.join(' ')}`);
+        stdout
+            .split(EOL)
+            .filter(line => line.includes(`/${type}`))
+            .map(line => line.split(' ').filter(Boolean))
+            .forEach(([,, service, ...versionInformation]) => {
+                const protocol = type.toUpperCase();
+                const version = versionInformation.join(' ');
+                data.push({protocol, port, service, version});
+            });
+    }
+    return data;
+};
 
 const PRIMARY_SCANNER = 'masscan';
 const SECONDARY_SCANNER = 'nmap';
@@ -45,7 +68,6 @@ export default {
         {
             text: 'Clear saved data',
             task: async ({ip}) => {
-                store.clear();
                 store.delete(makeKey(ip));
                 store.delete('tcp.ports');
                 store.delete('udp.ports');
@@ -56,8 +78,8 @@ export default {
             text: `Find open TCP ports with ${PRIMARY_SCANNER}`,
             task: async ({ip}) => {
                 const ports = await getOpenPortsWithMasscan(ip);
-                store.set('tcp.ports', ports);
                 await debug({ports}, `TCP ports from ${PRIMARY_SCANNER}`);
+                store.set('tcp.ports', ports);
             },
             condition: ({udpOnly}) => !udpOnly && commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(PRIMARY_SCANNER)
@@ -66,8 +88,8 @@ export default {
             text: `Find open TCP ports with ${SECONDARY_SCANNER}`,
             task: async ({ip}) => {
                 const ports = await getOpenPortsWithNmap(ip);
-                store.set('tcp.ports', ports);
                 await debug({ports}, `TCP ports from ${SECONDARY_SCANNER}`);
+                store.set('tcp.ports', ports);
             },
             condition: ({udpOnly}) => !udpOnly && commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
             optional: () => commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER)
@@ -76,8 +98,8 @@ export default {
             text: `Find open UDP ports with nmap`,
             task: async ({ip}) => {
                 const ports = await getOpenUdpPortsWithNmap(ip);
-                store.set('udp.ports', ports);
                 await debug({ports}, `UDP ports from nmap`);
+                store.set('udp.ports', ports);
             },
             condition: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap') && isElevated(),
             optional: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap')
@@ -85,49 +107,25 @@ export default {
         {
             text: 'Enumerate services with nmap',
             task: async ({ip, udp, udpOnly}) => {
-                const data = [];
-                const ports = store.get('tcp.ports') || [];
-                await debug({ports}, 'TCP ports passed to enumeration');
+                let data = [];
                 if (!udpOnly) {
-                    for (const port of ports) {
-                        const {stdout} = await execa('nmap', [ip, '-p', port, '-sV']);
-                        stdout
-                            .split(EOL)
-                            .filter(line => line.includes('/tcp'))
-                            .map(line => line.split(' ').filter(Boolean))
-                            .forEach(([,, service, ...versionInformation]) => {
-                                const protocol = 'TCP';
-                                const version = versionInformation.join(' ');
-                                data.push({protocol, port, service, version});
-                            });
-                    }
+                    const ports = store.get(`tcp.ports`) || [];
+                    await debug({ports}, 'TCP ports passed to enumeration');
+                    const details = await enumerate(ip, ports);
+                    data = [...data, ...details];
                 }
                 if ((udp || udpOnly) && await isElevated()) {
                     const ports = store.get('udp.ports') || [];
                     await debug({ports}, 'UDP ports passed to enumeration');
-                    for (const port of ports) {
-                        const {stdout} = await execa('nmap', [ip, '-p', port, '-sV', '-sU']);
-                        stdout
-                            .split(EOL)
-                            .filter(line => line.includes('/udp'))
-                            .map(line => line.split(' ').filter(Boolean))
-                            .forEach(([,, service, ...versionInformation]) => {
-                                const protocol = 'UDP';
-                                const version = versionInformation.join(' ');
-                                data.push({protocol, port, service, version});
-                            });
-                    }
+                    const details = await enumerate(ip, ports, 'udp');
+                    data = [...data, ...details];
                 }
                 if (await commandExists('amap')) {
-                    const shouldScanWithAmap = ({service, version}) => {
-                        const hasUnknownService = service === 'unknown' || service.includes('?');
-                        const hasNoVersionInformation = version.length === 0;
-                        return hasUnknownService || hasNoVersionInformation;
-                    };
                     for (const {port} of data.filter(shouldScanWithAmap)) {
                         const {stdout} = await execa('amap', ['-qAH', ip, port]);
+                        await debug({port}, 'scanned with amap');
+                        await debug(stdout, 'amap -qAH ip port');
                         const index = data.findIndex(row => row.port === port);
-                        await debug(port, 'Port scanned with amap');
                         const version = stdout
                             .split(EOL)
                             .filter(line => line.includes('matches'))
@@ -137,8 +135,9 @@ export default {
                         data[index].version = version || '???';
                     }
                 }
-                store.set(makeKey(ip), data);
-                await debug({data}, 'Results of enumeration');
+                const key = makeKey(ip);
+                await debug({data}, `Results of enumeration for ${key}`);
+                store.set(key, data);
             },
             condition: () => commandExists.sync('nmap') && shouldPerformEnumeration(),
             optional: () => commandExists.sync('nmap')

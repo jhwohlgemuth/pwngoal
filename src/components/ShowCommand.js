@@ -59,7 +59,10 @@ const SelectTarget = ({store}) => {
     };
     return target ?
         <DisplayTable data={target} title={title}/> :
-        <SubCommandSelect descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})} items={items} onSelect={onSelect}/>;
+        <SubCommandSelect
+            descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})}
+            items={items}
+            onSelect={onSelect}/>;
 };
 const ShowCommand = ({options, store, terms}) => {
     const {ip} = options;

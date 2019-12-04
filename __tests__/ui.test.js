@@ -63,7 +63,17 @@ describe('pwngoal', () => {
     });
     describe('show', () => {
         const command = 'show';
-        const store = {get() {}};
+        const store = Object.entries({
+            '127_0_0_1': [
+                {version: 'version', protocol: 'protocol', service: 'service'}
+            ],
+            '10_11_0_1': [
+                {version: 'version', protocol: 'protocol', service: 'service'}
+            ],
+            '192_168_1_42': [
+                {version: 'version', protocol: 'protocol', service: 'service'}
+            ]
+        });
         const terminalCommands = {show: ShowCommand};
         it('doesNotExist', () => {
             const terms = ['doesNotExist'];
@@ -81,17 +91,6 @@ describe('pwngoal', () => {
             const options = {
                 ip: '' // '' needed since meow is not applying default values
             };
-            const store = Object.entries({
-                '127_0_0_1': [
-                    {version: 'version', protocol: 'protocol', service: 'service'}
-                ],
-                '10_11_0_1': [
-                    {version: 'version', protocol: 'protocol', service: 'service'}
-                ],
-                '192_168_1_42': [
-                    {version: 'version', protocol: 'protocol', service: 'service'}
-                ]
-            });
             const {lastFrame} = render(<UI
                 commands={commands}
                 flags={options}
