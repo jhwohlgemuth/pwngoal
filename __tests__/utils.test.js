@@ -135,7 +135,7 @@ describe('Utilities', () => {
             return {stdout};
         });
         const ip = '127.0.0.1';
-        const ports = [22];
+        const ports = [22]; // eslint-disable-line no-magic-numbers
         const items = await enumerate(ip, ports);
         expect(items).toMatchSnapshot();
         expect(execa.mock.calls).toMatchSnapshot();
@@ -158,7 +158,7 @@ describe('Utilities', () => {
             return {stdout};
         });
         const ip = '127.0.0.1';
-        const ports = [22];
+        const ports = [22]; // eslint-disable-line no-magic-numbers
         const items = await enumerate(ip, ports, 'udp');
         expect(items).toMatchSnapshot();
         expect(execa.mock.calls).toMatchSnapshot();

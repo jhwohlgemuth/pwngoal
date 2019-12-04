@@ -11,19 +11,17 @@ import {
     getOpenUdpPortsWithNmap,
     shouldScanWithAmap
 } from '../utils';
+import {projectName} from '../cli';
 
-const store = new Conf({
-    projectName: 'pwngoal'
-});
+const store = new Conf({projectName});
+const PRIMARY_SCANNER = 'masscan';
+const SECONDARY_SCANNER = 'nmap';
 const makeKey = ip => ip.split('.').join('_');
 const shouldPerformEnumeration = () => {
     const tcp = store.get('tcp.ports') || [];
     const udp = store.get('udp.ports') || [];
     return [...tcp, ...udp].length > 0;
 };
-
-const PRIMARY_SCANNER = 'masscan';
-const SECONDARY_SCANNER = 'nmap';
 
 export default {
     port: [
