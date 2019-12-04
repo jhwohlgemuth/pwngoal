@@ -5,9 +5,11 @@ import Conf from 'conf';
 import commandExists from 'command-exists';
 import {
     debug,
+    enumerate,
     getOpenPortsWithNmap,
     getOpenPortsWithMasscan,
-    getOpenUdpPortsWithNmap
+    getOpenUdpPortsWithNmap,
+    shouldScanWithAmap
 } from '../utils';
 
 const store = new Conf({
@@ -18,29 +20,6 @@ const shouldPerformEnumeration = () => {
     const tcp = store.get('tcp.ports') || [];
     const udp = store.get('udp.ports') || [];
     return [...tcp, ...udp].length > 0;
-};
-const shouldScanWithAmap = ({service, version}) => {
-    const hasUnknownService = service === 'unknown' || service.includes('?');
-    const hasNoVersionInformation = version.length === 0;
-    return hasUnknownService || hasNoVersionInformation;
-};
-const enumerate = async (ip, ports, type = 'tcp') => {
-    const data = [];
-    for (const port of ports) {
-        const nmapArguments = [ip, '-p', port, '-sV'].concat(type === 'udp' ? '-sU' : []);
-        const {stdout} = await execa('nmap', nmapArguments);
-        await debug(stdout, `nmap ${nmapArguments.join(' ')}`);
-        stdout
-            .split(EOL)
-            .filter(line => line.includes(`/${type}`))
-            .map(line => line.split(' ').filter(Boolean))
-            .forEach(([,, service, ...versionInformation]) => {
-                const protocol = type.toUpperCase();
-                const version = versionInformation.join(' ');
-                data.push({protocol, port, service, version});
-            });
-    }
-    return data;
 };
 
 const PRIMARY_SCANNER = 'masscan';

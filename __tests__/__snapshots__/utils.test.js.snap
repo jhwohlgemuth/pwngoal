@@ -1,5 +1,56 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Utilities can enumerate services on TCP ports with "nmap -sV" 1`] = `
+Array [
+  Object {
+    "port": 22,
+    "protocol": "TCP",
+    "service": "ssh",
+    "version": "OpenSSH 7.8 (protocol 2.0)",
+  },
+]
+`;
+
+exports[`Utilities can enumerate services on TCP ports with "nmap -sV" 2`] = `
+Array [
+  Array [
+    "nmap",
+    Array [
+      "127.0.0.1",
+      "-p",
+      22,
+      "-sV",
+    ],
+  ],
+]
+`;
+
+exports[`Utilities can enumerate services on UDP ports with "nmap -sV -sU" 1`] = `
+Array [
+  Object {
+    "port": 22,
+    "protocol": "UDP",
+    "service": "ssh",
+    "version": "OpenSSH 7.8 (protocol 2.0)",
+  },
+]
+`;
+
+exports[`Utilities can enumerate services on UDP ports with "nmap -sV -sU" 2`] = `
+Array [
+  Array [
+    "nmap",
+    Array [
+      "127.0.0.1",
+      "-p",
+      22,
+      "-sV",
+      "-sU",
+    ],
+  ],
+]
+`;
+
 exports[`Utilities can execute masscan scan and parse results 1`] = `
 Array [
   "135",
@@ -30,6 +81,22 @@ Array [
       "0-65535",
       "--rate",
       500,
+    ],
+  ],
+]
+`;
+
+exports[`Utilities can execute nmap UDP scan and parse results 1`] = `
+Array [
+  Array [
+    "nmap",
+    Array [
+      "127.0.0.1",
+      "--open",
+      "-sU",
+      "-T4",
+      "--max-retries",
+      1,
     ],
   ],
 ]

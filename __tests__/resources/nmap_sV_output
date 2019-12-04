@@ -1,0 +1,10 @@
+Starting Nmap 7.80 ( https://nmap.org ) at 2019-12-03 20:26 CST
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00026s latency).
+Other addresses for localhost (not scanned): ::1 fe80::1
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.8 (protocol 2.0)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.70 seconds

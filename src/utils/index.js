@@ -23,8 +23,28 @@ export const debug = async (data, title = '') => {
         /* do nothing */
     }
 };
+export const enumerate = async (ip, ports, type = 'tcp') => {
+    const data = [];
+    for (const port of ports) {
+        const args = [ip, '-p', port, '-sV'].concat(type === 'udp' ? '-sU' : []);
+        const {stdout} = await execa('nmap', args);
+        await debug(stdout, `nmap ${args.join(' ')}`);
+        stdout
+            .split(EOL)
+            .filter(includes(`/${type}`))
+            .map(line => line.split(' ').filter(Boolean))
+            .forEach(([,, service, ...versionInformation]) => {
+                const protocol = type.toUpperCase();
+                const version = versionInformation.join(' ');
+                data.push({protocol, port, service, version});
+            });
+    }
+    return data;
+};
 export const getGateway = async (networkInterface = 'tap0') => {
-    const {stdout} = await execa('ip', ['route']);
+    const args = ['route'];
+    const {stdout} = await execa('ip', args);
+    await debug(stdout, `ip ${args.join(' ')}`);
     const [gateway] = (stdout || '')
         .split(EOL)
         .filter(includes('via'))
@@ -33,7 +53,9 @@ export const getGateway = async (networkInterface = 'tap0') => {
     return gateway;
 };
 export const getOpenPortsWithNmap = async ip => {
-    const {stdout} = await execa('nmap', [ip, '--open', '-p', '0-65535']);
+    const args = [ip, '--open', '-p', '0-65535'];
+    const {stdout} = await execa('nmap', args);
+    await debug(stdout, `nmap ${args.join(' ')}`);
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
@@ -41,7 +63,9 @@ export const getOpenPortsWithNmap = async ip => {
     return ports;
 };
 export const getOpenUdpPortsWithNmap = async ip => {
-    const {stdout} = await execa('nmap', [ip, '--open', '-sU', '-T4', '--max-retries', 1]);
+    const args = [ip, '--open', '-sU', '-T4', '--max-retries', 1];
+    const {stdout} = await execa('nmap', args);
+    await debug(stdout, `nmap ${args.join(' ')}`);
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/udp'))
@@ -51,14 +75,20 @@ export const getOpenUdpPortsWithNmap = async ip => {
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
     const gateway = await getGateway();
-    debug({ip, rate, networkInterface, gateway});
-    const {stdout} = await execa('masscan', [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate]);
-    debug(`stdout: ${stdout}`);
+    await debug({ip, rate, networkInterface, gateway});
+    const args = [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate];
+    const {stdout} = await execa('masscan', args);
+    await debug(stdout, `masscan ${args.join(' ')}`);
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
         .map(getPort)
         .sort((a, b) => a - b);
-    debug({ports});
+    await debug({ports}, 'TCP ports found with masscan');
     return ports;
+};
+export const shouldScanWithAmap = ({service, version}) => {
+    const hasUnknownService = service === 'unknown' || service.includes('?');
+    const hasNoVersionInformation = version.length === 0;
+    return hasUnknownService || hasNoVersionInformation;
 };
