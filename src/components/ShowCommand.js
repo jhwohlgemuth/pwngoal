@@ -34,7 +34,7 @@ const NoResults = ({ip}) => {
         </Box>
         {isValid(ip) ?
             <Fragment></Fragment> :
-            <Note message={'Try &ldquo;pwngoal scan&rdquo; to get some data to show'}/>}
+            <Note message={'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}/>}
     </Box>;
 };
 const Note = ({message}) => <Box marginBottom={2} marginLeft={1}>
@@ -45,7 +45,7 @@ const DisplayTable = ({data, title}) => <Fragment>
         <Color bold cyan>{title}</Color>
     </InkBox>
     <Table data={data}/>
-    <Note message={'Try &ldquo;pwngoal suggest&rdquo; to get some suggestions on what to do next'}/>
+    <Note message={'Try "pwngoal suggest" to get some suggestions on what to do next'}/>
 </Fragment>;
 const SelectTarget = ({store}) => {
     const [title, setTitle] = useState('');

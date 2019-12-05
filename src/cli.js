@@ -2,6 +2,7 @@ import {cyan, dim, bold} from 'chalk';
 
 export const projectName = 'pwngoal';
 export const descriptions = {
+    default: item => `Execute for ${item}`,
     enum: 'Enumerate stuff',
     scan: 'Scan stuff',
     port: `Scan a port with nmap`,
