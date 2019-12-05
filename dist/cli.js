@@ -22,10 +22,11 @@
         --version, -v           Print version
         --ignore-warnings,      Ignore warning messages [Default: false]
         --debug                 Show debug data [Default: false]
+        --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
         --ip,               -i  IP address [Default: 127.0.0.1]
         --port,             -p  Port [Default: 80]
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
-`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"}}};exports.options=options;
+`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"}}};exports.options=options;

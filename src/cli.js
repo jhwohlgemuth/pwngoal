@@ -40,6 +40,7 @@ export const help = `
         --version, -v           Print version
         --ignore-warnings,      Ignore warning messages [Default: false]
         --debug                 Show debug data [Default: false]
+        --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
         --ip,               -i  IP address [Default: 127.0.0.1]
         --port,             -p  Port [Default: 80]
         --udp               -u  Include UDP ports in scan [Default: false]
@@ -67,6 +68,11 @@ export const options = {
         debug: {
             type: 'boolean',
             default: false
+        },
+        escaped: {
+            type: 'boolean',
+            default: false,
+            alias: 'e'
         },
         ip: {
             type: 'string',
