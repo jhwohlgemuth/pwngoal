@@ -32,17 +32,20 @@ const NoResults = ({ip}) => {
             <Text>No results for </Text>
             <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
         </Box>
-        {isValid(ip) ? <Fragment></Fragment> : <Box marginLeft={1}>↳ <Color dim>Try &ldquo;pwngoal scan&rdquo; to get some data to show</Color></Box>}
+        {isValid(ip) ?
+            <Fragment></Fragment> :
+            <Note message={'Try &ldquo;pwngoal scan&rdquo; to get some data to show'}/>}
     </Box>;
 };
+const Note = ({message}) => <Box marginBottom={2} marginLeft={1}>
+    ↳ <Color dim>{message}</Color>
+</Box>;
 const DisplayTable = ({data, title}) => <Fragment>
     <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
         <Color bold cyan>{title}</Color>
     </InkBox>
     <Table data={data}/>
-    <Box marginBottom={2} marginLeft={1}>
-        ↳ <Color dim>Try &ldquo;pwngoal suggest&rdquo; to get some suggestions on what to do next</Color>
-    </Box>
+    <Note message={'Try &ldquo;pwngoal suggest&rdquo; to get some suggestions on what to do next'}/>
 </Fragment>;
 const SelectTarget = ({store}) => {
     const [title, setTitle] = useState('');
@@ -85,6 +88,9 @@ DisplayTable.propTypes = {
 };
 NoResults.propTypes = {
     ip: PropTypes.string
+};
+Note.propTypes = {
+    message: PropTypes.string
 };
 SelectTarget.propTypes = {
     store: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
