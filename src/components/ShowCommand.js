@@ -31,7 +31,7 @@ const NoResults = ({ip}) => {
             <Text>No results for </Text>
             <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
         </Box>
-        {isValid(ip) ? <Fragment></Fragment> : <Box marginLeft={1}>↳  <Color dim>Did you mean to use &ldquo;pwngoal --help&rdquo;?</Color></Box>}
+        {isValid(ip) ? <Fragment></Fragment> : <Box marginLeft={1}>↳ <Color dim>Try &ldquo;pwngoal scan&rdquo; to get some data to show</Color></Box>}
     </Box>;
 };
 const DisplayTable = ({data, title}) => <Fragment>
@@ -57,12 +57,14 @@ const SelectTarget = ({store}) => {
         setTitle(value);
         setTarget(details);
     };
-    return target ?
-        <DisplayTable data={target} title={title}/> :
-        <SubCommandSelect
-            descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})}
-            items={items}
-            onSelect={onSelect}/>;
+    return items.length > 0 ?
+        target ?
+            <DisplayTable data={target} title={title}/> :
+            <SubCommandSelect
+                descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})}
+                items={items}
+                onSelect={onSelect}/> :
+        <NoResults />;
 };
 const ShowCommand = ({options, store, terms}) => {
     const {ip} = options;
