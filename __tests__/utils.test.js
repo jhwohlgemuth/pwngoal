@@ -1,5 +1,6 @@
 import execa from 'execa';
 import {
+    byIpAddress,
     enumerate,
     getOpenPortsWithMasscan,
     getOpenPortsWithNmap,
@@ -10,6 +11,7 @@ import {
 jest.mock('execa', () => jest.fn());
 jest.mock('../src/utils', () => {
     const {
+        byIpAddress,
         enumerate,
         getElapsedTime,
         getOpenPortsWithMasscan,
@@ -19,6 +21,7 @@ jest.mock('../src/utils', () => {
     } = jest.requireActual('../src/utils');
     return {
         __esModule: true,
+        byIpAddress,
         enumerate,
         debug: jest.fn(),
         getElapsedTime,
@@ -171,5 +174,17 @@ describe('Utilities', () => {
         expect(shouldScanWithAmap({service: 'service?', version})).toEqual(true);
         expect(shouldScanWithAmap({service, version: ''})).toEqual(true);
         expect(shouldScanWithAmap({service, version})).toEqual(false);
+    });
+    test('can sort IP addresses', () => {
+        const input = [
+            '123.4.245.23',
+            '104.244.253.29',
+            '1.198.3.93',
+            '32.183.93.40',
+            '104.30.244.2',
+            '104.244.4.1'
+        ];
+        const sorted = input.sort(byIpAddress());
+        expect(sorted).toMatchSnapshot();
     });
 });

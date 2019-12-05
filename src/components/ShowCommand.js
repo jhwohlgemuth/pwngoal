@@ -6,6 +6,7 @@ import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
 import {SubCommandSelect} from 'tomo-cli';
+import {byIpAddress} from '../utils';
 import {descriptions, projectName} from '../cli';
 
 const store = new Conf({projectName});
@@ -51,6 +52,7 @@ const SelectTarget = ({store}) => {
         .filter(key => !['tcp', 'udp'].includes(key))
         .map(value => value.split('_').join('.'))
         .filter(value => isIP(value) > 0)
+        .sort(byIpAddress())
         .map(value => ({value, label: value}));
     const onSelect = ({value}) => {
         const details = getData(value);

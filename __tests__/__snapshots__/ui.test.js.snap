@@ -50,10 +50,10 @@ exports[`pwngoal show --ip doesNotExist 1`] = `"No results for [31m[1mdoesNotE
 
 exports[`pwngoal show can render with no input 1`] = `
 "
- [36mShow scan results for 127.0.0.1[39m
+ [36mShow scan results for 10.11.0.1[39m
 
- [36m[1m→[22m[39m [39m[36m[1m127.0.0.1[22m[39m[39m
-   10.11.0.1
+ [36m[1m→[22m[39m [39m[36m[1m10.11.0.1[22m[39m[39m
+   127.0.0.1
    192.168.1.42
 "
 `;

@@ -9,6 +9,10 @@ const append = promisify(appendFile);
 const includes = str => line => line.includes(str);
 const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
 
+export const byIpAddress = () => {
+    const format = val => Number(val.split('.').map(num => (`000${num}`).slice(-3)).join('')); // eslint-disable-line no-magic-numbers
+    return (a, b) => format(a) - format(b);
+};
 export const debug = async (data, title = '') => {
     const savepath = join(homedir(), '.pwngoal');
     const [date] = (new Date()).toISOString().split('T');
