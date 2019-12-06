@@ -80,6 +80,7 @@ describe('pwngoal', () => {
             const options = {};
             const {lastFrame} = render(<UI
                 commands={commands}
+                descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
@@ -93,6 +94,7 @@ describe('pwngoal', () => {
             };
             const {lastFrame} = render(<UI
                 commands={commands}
+                descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
@@ -106,6 +108,7 @@ describe('pwngoal', () => {
             };
             const {lastFrame} = render(<UI
                 commands={commands}
+                descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
@@ -119,6 +122,7 @@ describe('pwngoal', () => {
             };
             const {lastFrame} = render(<UI
                 commands={commands}
+                descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
