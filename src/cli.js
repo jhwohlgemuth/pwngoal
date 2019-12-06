@@ -26,7 +26,7 @@ export const help = `
 
     ${dim.bold('Commands')}
 
-        copy, scan, show, version
+        copy, scan, show, suggest, version, wat
 
 
     ${dim.bold('Terms')}

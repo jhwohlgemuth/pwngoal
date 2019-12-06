@@ -5,7 +5,8 @@ import scan from './scan';
 export default {
     clear,
     copy,
-    show: 'custom',
+    show: 'show scan data',
     scan,
-    suggest: 'custom'
+    suggest: 'provide suggestions for a given service',
+    wat: 'alias for suggest'
 };

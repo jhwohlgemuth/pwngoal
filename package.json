@@ -4,6 +4,7 @@
   "description": "",
   "license": "MIT",
   "bin": {
+    "pwn": "dist/index.js",
     "pwngoal": "dist/index.js"
   },
   "repository": {

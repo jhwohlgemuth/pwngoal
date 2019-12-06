@@ -7,7 +7,7 @@ import InkBox from 'ink-box';
 import Table from 'ink-table';
 import {SubCommandSelect} from 'tomo-cli';
 import {byIpAddress} from '../utils';
-import {descriptions, projectName} from '../cli';
+import {projectName} from '../cli';
 
 const store = new Conf({projectName});
 
@@ -16,7 +16,7 @@ const truncate = (str, len) => {
     const {length} = str;
     return length < MAX_LENGTH ? str : str.substring(0, len).concat('...');
 };
-const getData = value => {
+const getTableData = value => {
     const key = value.split('.').join('_');
     return (store.get(key) || []).map(row => {
         const {version} = row;
@@ -47,7 +47,7 @@ const DisplayTable = ({data, title}) => <Fragment>
     <Table data={data}/>
     <Note message={'Try "pwngoal suggest" to get some suggestions on what to do next'}/>
 </Fragment>;
-const SelectTarget = ({store}) => {
+const SelectTarget = ({descriptions, fallback, store}) => {
     const [title, setTitle] = useState('');
     const [target, setTarget] = useState(undefined);
     const items = [...store]
@@ -58,7 +58,7 @@ const SelectTarget = ({store}) => {
         .sort(byIpAddress())
         .map(value => ({value, label: value}));
     const onSelect = ({value}) => {
-        const details = getData(value);
+        const details = getTableData(value);
         setTitle(value);
         setTarget(details);
     };
@@ -66,18 +66,18 @@ const SelectTarget = ({store}) => {
         target ?
             <DisplayTable data={target} title={title}/> :
             <SubCommandSelect
-                descriptions={Object.assign(descriptions, {default: ip => `Show scan results for ${ip}`})}
+                descriptions={Object.assign(descriptions, {default: fallback})}
                 items={items}
                 onSelect={onSelect}/> :
         <NoResults />;
 };
-const ShowCommand = ({options, store, terms}) => {
+const ShowCommand = ({descriptions, options, store, terms}) => {
     const {ip} = options;
     const [firstTerm] = terms;
     const value = firstTerm || ip;
-    const data = getData(value);
+    const data = getTableData(value);
     return (firstTerm === undefined && ip === '') ?
-        <SelectTarget store={store}/> :
+        <SelectTarget store={store} descriptions={descriptions} fallback={ip => `Show scan results for ${ip}`}/> :
         data.length === 0 ?
             <NoResults ip={value}/> :
             <DisplayTable data={data} title={value}/>;
@@ -93,10 +93,12 @@ Note.propTypes = {
     message: PropTypes.string
 };
 SelectTarget.propTypes = {
+    descriptions: PropTypes.object,
+    fallback: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     store: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 ShowCommand.propTypes = {
-    done: PropTypes.func,
+    descriptions: PropTypes.object,
     options: PropTypes.object,
     store: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
     terms: PropTypes.array

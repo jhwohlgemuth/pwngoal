@@ -54,7 +54,12 @@ export default class UI extends Component {
         const CustomCommand = () => {
             const lookup = dict(terminalCommands || {});
             const Command = lookup.has(intendedCommand) ? lookup.get(intendedCommand) : UnderConstruction;
-            return <Command done={done} options={flags} store={store} terms={intendedTerms}/>;
+            return <Command
+                descriptions={descriptions}
+                done={done}
+                options={flags}
+                store={store}
+                terms={intendedTerms}/>;
         };
         const Timer = () => {
             const [start] = process.hrtime();

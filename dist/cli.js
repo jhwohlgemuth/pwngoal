@@ -8,7 +8,7 @@
 
     ${_chalk.dim.bold("Commands")}
 
-        copy, scan, show, version
+        copy, scan, show, suggest, version, wat
 
 
     ${_chalk.dim.bold("Terms")}

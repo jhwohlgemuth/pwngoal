@@ -5,19 +5,21 @@ import meow from 'meow';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
 // import updateNotifier from 'update-notifier';
-import {UnderConstruction, showVersion} from 'tomo-cli';
+import {showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import {descriptions, options, projectName} from './cli';
-import ShowCommand from './components/ShowCommand';
+import Show from './components/ShowCommand';
+import Suggest from './components/SuggestCommand';
 
 // Notify updater
 // const pkg = require(`../package.json`);
 // updateNotifier({pkg}).notify();
 
 const terminalCommands = {
-    show: ShowCommand,
-    suggest: UnderConstruction
+    show: Show,
+    suggest: Suggest,
+    wat: Suggest
 };
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
