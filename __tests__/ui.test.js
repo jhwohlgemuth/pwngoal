@@ -74,7 +74,7 @@ describe('pwngoal', () => {
                 {version: 'version', protocol: 'protocol', service: 'service'}
             ]
         });
-        const terminalCommands = {show: ShowCommand};
+        const customCommands = {show: ShowCommand};
         it('doesNotExist', () => {
             const terms = ['doesNotExist'];
             const options = {};
@@ -83,7 +83,7 @@ describe('pwngoal', () => {
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
-                terminalCommands={terminalCommands}/>);
+                customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
         it('can render with no input', () => {
@@ -96,7 +96,7 @@ describe('pwngoal', () => {
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
-                terminalCommands={terminalCommands}/>);
+                customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
         it('--ip doesNotExist', () => {
@@ -109,7 +109,7 @@ describe('pwngoal', () => {
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
-                terminalCommands={terminalCommands}/>);
+                customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
         it('ipPassedAsTerm --ip doesNotExist', () => {
@@ -122,7 +122,7 @@ describe('pwngoal', () => {
                 flags={options}
                 input={[command, ...terms]}
                 store={store}
-                terminalCommands={terminalCommands}/>);
+                customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
     });

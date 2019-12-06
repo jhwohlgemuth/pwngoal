@@ -49,10 +49,10 @@ export default class UI extends Component {
         this.updateTerms = this.updateTerms.bind(this);
     }
     render() {
-        const {commands, descriptions, done, flags, store, terminalCommands} = this.props;
+        const {commands, descriptions, done, flags, store, customCommands} = this.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = this.state;
         const CustomCommand = () => {
-            const lookup = dict(terminalCommands || {});
+            const lookup = dict(customCommands || {});
             const Command = lookup.has(intendedCommand) ? lookup.get(intendedCommand) : UnderConstruction;
             return <Command
                 descriptions={descriptions}
@@ -146,7 +146,7 @@ UI.propTypes = {
     input: PropTypes.array,
     stdin: PropTypes.string,
     store: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-    terminalCommands: PropTypes.object
+    customCommands: PropTypes.object
 };
 UI.defaultProps = {
     input: [],

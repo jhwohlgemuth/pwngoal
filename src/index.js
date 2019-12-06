@@ -16,7 +16,7 @@ import Suggest from './components/SuggestCommand';
 // const pkg = require(`../package.json`);
 // updateNotifier({pkg}).notify();
 
-const terminalCommands = {
+const customCommands = {
     show: Show,
     suggest: Suggest,
     wat: Suggest
@@ -36,7 +36,7 @@ const {input, flags} = meow(options);
             input={input}
             stdin={stdin}
             store={store}
-            terminalCommands={terminalCommands}/>
+            customCommands={customCommands}/>
     </Fragment>;
     render(<Main/>, {exitOnCtrlC: true});
 })();
