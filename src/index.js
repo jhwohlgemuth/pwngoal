@@ -9,8 +9,8 @@ import {showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import {descriptions, options, projectName} from './cli';
-import Show from './components/ShowCommand';
-import Suggest from './components/SuggestCommand';
+import Show from './components/Show';
+import Suggest from './components/Suggest';
 
 // Notify updater
 // const pkg = require(`../package.json`);

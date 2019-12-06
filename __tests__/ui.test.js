@@ -3,7 +3,7 @@ import {render} from 'ink-testing-library';
 import commands from '../src/commands';
 import {descriptions} from '../src/cli';
 import UI from '../src/main';
-import ShowCommand from '../src/components/ShowCommand.js';
+import Show from '../src/components/Show';
 
 describe('pwngoal', () => {
     describe('copy', () => {
@@ -74,7 +74,7 @@ describe('pwngoal', () => {
                 {version: 'version', protocol: 'protocol', service: 'service'}
             ]
         });
-        const customCommands = {show: ShowCommand};
+        const customCommands = {show: Show};
         it('doesNotExist', () => {
             const terms = ['doesNotExist'];
             const options = {};
