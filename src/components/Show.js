@@ -1,22 +1,18 @@
 import {isIP} from 'net';
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
-import Conf from 'conf';
 import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
 import {SubCommandSelect} from 'tomo-cli';
 import {byIpAddress} from '../utils';
-import {projectName} from '../cli';
-
-const store = new Conf({projectName});
 
 const MAX_LENGTH = 60;
 const truncate = (str, len) => {
     const {length} = str;
     return length < MAX_LENGTH ? str : str.substring(0, len).concat('...');
 };
-const getTableData = value => {
+const getTableData = (store, value) => {
     const key = value.split('.').join('_');
     return (store.get(key) || []).map(row => {
         const {version} = row;
@@ -58,7 +54,7 @@ const SelectTarget = ({descriptions, fallback, store}) => {
         .sort(byIpAddress())
         .map(value => ({value, label: value}));
     const onSelect = ({value}) => {
-        const details = getTableData(value);
+        const details = getTableData(store, value);
         setTitle(value);
         setTarget(details);
     };
@@ -75,7 +71,7 @@ const ShowCommand = ({descriptions, options, store, terms}) => {
     const {ip} = options;
     const [firstTerm] = terms;
     const value = firstTerm || ip;
-    const data = getTableData(value);
+    const data = getTableData(store, value);
     return (firstTerm === undefined && ip === '') ?
         <SelectTarget store={store} descriptions={descriptions} fallback={ip => `Show scan results for ${ip}`}/> :
         data.length === 0 ?

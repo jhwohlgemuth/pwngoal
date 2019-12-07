@@ -4,6 +4,33 @@ import commands from '../src/commands';
 import {descriptions} from '../src/cli';
 import UI from '../src/main';
 import Show from '../src/components/Show';
+import Suggest from '../src/components/Suggest';
+
+const SCAN_DATA = {
+    '127_0_0_1': [
+        {protocol: 'tcp', port: '21', service: 'ftp', version: '???'},
+        {protocol: 'tcp', port: '22', service: 'ssh', version: 'OpenSSH 7.8 (protocol 2.0)'},
+        {protocol: 'tcp', port: '25', service: 'smtp', version: '???'},
+        {protocol: 'tcp', port: '53', service: 'dns', version: '???'},
+        {protocol: 'tcp', port: '110', service: 'pop3', version: '???'},
+        {protocol: 'tcp', port: '143', service: 'imap', version: '???'},
+        {protocol: 'tcp', port: '161', service: 'snmp', version: '???'},
+        {protocol: 'tcp', port: '443', service: 'https', version: '???'},
+        {protocol: 'tcp', port: '445', service: 'smb', version: '???'},
+        {protocol: 'tcp', port: '631', service: 'ipp', version: 'CUPS 2.2'},
+        {protocol: 'tcp', port: '17600', service: 'http', version: 'Tornado httpd 4.2'}
+    ],
+    '10_11_0_1': [
+        {version: 'version', protocol: 'protocol', service: 'service'}
+    ],
+    '192_168_1_42': [
+        {version: 'version', protocol: 'protocol', service: 'service'}
+    ],
+    '192_2_1_41': [
+        {version: 'version', protocol: 'protocol', service: 'service'}
+    ]
+};
+const store = new Map(Object.entries(SCAN_DATA));
 
 describe('pwngoal', () => {
     describe('copy', () => {
@@ -63,19 +90,36 @@ describe('pwngoal', () => {
     });
     describe('show', () => {
         const command = 'show';
-        const store = Object.entries({
-            '127_0_0_1': [
-                {version: 'version', protocol: 'protocol', service: 'service'}
-            ],
-            '10_11_0_1': [
-                {version: 'version', protocol: 'protocol', service: 'service'}
-            ],
-            '192_168_1_42': [
-                {version: 'version', protocol: 'protocol', service: 'service'}
-            ]
-        });
         const customCommands = {show: Show};
-        it('doesNotExist', () => {
+        test('-i 127.0.0.1', () => {
+            const terms = [];
+            const options = {
+                ip: '127.0.0.1'
+            };
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                flags={options}
+                input={[command, ...terms]}
+                store={store}
+                customCommands={customCommands}/>);
+            expect(lastFrame()).toMatchSnapshot();
+        });
+        test('127.0.0.1', () => {
+            const terms = ['127.0.0.1'];
+            const options = {
+                ip: ''
+            };
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                flags={options}
+                input={[command, ...terms]}
+                store={store}
+                customCommands={customCommands}/>);
+            expect(lastFrame()).toMatchSnapshot();
+        });
+        test('doesNotExist', () => {
             const terms = ['doesNotExist'];
             const options = {};
             const {lastFrame} = render(<UI
@@ -87,7 +131,7 @@ describe('pwngoal', () => {
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
-        it('can render with no input', () => {
+        it('will render with no terms or options', () => {
             const terms = [];
             const options = {
                 ip: '' // '' needed since meow is not applying default values
@@ -101,7 +145,7 @@ describe('pwngoal', () => {
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
-        it('--ip doesNotExist', () => {
+        test('--ip doesNotExist', () => {
             const terms = [];
             const options = {
                 ip: 'doesNotExist'
@@ -115,10 +159,42 @@ describe('pwngoal', () => {
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
-        it('ipPassedAsTerm --ip doesNotExist', () => {
+        test('ipPassedAsTerm --ip doesNotExist', () => {
             const terms = ['ipPassedAsTerm'];
             const options = {
                 ip: 'ip passed as option'
+            };
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                flags={options}
+                input={[command, ...terms]}
+                store={store}
+                customCommands={customCommands}/>);
+            expect(lastFrame()).toMatchSnapshot();
+        });
+    });
+    describe('suggest', () => {
+        const command = 'suggest';
+        const customCommands = {suggest: Suggest};
+        it('will render with no terms or options', () => {
+            const terms = [];
+            const options = {
+                ip: ''
+            };
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                flags={options}
+                input={[command, ...terms]}
+                store={store}
+                customCommands={customCommands}/>);
+            expect(lastFrame()).toMatchSnapshot();
+        });
+        it('will display select menu when passed IP term', () => {
+            const terms = ['127.0.0.1'];
+            const options = {
+                ip: ''
             };
             const {lastFrame} = render(<UI
                 commands={commands}
