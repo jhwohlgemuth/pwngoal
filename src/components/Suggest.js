@@ -30,6 +30,20 @@ const DisplaySuggestions = ({service}) => {
     const HINT = `${bold.magenta('HINT')}${bold.magenta(arrowRight)} `;
     const GIBU_HINT = `${HINT}${dim('remember to check for other NSE scripts with')} ${bold.dim('gibu /usr/share/nmap/script -fr')}`;
     const lookup = dict({
+        domain: [// DNS
+            {
+                title: 'Perform a "standard" scan and brute-force hostnames with a dictionary',
+                command: `${bold.green('dnsrecon')} -d ${bold.cyan('domain')} -D /usr/share/wordlists/dnsmap.txt -t std`
+            },
+            {
+                title: 'Enumerate DNS information with dnsenum',
+                command: `${bold.green('dnsenum')} ${bold.cyan('domain')}`
+            },
+            {
+                title: 'Scan for vulnerabilties with nmap',
+                command: `${bold.green('nmap')} --script "dns-*"${NL}${GIBU_HINT}`
+            }
+        ],
         ftp: [
             {
                 title: 'Check for anonymous login (username: "anonymous", password: <nothing>)',
@@ -92,7 +106,7 @@ const DisplaySuggestions = ({service}) => {
                 command: `${bold.green('nmap')} --script "nfs-*"`
             }
         ],
-        smb: [
+        'netbios-ssn': [// SMB
             {
                 title: 'Enumerate SMB users with nmap',
                 command: `${bold.green('nmap')} --script smb-enum-users -p ${bold.cyan('port')}`
@@ -100,6 +114,10 @@ const DisplaySuggestions = ({service}) => {
             {
                 title: 'Enumerate SMB shares with nmap',
                 command: `${bold.green('nmap')} --script smb-enum-shares -p ${bold.cyan('port')}${NL}${GIBU_HINT}`
+            },
+            {
+                title: 'Enumerate with enum4linux',
+                command: `${bold.green('enum4linux')} -a ${bold.cyan('ip')}`
             },
             {
                 title: 'Connect to share',
@@ -132,6 +150,26 @@ const DisplaySuggestions = ({service}) => {
             {
                 title: 'Enumerate Windows information with snmpwalk',
                 command: `${bold.cyan('snmpwalk')} -c ${bold.cyan('community')} -v1 ${bold.cyan('ip')} ${bold.cyan('oid')}`
+            }
+        ],
+        ssh: [
+            {
+                title: 'Brute force login password with hydra',
+                command: `${bold.green('hydra')} -l ${bold.cyan('user')} -P ${bold.cyan('/path/to/password/list')} -f -V ${bold.cyan('ip')}`
+            }
+        ],
+        'ssl/http': [// https
+            {
+                title: 'Evaluate the web server SSL/TLS (HTTPS) security with tlssled',
+                command: `${bold.green('tlssled')} ${bold.cyan('ip')} ${bold.cyan('port')}`
+            },
+            {
+                title: 'Analyze server SSL configuration with "regular" sslyze scan',
+                command: `${bold.green('sslyze')} --regular ${bold.cyan('ip')}`
+            },
+            {
+                title: 'Enumerate SSL ciphers with nmap',
+                command: `${bold.green('nmap')} ${bold.cyan('ip')} --script ssl-enum-ciphers -p ${bold.cyan('port')}${NL}${GIBU_HINT}`
             }
         ]
     });
