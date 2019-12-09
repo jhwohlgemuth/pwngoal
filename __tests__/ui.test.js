@@ -13,6 +13,7 @@ const SCAN_DATA = {
         {protocol: 'tcp', port: '25', service: 'smtp', version: '???'},
         {protocol: 'tcp', port: '53', service: 'dns', version: '???'},
         {protocol: 'tcp', port: '110', service: 'pop3', version: '???'},
+        {protocol: 'tcp', port: '135', service: 'msrpc', version: '???'},
         {protocol: 'tcp', port: '143', service: 'imap', version: '???'},
         {protocol: 'tcp', port: '161', service: 'snmp', version: '???'},
         {protocol: 'tcp', port: '443', service: 'https', version: '???'},
@@ -191,7 +192,7 @@ describe('pwngoal', () => {
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
-        it('will display select menu when passed IP term', () => {
+        it('will display service select menu when passed IP term', () => {
             const terms = ['127.0.0.1'];
             const options = {
                 ip: ''
@@ -204,6 +205,21 @@ describe('pwngoal', () => {
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
+        });
+        it('can display suggestions for various services', () => {
+            const terms = [];
+            const options = {ip: ''};
+            const services = ['domain', 'ftp', 'http', 'msrpc', 'netbios-ssn', 'nfs', 'smtp', 'snmp', 'ssh', 'ssl/http'];
+            services.forEach(service => {
+                const {lastFrame} = render(<UI
+                    commands={commands}
+                    descriptions={descriptions}
+                    flags={{...options, service}}
+                    input={[command, ...terms]}
+                    store={store}
+                    customCommands={customCommands}/>);
+                console.log(lastFrame());
+            });
         });
     });
 });

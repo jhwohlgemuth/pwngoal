@@ -99,9 +99,9 @@ export default {
                 }
                 if (await commandExists('amap')) {
                     for (const {port} of data.filter(shouldScanWithAmap)) {
-                        const {stdout} = await execa('amap', ['-qAH', ip, port]);
+                        const {stdout} = await execa('amap', ['-q', ip, port]);
                         await debug({port}, 'scanned with amap');
-                        await debug(stdout, 'amap -qAH ip port');
+                        await debug(stdout, 'amap -q ip port');
                         const index = data.findIndex(row => row.port === port);
                         const version = stdout
                             .split(EOL)

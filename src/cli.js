@@ -41,8 +41,9 @@ export const help = `
         --ignore-warnings,      Ignore warning messages [Default: false]
         --debug                 Show debug data [Default: false]
         --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
-        --ip,               -i  IP address [Default: 127.0.0.1]
+        --ip,               -i  IP address
         --port,             -p  Port [Default: 80]
+        --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
         --user                  User name for functions that need it [Default: 'user']
@@ -83,6 +84,11 @@ export const options = {
             type: 'number',
             default: 80,
             alias: 'p'
+        },
+        service: {
+            type: 'string',
+            default: '',
+            alias: 's'
         },
         udp: {
             type: 'boolean',
