@@ -1,9 +1,11 @@
 import {bold, dim} from 'chalk';
 import {arrowRight} from 'figures';
 
-const NL = `\n    `;
-const TIP = `${bold.magenta('TIP')} ${bold.magenta(arrowRight)} `;
-const GIBU_TIP = `${TIP}${dim('check for other NSE scripts with')} ${bold.dim('gibu /usr/share/nmap/script -fr')}`;
+const INDENT = '    ';
+const note = message => `\n\n${INDENT}${bold('NOTE')} ${bold.dim(arrowRight)} ${dim(message)}`;
+const tip = message => `\n\n${INDENT}${bold.magenta('TIP')} ${bold.magenta(arrowRight)} ${dim(message)}`;
+const GIBU_TIP = tip(`find other NSE scripts with ${bold('gibu /usr/share/nmap/script -fr')}`);
+
 export const suggestions = {
     domain: [// DNS
         {
@@ -16,7 +18,7 @@ export const suggestions = {
         },
         {
             title: 'Scan for vulnerabilties with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "dns-*"${NL}${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "dns-*"${GIBU_TIP}`
         }
     ],
     ftp: [
@@ -49,6 +51,10 @@ export const suggestions = {
         {
             title: 'Fingerprint web server with whatweb',
             command: `${bold.green('whatweb')} -a 3 ${bold.cyan('ip')}:${bold.cyan('port')}`
+        },
+        {
+            title: 'Take screenshot of server web page and identify default credentials with EyeWitness',
+            command: `${bold.green('./EyeWitness.py')} -f ${bold.cyan('/path/to/hosts')}\n${INDENT}${bold.green('./EyeWitness.py')} --single ${bold.cyan('ip')}`
         },
         {
             title: 'Brute force .htaccess directory with medusa',
@@ -88,7 +94,7 @@ export const suggestions = {
         },
         {
             title: 'Run nmap scripts',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "nfs-*"${NL}${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "nfs-*"${GIBU_TIP}`
         }
     ],
     'netbios-ssn': [// SMB
@@ -98,7 +104,7 @@ export const suggestions = {
         },
         {
             title: 'Enumerate SMB shares with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script smb-enum-shares -p ${bold.cyan('port')}${NL}${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script smb-enum-shares -p ${bold.cyan('port')}${GIBU_TIP}`
         },
         {
             title: 'Enumerate with enum4linux',
@@ -113,6 +119,24 @@ export const suggestions = {
             command: `${bold.green('rpcclient')} -U "" ${bold.cyan('ip')}`
         }
     ],
+    oracle: [
+        {
+            title: 'Enumerate server information with oscanner',
+            command: `${bold.green('oscanner')} -s ${bold.cyan('ip')} -P ${bold.cyan('port')}`
+        },
+        {
+            title: 'Get information from the Oracle TNS listener',
+            command: `${bold.green('tnscmd10g')} version -h ${bold.cyan('target')}${note('the default port is 1521/tcp')}`
+        },
+        {
+            title: 'Brute force the SID with hydra',
+            command: `${bold.green('hydra')} -L /usr/share/oscanner/lib/services.txt -s 1521 ${bold.cyan('target')} oracle-sid`
+        },
+        {
+            title: 'Run nmap scans',
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script oracle-enum-users${GIBU_TIP}`
+        }
+    ],
     smtp: [
         {
             title: 'Check for available SMTP commands',
@@ -123,12 +147,8 @@ export const suggestions = {
             command: `${bold.green('smtp-user-enum')} -M ${bold.cyan('COMMAND')} -U ${bold.cyan('/path/to/users')} -t ${bold.cyan('ip')}`
         },
         {
-            title: 'Scan SMTP users with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script smtp-enum-users -p ${bold.cyan('port')}`
-        },
-        {
             title: 'Scan for vulnerabilties with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "smtp-vuln-*"${NL}${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script "smtp-vuln-*"${GIBU_TIP}`
         }
     ],
     snmp: [
@@ -170,7 +190,7 @@ export const suggestions = {
         },
         {
             title: 'Enumerate SSL ciphers with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script ssl-enum-ciphers -p ${bold.cyan('port')}${NL}${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('ip')} --script ssl-enum-ciphers -p ${bold.cyan('port')}${GIBU_TIP}`
         }
     ]
 };

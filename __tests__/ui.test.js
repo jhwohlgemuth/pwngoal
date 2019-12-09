@@ -19,6 +19,7 @@ const SCAN_DATA = {
         {protocol: 'tcp', port: '443', service: 'https', version: '???'},
         {protocol: 'tcp', port: '445', service: 'smb', version: '???'},
         {protocol: 'tcp', port: '631', service: 'ipp', version: 'CUPS 2.2'},
+        {protocol: 'tcp', port: '1521', service: 'oracle', version: '???'},
         {protocol: 'tcp', port: '17600', service: 'http', version: 'Tornado httpd 4.2'}
     ],
     '10_11_0_1': [
@@ -209,7 +210,7 @@ describe('pwngoal', () => {
         it('can display suggestions for various services', () => {
             const terms = [];
             const options = {ip: ''};
-            const services = ['domain', 'ftp', 'http', 'msrpc', 'netbios-ssn', 'nfs', 'smtp', 'snmp', 'ssh', 'ssl/http'];
+            const services = ['domain', 'ftp', 'http', 'msrpc', 'netbios-ssn', 'nfs', 'oracle', 'smtp', 'snmp', 'ssh', 'ssl/http'];
             services.forEach(service => {
                 const {lastFrame} = render(<UI
                     commands={commands}

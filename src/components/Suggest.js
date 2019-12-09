@@ -35,7 +35,7 @@ const DisplaySuggestions = ({service}) => {
     }];
     const data = lookup.has(service) ? lookup.get(service) : noSuggestion;
     return <Fragment>
-        <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
+        <InkBox padding={{left: 1, right: 1}} borderColor="blue">
             <Color>{service}</Color>
         </InkBox>
         <Box flexDirection="column" marginTop={1} marginLeft={1}>

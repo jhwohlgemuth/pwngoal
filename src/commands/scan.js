@@ -82,7 +82,7 @@ export default {
             optional: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap')
         },
         {
-            text: 'Enumerate services with nmap',
+            text: 'Enumerate services with nmap and amap',
             task: async ({ip, udp, udpOnly}) => {
                 let data = [];
                 if (!udpOnly) {
