@@ -7,8 +7,6 @@ import UI from '../src/main';
 import Show from '../src/components/Show';
 import Suggest from '../src/components/Suggest';
 
-const ARROW_DOWN = '\u001B[B';
-const ENTER = '\uE007[B'
 const SCAN_DATA = {
     '127_0_0_1': [
         {protocol: 'tcp', port: '21', service: 'ftp', version: '???'},
