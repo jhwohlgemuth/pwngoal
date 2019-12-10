@@ -7,7 +7,7 @@ import {bold, dim} from 'chalk';
 import {arrowRight} from 'figures';
 import {SubCommandSelect, dict} from 'tomo-cli';
 import {byIpAddress} from '../utils';
-import mindmap from './mindmap';
+import mindmap from '../mindmap';
 
 const MAX_LENGTH = 60;
 const truncate = (str, len) => {
@@ -31,7 +31,7 @@ const DisplaySuggestions = ({service}) => {
     const lookup = dict(mindmap);
     const noSuggestion = [{
         title: `Sorry, no suggestions for ${bold(service)}...`,
-        command: `Don't forget to TRY HARDER! You can do it!`
+        command: `Don't forget to ${bold.magenta('TRY HARDER!')} You can do it!`
     }];
     const data = lookup.has(service) ? lookup.get(service) : noSuggestion;
     return <Fragment>

@@ -32,8 +32,7 @@ jest.mock('../src/utils', () => {
         shouldScanWithAmap
     };
 });
-
-describe('Utilities', () => {
+describe('Network utilities', () => {
     beforeEach(() => {
         execa.mockClear();
     });

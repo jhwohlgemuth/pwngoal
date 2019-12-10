@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Utilities can enumerate services on TCP ports with "nmap -sV" 1`] = `
+exports[`Network utilities can enumerate services on TCP ports with "nmap -sV" 1`] = `
 Array [
   Object {
     "port": 22,
@@ -11,7 +11,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can enumerate services on TCP ports with "nmap -sV" 2`] = `
+exports[`Network utilities can enumerate services on TCP ports with "nmap -sV" 2`] = `
 Array [
   Array [
     "nmap",
@@ -25,7 +25,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can enumerate services on UDP ports with "nmap -sV -sU" 1`] = `
+exports[`Network utilities can enumerate services on UDP ports with "nmap -sV -sU" 1`] = `
 Array [
   Object {
     "port": 22,
@@ -36,7 +36,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can enumerate services on UDP ports with "nmap -sV -sU" 2`] = `
+exports[`Network utilities can enumerate services on UDP ports with "nmap -sV -sU" 2`] = `
 Array [
   Array [
     "nmap",
@@ -51,7 +51,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can execute masscan scan and parse results 1`] = `
+exports[`Network utilities can execute masscan scan and parse results 1`] = `
 Array [
   "135",
   "139",
@@ -61,7 +61,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can execute masscan scan and parse results 2`] = `
+exports[`Network utilities can execute masscan scan and parse results 2`] = `
 Array [
   Array [
     "ip",
@@ -86,7 +86,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can execute nmap UDP scan and parse results 1`] = `
+exports[`Network utilities can execute nmap UDP scan and parse results 1`] = `
 Array [
   Array [
     "nmap",
@@ -102,7 +102,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can execute nmap scan and parse results 1`] = `
+exports[`Network utilities can execute nmap scan and parse results 1`] = `
 Array [
   "22",
   "445",
@@ -113,7 +113,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can execute nmap scan and parse results 2`] = `
+exports[`Network utilities can execute nmap scan and parse results 2`] = `
 Array [
   Array [
     "nmap",
@@ -127,7 +127,7 @@ Array [
 ]
 `;
 
-exports[`Utilities can sort IP addresses 1`] = `
+exports[`Network utilities can sort IP addresses 1`] = `
 Array [
   "1.198.3.93",
   "32.183.93.40",

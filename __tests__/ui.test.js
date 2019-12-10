@@ -1,11 +1,14 @@
 import React from 'react';
 import {render} from 'ink-testing-library';
 import commands from '../src/commands';
+import mindmap from '../src/mindmap';
 import {descriptions} from '../src/cli';
 import UI from '../src/main';
 import Show from '../src/components/Show';
 import Suggest from '../src/components/Suggest';
 
+const ARROW_DOWN = '\u001B[B';
+const ENTER = '\uE007[B'
 const SCAN_DATA = {
     '127_0_0_1': [
         {protocol: 'tcp', port: '21', service: 'ftp', version: '???'},
@@ -210,7 +213,7 @@ describe('pwngoal', () => {
         it('can display suggestions for various services', () => {
             const terms = [];
             const options = {ip: ''};
-            const services = ['domain', 'ftp', 'http', 'msrpc', 'netbios-ssn', 'nfs', 'oracle', 'smtp', 'snmp', 'ssh', 'ssl/http'];
+            const services = Object.keys(mindmap);
             services.forEach(service => {
                 const {lastFrame} = render(<UI
                     commands={commands}
@@ -219,8 +222,20 @@ describe('pwngoal', () => {
                     input={[command, ...terms]}
                     store={store}
                     customCommands={customCommands}/>);
-                console.log(lastFrame());
+                expect(lastFrame()).toMatchSnapshot();
             });
+        });
+        it('can handle services with no suggestions', () => {
+            const terms = [];
+            const options = {ip: ''};
+            const {lastFrame} = render(<UI
+                commands={commands}
+                descriptions={descriptions}
+                flags={{...options, service: 'does-not-exist'}}
+                input={[command, ...terms]}
+                store={store}
+                customCommands={customCommands}/>);
+            expect(lastFrame()).toMatchSnapshot();
         });
     });
 });
