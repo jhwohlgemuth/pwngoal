@@ -98,11 +98,11 @@ export default {
                     data = [...data, ...details];
                 }
                 if (await commandExists('amap')) {
-                    for (const {port} of data.filter(shouldScanWithAmap)) {
+                    for (const {port, protocol} of data.filter(shouldScanWithAmap)) {
                         const {stdout} = await execa('amap', ['-q', ip, port]);
-                        await debug({port}, 'scanned with amap');
+                        await debug({port, protocol}, 'Port to scan with amap');
                         await debug(stdout, `amap -q ${ip} ${port}`);
-                        const index = data.findIndex(row => row.port === port);
+                        const index = data.findIndex(row => row.port === port && row.protocol === protocol);
                         const version = stdout
                             .split(EOL)
                             .filter(line => line.includes('matches'))

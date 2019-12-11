@@ -13,6 +13,7 @@ import {
     getElapsedTime,
     getIntendedInput
 } from 'tomo-cli';
+import {debug} from './utils';
 
 /**
  * Main tomo UI component
@@ -65,6 +66,11 @@ export default class UI extends Component {
             const [start] = process.hrtime();
             const [complete, setComplete] = useState(false);
             const [elapsed, setElapsed] = useState('00:00:00');
+            const getElapsedSeconds = duration => duration
+                .split(':')
+                .map(Number)
+                .reverse()
+                .reduce((total, value, index) => ((60 ** index) * value) + total, 0);
             const AnimatedIndicator = ({complete, elapsed}) => {
                 const Active = () => <Color cyan>{play}</Color>;
                 const Inactive = () => <Color dim>{play}</Color>;
@@ -84,6 +90,17 @@ export default class UI extends Component {
                     setElapsed(getElapsedTime(start));
                 }, 1000); // eslint-disable-line no-magic-numbers
                 global._pwngoal_callback = () => {// eslint-disable-line camelcase
+                    const append = (key, value) => {
+                        const before = store.get(key);
+                        Array.isArray(before) || store.set(key, []);
+                        store.set(key, before.concat(value));
+                    };
+                    const tcp = store.get('tcp.ports') || [];
+                    const udp = store.get('udp.ports') || [];
+                    const ports = [...tcp, ...udp];
+                    const runtime = getElapsedSeconds(getElapsedTime(start));
+                    append('stats', {ports, runtime});
+                    debug(store.get('stats'), `elapsed seconds and ports`);
                     setComplete(true);
                     clearInterval(id);
                 };

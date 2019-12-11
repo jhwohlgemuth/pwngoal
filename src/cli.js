@@ -48,6 +48,7 @@ export const help = `
         --udp-only              Only scan UDP ports [Default: false]
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
+        --output            -o  Path to output directory when backing up data [Default: cwd]
 `;
 export const options = {
     help,
@@ -106,6 +107,11 @@ export const options = {
         group: {
             type: 'string',
             default: 'GROUP'
+        },
+        output: {
+            type: 'string',
+            default: process.cwd(),
+            alias: 'o'
         }
     }
 };

@@ -3,6 +3,7 @@ import copy from './copy';
 import scan from './scan';
 
 export default {
+    backup: 'create backup of config file',
     clear,
     copy,
     show: 'show scan data',

@@ -9,6 +9,7 @@ import {showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import {descriptions, options, projectName} from './cli';
+import Backup from './components/Backup';
 import Show from './components/Show';
 import Suggest from './components/Suggest';
 
@@ -17,6 +18,7 @@ import Suggest from './components/Suggest';
 // updateNotifier({pkg}).notify();
 
 const customCommands = {
+    backup: Backup,
     show: Show,
     suggest: Suggest,
     wat: Suggest

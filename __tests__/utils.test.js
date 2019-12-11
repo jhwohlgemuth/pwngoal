@@ -32,6 +32,21 @@ jest.mock('../src/utils', () => {
         shouldScanWithAmap
     };
 });
+describe('Helper utilities', () => {
+    test('can calculate elapsed seconds from elapsed time', () => {
+        const a = '01:45:30';
+        const b = '00:00:15';
+        const c = '00:10:00';
+        const getElapsedSeconds = duration => duration
+            .split(':')
+            .map(Number)
+            .reverse()
+            .reduce((total, value, index) => ((60 ** index) * value) + total, 0);
+        expect(getElapsedSeconds(a)).toEqual(6330);
+        expect(getElapsedSeconds(b)).toEqual(15);
+        expect(getElapsedSeconds(c)).toEqual(600);
+    });
+});
 describe('Network utilities', () => {
     beforeEach(() => {
         execa.mockClear();
