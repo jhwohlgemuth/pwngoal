@@ -78,7 +78,7 @@ export const getOpenUdpPortsWithNmap = async ip => {
 };
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
-    const gateway = await getGateway();
+    const gateway = await getGateway(networkInterface);
     await debug({ip, rate, networkInterface, gateway});
     const args = [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate];
     const {stdout} = await execa('masscan', args);

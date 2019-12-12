@@ -43,6 +43,7 @@ export const help = `
         --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
         --ip,               -i  IP address
         --port,             -p  Port [Default: 80]
+        --network-interface -I  Network interface (like eth0 or fxp1) [Default: tap0]
         --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
@@ -86,6 +87,11 @@ export const options = {
             type: 'number',
             default: 80,
             alias: 'p'
+        },
+        networkInterface: {
+            type: 'string',
+            default: 'tap0',
+            alias: 'I'
         },
         service: {
             type: 'string',

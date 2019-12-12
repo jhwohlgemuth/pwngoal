@@ -53,8 +53,8 @@ export default {
         },
         {
             text: `Find open TCP ports with ${PRIMARY_SCANNER}`,
-            task: async ({ip}) => {
-                const ports = await getOpenPortsWithMasscan(ip);
+            task: async ({ip, networkInterface}) => {
+                const ports = await getOpenPortsWithMasscan(ip, networkInterface);
                 await debug({ports}, `TCP ports from ${PRIMARY_SCANNER}`);
                 store.set('tcp.ports', ports);
             },
