@@ -86,15 +86,15 @@ export default class UI extends Component {
                 }, 1000); // eslint-disable-line no-magic-numbers
                 global._pwngoal_callback = () => {// eslint-disable-line camelcase
                     const appendTo = (store, key, value) => {
-                        const before = store.get(key);
-                        Array.isArray(before) || store.set(key, []);
-                        store.set(key, before.concat(value));
+                        const unsafe = store.get(key);
+                        Array.isArray(unsafe) || store.set(key, []);
+                        const safe = store.get(key);
+                        store.set(key, safe.concat(value));
                     };
                     const tcp = store.get('tcp.ports') || [];
                     const udp = store.get('udp.ports') || [];
-                    const ports = [...tcp, ...udp];
                     const runtime = getElapsedSeconds(getElapsedTime(start));
-                    appendTo(store, 'stats', {ports, runtime});
+                    runtime > 1 && appendTo(store, 'stats', {tcp, udp, runtime});
                     setComplete(true);
                     clearInterval(id);
                 };
