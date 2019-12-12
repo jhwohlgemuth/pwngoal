@@ -58,8 +58,8 @@ export default {
                 await debug({ports}, `TCP ports from ${PRIMARY_SCANNER}`);
                 store.set('tcp.ports', ports);
             },
-            condition: ({udpOnly}) => !udpOnly && commandExists.sync(PRIMARY_SCANNER),
-            optional: () => commandExists.sync(PRIMARY_SCANNER)
+            condition: ({nmapOnly, udpOnly}) => !nmapOnly && !udpOnly && commandExists.sync(PRIMARY_SCANNER),
+            optional: ({nmapOnly}) => !nmapOnly && commandExists.sync(PRIMARY_SCANNER)
         },
         {
             text: `Find open TCP ports with ${SECONDARY_SCANNER}`,

@@ -46,6 +46,7 @@ export const help = `
         --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
+        --nmap-only             Use nmap only, even if masscan is available [Default: false]
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
         --output            -o  Path to output directory when backing up data [Default: cwd]
@@ -97,6 +98,10 @@ export const options = {
             alias: 'u'
         },
         udpOnly: {
+            type: 'boolean',
+            default: false
+        },
+        nmapOnly: {
             type: 'boolean',
             default: false
         },

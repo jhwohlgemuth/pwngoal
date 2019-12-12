@@ -28,7 +28,8 @@
         --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
         --udp-only              Only scan UDP ports [Default: false]
+        --nmap-only             Use nmap only, even if masscan is available [Default: false]
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
         --output            -o  Path to output directory when backing up data [Default: cwd]
-`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
+`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},nmapOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
