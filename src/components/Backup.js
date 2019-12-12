@@ -15,7 +15,7 @@ const Backup = ({options, store}) => {
             await copyFile(store.path, join(output, filename));
         };
         backup();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
     return <Box margin={1}>
         <Text>Data backed up to </Text>
         <Color cyan>{output}/</Color>

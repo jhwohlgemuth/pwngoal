@@ -6,6 +6,7 @@ module.exports = {
             jsx: true
         }
     },
+    plugins: ['react-hooks'],
     env: {
         browser: true,
         node: true,
@@ -21,6 +22,8 @@ module.exports = {
         BigInt: true
     },
     rules: {
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
         'compat/compat': 'off',
         'complexity': ['warn', 12],
         'valid-jsdoc': 'off',

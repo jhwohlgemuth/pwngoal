@@ -98,7 +98,7 @@ export default class UI extends Component {
                     setComplete(true);
                     clearInterval(id);
                 };
-            }, []);
+            }, []); // eslint-disable-line react-hooks/exhaustive-deps
             return <Box marginTop={1} marginLeft={1}>
                 <AnimatedIndicator elapsed={elapsed} complete={complete}/>
                 <Text> {elapsed}</Text>
