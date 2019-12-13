@@ -24,7 +24,7 @@ const getTableData = (store, value) => {
 const NoResults = ({ip}) => {
     const isValid = value => (typeof value === 'string') && value.length > 0;
     return <Box flexDirection={'column'}>
-        <Box>
+        <Box marginTop={1} marginLeft={1}>
             <Text>No results for </Text>
             <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
         </Box>

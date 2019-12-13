@@ -22,3 +22,33 @@ No Install Usage
 ```bash
 npx pwngoal -h
 ```
+
+What can you do with `pwngoal`?
+-------------------------------
+Generally, `pwngoal` will help you enumerate servers and keep track of your progress...also, it lets you copy commands for easy use.
+
+Specifically, `pwngoal` lets you
+- Scan TCP and UDP ports with [`masscan`](https://tools.kali.org/information-gathering/masscan) and/or  [`nmap`](https://nmap.org/)
+- Analyze services on open ports with [`nmap`](https://nmap.org/) and [`amap`](https://tools.kali.org/information-gathering/amap) *automagically*
+- Save results for export and review
+- Easily display results in the console, neatly organized in nice tables
+- Copy useful commands to your clipboard for easy access (parameterized with options passed via the command line)
+
+See the available commands with `pwngoal -h`
+
+
+
+"pwngoal"?
+----------
+> “A goal is not always meant to be [PWNed], it often serves simply as something to aim at.”(*edited*) 
+―**Bruce Lee**
+
+
+> “Perhaps when we find ourselves [PWNing] everything, it is because we are dangerously close to [PWNing] nothing.”(*edited*) 
+―**Sylvia Plath**
+
+
+> “I love the challenge of starting at zero every day and seeing how much I can accomplish.”(*edited*)  
+―**Martha Stewart**
+
+Also, make sure you don't score an [OWN GOAL!?!?](https://www.youtube.com/watch?v=tafCE6GJrhQ&lc=UgwiQuy3c7rt2Kj6gMl4AaABAg)
