@@ -20,20 +20,14 @@ export const help = `
     ${dim.bold('Usage')}
 
         ${cyan('>')} ${projectName} [commands] [terms] [options]
-        
-        ${cyan('>')} ${projectName} version
 
+        ${cyan('>')} pwn [commands] [terms] [options]
 
     ${dim.bold('Commands')}
 
-        backup, copy, scan, show, suggest, version, wat
+        backup, clear, copy, help, scan, show, suggest, version, wat
 
-
-    ${dim.bold('Terms')}
-
-        [???]
-        ???, ...
-
+        ${bold.magenta('TIP:')} ${bold('wat')} is an alias for ${bold('suggest')}
 
     ${dim.bold('Options')}
 
@@ -51,6 +45,32 @@ export const help = `
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
         --output            -o  Path to output directory when backing up data [Default: cwd]
+
+        ${bold.magenta('TIP:')} set your interface with ${bold('--network-interface')} when you want to use masscan
+
+    ${dim.bold('Examples')}
+
+        ${dim('Scan open TCP ports, enumerate services')}
+        ${cyan('>')} ${projectName} scan ports -i IP [--nmap-only]
+
+        ${dim('Scan open TCP and UDP ports, enumerate services')}
+        ${cyan('>')} ${projectName} scan ports -i IP --udp
+
+        ${dim('Scan open UDP ports only, enumerate services')}
+        ${cyan('>')} ${projectName} scan ports -i IP --udp-only
+
+        ${dim('Select a command to be copied to your clipboard')}
+        ${cyan('>')} ${projectName} copy [-i IP | -p PORT | --user USER | --group GROUP | --escaped]
+
+        ${dim('View suggestions for PWNing http')}
+        ${cyan('>')} ${projectName} suggest -s http
+
+        ${dim('Display scan results in a neatly organized table, right in your terminal')}
+        ${cyan('>')} ${projectName} show [-i IP]
+
+        ${bold.magenta('TIP:')} pwngoal works well with ${bold('gibu')}, ${cyan('https://github.com/jhwohlgemuth/gibu')}
+
+
 `;
 export const options = {
     help,

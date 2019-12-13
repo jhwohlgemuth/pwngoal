@@ -20,12 +20,12 @@ No Install Usage
 > [node](https://nodejs.org/en/) still required
 
 ```bash
-npx pwngoal -h
+npx pwngoal scan ports -i 10.11.1.42
 ```
 
 What can you do with `pwngoal`?
 -------------------------------
-Generally, `pwngoal` will help you enumerate servers and keep track of your progress...also, it lets you copy commands for easy use.
+Generally, `pwngoal` will help you enumerate servers and keep track of your progress...also, it lets you copy commands to your clipboard for easy use when you are trying to reverse your shell or escalate your privilege.
 
 Specifically, `pwngoal` lets you
 - Scan TCP and UDP ports with [`masscan`](https://tools.kali.org/information-gathering/masscan) and/or  [`nmap`](https://nmap.org/)

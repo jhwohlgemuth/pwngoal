@@ -2,20 +2,14 @@
     ${_chalk.dim.bold("Usage")}
 
         ${(0,_chalk.cyan)(">")} ${"pwngoal"} [commands] [terms] [options]
-        
-        ${(0,_chalk.cyan)(">")} ${"pwngoal"} version
 
+        ${(0,_chalk.cyan)(">")} pwn [commands] [terms] [options]
 
     ${_chalk.dim.bold("Commands")}
 
-        backup, copy, scan, show, suggest, version, wat
+        backup, clear, copy, help, scan, show, suggest, version, wat
 
-
-    ${_chalk.dim.bold("Terms")}
-
-        [???]
-        ???, ...
-
+        ${_chalk.bold.magenta("TIP:")} ${(0,_chalk.bold)("wat")} is an alias for ${(0,_chalk.bold)("suggest")}
 
     ${_chalk.dim.bold("Options")}
 
@@ -33,4 +27,30 @@
         --user                  User name for functions that need it [Default: 'user']
         --group                 Group name for functions that need it [Default: 'user']
         --output            -o  Path to output directory when backing up data [Default: cwd]
+
+        ${_chalk.bold.magenta("TIP:")} set your interface with ${(0,_chalk.bold)("--network-interface")} when you want to use masscan
+
+    ${_chalk.dim.bold("Examples")}
+
+        ${(0,_chalk.dim)("Scan open TCP ports, enumerate services")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} scan ports -i IP [--nmap-only]
+
+        ${(0,_chalk.dim)("Scan open TCP and UDP ports, enumerate services")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} scan ports -i IP --udp
+
+        ${(0,_chalk.dim)("Scan open UDP ports only, enumerate services")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} scan ports -i IP --udp-only
+
+        ${(0,_chalk.dim)("Select a command to be copied to your clipboard")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} copy [-i IP | -p PORT | --user USER | --group GROUP | --escaped]
+
+        ${(0,_chalk.dim)("View suggestions for PWNing http")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} suggest -s http
+
+        ${(0,_chalk.dim)("Display scan results in a neatly organized table, right in your terminal")}
+        ${(0,_chalk.cyan)(">")} ${"pwngoal"} show [-i IP]
+
+        ${_chalk.bold.magenta("TIP:")} pwngoal works well with ${(0,_chalk.bold)("gibu")}, ${(0,_chalk.cyan)("https://github.com/jhwohlgemuth/gibu")}
+
+
 `;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},networkInterface:{type:"string",default:"tap0",alias:"I"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},nmapOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
