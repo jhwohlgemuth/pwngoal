@@ -86,13 +86,13 @@ const suggestions = {
             command: `${bold.green('droopescan')} scan -u ${bold.cyan('$RHOST')}`
         }
     ],
-    msrpc: [
+    msrpc: [ // Microsoft Remote Procedure Call
         {
             title: 'Enumerate shares with nmap',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script msrpc-enum`
         }
     ],
-    nfs: [
+    nfs: [ // Network File System
         {
             title: 'Enumerate NFS with rpcinfo',
             command: `${bold.green('rpcinfo')} -p ${bold.cyan('$RHOST')}`
@@ -146,7 +146,7 @@ const suggestions = {
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script oracle-enum-users${GIBU_TIP}`
         }
     ],
-    smtp: [
+    smtp: [ // Simple Mail Transfer Protocol
         {
             title: 'Check for available SMTP commands',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} -p ${bold.cyan('$RPORT')} --script smtp-commands`
@@ -160,7 +160,7 @@ const suggestions = {
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script "smtp-vuln-*"${GIBU_TIP}`
         }
     ],
-    snmp: [
+    snmp: [ // Simple Network Management Protocol
         {
             title: 'Brute force community strings',
             command: `${bold.green('onesixtyone')} -i ${bold.cyan('/path/to/hosts')} -c ${bold.cyan('/path/to/strings')}`
@@ -204,8 +204,8 @@ const suggestions = {
     ]
 };
 [ // Add aliases
-    ['dns', 'domain'],
-    ['smb', 'netbios-ssn'],
+    ['dns', 'domain'], // Domain Name System
+    ['smb', 'netbios-ssn'], // Server Message Block
     ['https', 'ssl/http']
 ].forEach(([alias, old]) => {
     suggestions[alias] = suggestions[old];

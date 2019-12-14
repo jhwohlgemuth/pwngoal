@@ -14,7 +14,8 @@ export const byIpAddress = () => {
     return (a, b) => format(a) - format(b);
 };
 export const debug = async (data, title = '') => {
-    const savepath = join(homedir(), '.pwngoal');
+    const name = 'pwngoal';
+    const savepath = join(homedir(), `.${name}`);
     const [date] = (new Date()).toISOString().split('T');
     const time = new Date().toLocaleTimeString('en-US', {hour12: false});
     const timestamp = `${date} ${time}`;
@@ -29,19 +30,26 @@ export const debug = async (data, title = '') => {
 };
 export const enumerate = async (ip, ports, type = 'tcp') => {
     const data = [];
+    const protocol = type.toUpperCase();
     for (const port of ports) {
-        const args = [ip, '-p', port, '-sV'].concat(type === 'udp' ? '-sU' : []);
-        const {stdout} = await execa('nmap', args);
-        await debug(stdout, `nmap ${args.join(' ')}`);
-        stdout
-            .split(EOL)
-            .filter(includes(`/${type}`))
-            .map(line => line.split(' ').filter(Boolean))
-            .forEach(([,, service, ...versionInformation]) => {
-                const protocol = type.toUpperCase();
-                const version = versionInformation.join(' ');
-                data.push({protocol, port, service, version});
-            });
+        const args = [ip, '-p', port, '-sV'].concat(protocol === 'UDP' ? '-sU' : []);
+        try {
+            const {stdout} = await execa('nmap', args);
+            await debug(stdout, `nmap ${args.join(' ')}`);
+            stdout
+                .split(EOL)
+                .filter(includes(`/${type}`))
+                .map(line => line.split(' ').filter(Boolean))
+                .forEach(([,, service, ...versionInformation]) => {
+                    const version = versionInformation.join(' ');
+                    data.push({protocol, port, service, version});
+                });
+        } catch (err) {
+            await debug(err, `Error during "nmap ${args.join(' ')}"`);
+            const service = 'ERROR';
+            const version = 'ERROR';
+            data.push({protocol, port, service, version});
+        }
     }
     return data;
 };
