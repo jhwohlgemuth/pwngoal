@@ -84,7 +84,7 @@ const SelectTarget = ({descriptions, fallback, store}) => {
 };
 const SelectService = ({data, descriptions}) => {
     const [service, setService] = useState(undefined);
-    const isKnownService = name => !(name.endsWith('?') || name.includes('unknown'));
+    const isKnownService = name => !(name.endsWith('?') || name.includes('unknown') || name.includes('ERROR'));
     const items = data
         .map(({service}) => service)
         .filter(isKnownService)

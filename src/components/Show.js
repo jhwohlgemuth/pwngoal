@@ -1,6 +1,7 @@
 import {isIP} from 'net';
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
+import {bold} from 'chalk';
 import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
@@ -15,9 +16,10 @@ const truncate = (str, len) => {
 const getTableData = (store, value) => {
     const key = value.split('.').join('_');
     return (store.get(key) || []).map(row => {
-        const {version} = row;
+        const {service, version} = row;
         return Object.assign(row, {
-            version: truncate(version, MAX_LENGTH - '...'.length)
+            service: service === 'ERROR' ? `${bold.red(service)}` : service,
+            version: version === 'ERROR' ? `${bold.red(version)}` : truncate(version, MAX_LENGTH - '...'.length)
         });
     });
 };

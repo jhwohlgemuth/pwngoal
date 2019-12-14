@@ -21,7 +21,8 @@ const SCAN_DATA = {
         {protocol: 'tcp', port: '445', service: 'smb', version: '???'},
         {protocol: 'tcp', port: '631', service: 'ipp', version: 'CUPS 2.2'},
         {protocol: 'tcp', port: '1521', service: 'oracle', version: '???'},
-        {protocol: 'tcp', port: '17600', service: 'http', version: 'Tornado httpd 4.2'}
+        {protocol: 'tcp', port: '17600', service: 'http', version: 'Tornado httpd 4.2'},
+        {protocol: 'tcp', port: '45295', service: 'ERROR', version: 'ERROR'}
     ],
     '10_11_0_1': [
         {version: 'version', protocol: 'protocol', service: 'service'}
