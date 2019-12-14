@@ -1,7 +1,6 @@
 import {isIP} from 'net';
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
-import {bold} from 'chalk';
 import {Box, Color, Text} from 'ink';
 import InkBox from 'ink-box';
 import Table from 'ink-table';
@@ -16,12 +15,15 @@ const truncate = (str, len) => {
 const getTableData = (store, value) => {
     const key = value.split('.').join('_');
     return (store.get(key) || []).map(row => {
-        const {service, version} = row;
+        const {version} = row;
         return Object.assign(row, {
-            service: service === 'ERROR' ? `${bold.red(service)}` : service,
-            version: version === 'ERROR' ? `${bold.red(version)}` : truncate(version, MAX_LENGTH - '...'.length)
+            version: truncate(version, MAX_LENGTH - '...'.length)
         });
     });
+};
+const Cell = ({children}) => {
+    const hasError = children.some(val => val.toLowerCase().includes('error'));
+    return hasError ? <Color bold red>{children}</Color> : <Text>{children}</Text>;
 };
 const NoResults = ({ip}) => {
     const isValid = value => (typeof value === 'string') && value.length > 0;
@@ -42,7 +44,7 @@ const DisplayTable = ({data, title}) => <Fragment>
     <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
         <Color bold cyan>{title}</Color>
     </InkBox>
-    <Table data={data}/>
+    <Table data={data} cell={Cell}/>
     <Note message={'Try "pwngoal suggest" to get some suggestions on what to do next'}/>
 </Fragment>;
 const SelectTarget = ({descriptions, fallback, store}) => {
@@ -79,6 +81,9 @@ const ShowCommand = ({descriptions, options, store, terms}) => {
         data.length === 0 ?
             <NoResults ip={value}/> :
             <DisplayTable data={data} title={value}/>;
+};
+Cell.propTypes = {
+    children: PropTypes.node
 };
 DisplayTable.propTypes = {
     data: PropTypes.array,
