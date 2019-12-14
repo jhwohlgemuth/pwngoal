@@ -76,6 +76,14 @@ const suggestions = {
         {
             title: 'Determine if enabled DAV services are exploitable',
             command: `${bold.green('davtest')} -url http://${bold.cyan('$RHOST')}`
+        },
+        {
+            title: 'Enumerate Wordpress site with wpscan',
+            command: `${bold.green('wpscan')} --url http://${bold.cyan('$RHOST')}`
+        },
+        {
+            title: 'Enumerate Drupal site with droopescan',
+            command: `${bold.green('droopescan')} scan -u ${bold.cyan('$RHOST')}`
         }
     ],
     msrpc: [
