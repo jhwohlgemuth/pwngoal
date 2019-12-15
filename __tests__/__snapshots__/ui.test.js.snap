@@ -354,9 +354,9 @@ exports[`pwngoal suggest can display suggestions for various services 10`] = `
 `;
 
 exports[`pwngoal suggest can display suggestions for various services 11`] = `
-"[34m┌──────────┐[39m
-[34m│[39m ssl/http [34m│[39m
-[34m└──────────┘[39m
+"[34m┌───────────┐[39m
+[34m│[39m ssl/https [34m│[39m
+[34m└───────────┘[39m
 
  [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate configuration, check for heartbleed vulnerability, and determine supported ciphers with sslscan[22m
    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m

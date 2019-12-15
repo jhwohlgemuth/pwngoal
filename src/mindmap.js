@@ -184,7 +184,7 @@ const suggestions = {
             command: `${bold.green('searchsploit')} ${bold.cyan('version')}`
         }
     ],
-    'ssl/http': [
+    'ssl/https': [
         {
             title: 'Enumerate configuration, check for heartbleed vulnerability, and determine supported ciphers with sslscan',
             command: `${bold.green('sslscan')} ${bold.cyan('$RHOST')}`
@@ -206,7 +206,7 @@ const suggestions = {
 [ // Add aliases
     ['dns', 'domain'], // Domain Name System
     ['smb', 'netbios-ssn'], // Server Message Block
-    ['https', 'ssl/http']
+    ['https', 'ssl/https']
 ].forEach(([alias, old]) => {
     suggestions[alias] = suggestions[old];
 });
