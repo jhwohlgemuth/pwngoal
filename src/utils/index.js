@@ -47,7 +47,7 @@ export const enumerate = async (ip, ports, type = 'tcp') => {
         } catch (err) {
             await debug(err, `Error during "nmap ${args.join(' ')}"`);
             const service = 'ERROR';
-            const version = 'ERROR';
+            const version = 'Read debug log for details';
             data.push({protocol, port, service, version});
         }
     }
