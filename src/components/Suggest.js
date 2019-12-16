@@ -1,11 +1,11 @@
 import {isIP} from 'net';
+import {init, last} from 'ramda';
 import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Box, Color, Text} from 'ink';
-import InkBox from 'ink-box';
 import {bold, dim} from 'chalk';
 import {arrowRight} from 'figures';
-import {SubCommandSelect, dict} from 'tomo-cli';
+import {SubCommandSelect, SubCommandMultiSelect, dict} from 'tomo-cli';
 import {byIpAddress} from '../utils';
 import mindmap from '../mindmap';
 
@@ -27,21 +27,30 @@ const Suggestion = ({command, title}) => <Box flexDirection="column" marginBotto
     <Text>{bold.blue('TRY')} {dim.blue(arrowRight)} {dim(title)}</Text>
     <Text>  {dim.blue('↳')} {command}</Text>
 </Box>;
-const DisplaySuggestions = ({service}) => {
+const DisplaySuggestions = ({items}) => {
     const lookup = dict(mindmap);
-    const noSuggestion = [{
-        title: `Sorry, no suggestions for ${bold(service)}...`,
-        command: `Don't forget to ${bold.magenta('TRY HARDER!')} You can do it!`
-    }];
-    const data = lookup.has(service) ? lookup.get(service) : noSuggestion;
-    return <Fragment>
-        <InkBox padding={{left: 1, right: 1}} borderColor="blue">
-            <Color>{service}</Color>
-        </InkBox>
-        <Box flexDirection="column" marginTop={1} marginLeft={1}>
-            {data.map(({command, title}, index) => <Suggestion title={title} command={command} key={index}/>)}
-        </Box>
-    </Fragment>;
+    const services = items.map(({label}) => label);
+    const data = items
+        .map(({value}) => value)
+        .filter(service => lookup.has(service))
+        .map(service => lookup.get(service));
+    const format = items => {
+        const {length} = items;
+        const style = bold.red;
+        return length === 1 ? style(items[0]) : init(items)
+            .map(item => style(item))
+            .join(', ')
+            .concat(`${length === 2 ? '' : ','} or ${style(last(items))}`);
+    };
+    return <Box margin={1} flexDirection="column">
+        {data.length === 0 ?
+            <Text>Sorry, no suggestions for {format(services)}...</Text> :
+            data.map((suggestions, index) => <Fragment key={index}>
+                <Box flexDirection="column" marginLeft={1}>
+                    {suggestions.map(({command, title}, index) => <Suggestion title={title} command={command} key={index}/>)}
+                </Box>
+            </Fragment>)}
+    </Box>;
 };
 const NoResults = ({ip}) => {
     const isValid = value => (typeof value === 'string') && value.length > 0;
@@ -83,32 +92,33 @@ const SelectTarget = ({descriptions, fallback, store}) => {
         <NoResults/>;
 };
 const SelectService = ({data, descriptions}) => {
-    const [service, setService] = useState(undefined);
+    const [services, setServices] = useState([]);
     const isKnownService = name => !(name.endsWith('?') || name.includes('unknown') || name.includes('ERROR'));
     const items = data
         .map(({service}) => service)
         .filter(isKnownService)
         .reduce((items, item) => items.includes(item) ? items : [...items, item], [])
         .map(value => ({value, label: value}));
-    const onSelect = ({value}) => {
-        setService(value);
+    const onSubmit = items => {
+        setServices(items);
     };
     return items.length > 0 ?
-        service ?
-            <DisplaySuggestions service={service}/> :
-            <SubCommandSelect
+        services.length > 0 ?
+            <DisplaySuggestions items={services}/> :
+            <SubCommandMultiSelect
                 descriptions={Object.assign(descriptions, {default: service => `Show suggestions for ${service}`})}
                 items={items}
-                onSelect={onSelect}/> :
+                onSubmit={onSubmit}/> :
         <NoResults/>;
 };
 const SuggestCommand = ({descriptions, options, store, terms}) => {
-    const {ip, service} = options;
+    const {ip, service = ''} = options;
     const [firstTerm] = terms;
     const target = firstTerm || ip;
     const data = getTableData(store, target);
+    const items = service.split(',').map(value => ({label: value, value}));
     return service ?
-        <DisplaySuggestions service={service}/> :
+        <DisplaySuggestions items={items}/> :
         (firstTerm === undefined && ip === '') ?
             <SelectTarget store={store} descriptions={descriptions} fallback={target => `Select service for ${target}`}/> :
             data.length === 0 ?
@@ -116,7 +126,7 @@ const SuggestCommand = ({descriptions, options, store, terms}) => {
                 <SelectService data={data} descriptions={descriptions} title={target}/>;
 };
 DisplaySuggestions.propTypes = {
-    service: PropTypes.string
+    items: PropTypes.array
 };
 NoResults.propTypes = {
     ip: PropTypes.string

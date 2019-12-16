@@ -10,7 +10,7 @@ const GIBU_TIP = tip(`find other NSE scripts with ${bold('gibu /usr/share/nmap/s
 const suggestions = {
     domain: [
         {
-            title: 'Perform a "standard" scan and brute force hostnames with a dictionary',
+            title: 'Perform a "standard" DNS scan and brute force hostnames with a dictionary',
             command: `${bold.green('dnsrecon')} -d ${bold.cyan('$RHOST')} -D /usr/share/wordlists/dnsmap.txt -t std`
         },
         {
@@ -18,13 +18,13 @@ const suggestions = {
             command: `${bold.green('dnsenum')} ${bold.cyan('$RHOST')}`
         },
         {
-            title: 'Scan for vulnerabilties with nmap',
+            title: 'Scan for DNS vulnerabilties with nmap',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script "dns-*"${GIBU_TIP}`
         }
     ],
     ftp: [
         {
-            title: 'Check for anonymous login (username: "anonymous", password: <nothing>)',
+            title: 'Check for anonymous FTP login (username: "anonymous", password: <nothing>)',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} -p ${bold.cyan('$RPORT')} --script ftp-anon`
         }
     ],
@@ -88,7 +88,7 @@ const suggestions = {
     ],
     msrpc: [ // Microsoft Remote Procedure Call
         {
-            title: 'Enumerate shares with nmap',
+            title: 'Enumerate RPC shares with nmap',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script msrpc-enum`
         }
     ],
@@ -98,11 +98,11 @@ const suggestions = {
             command: `${bold.green('rpcinfo')} -p ${bold.cyan('$RHOST')}`
         },
         {
-            title: `Show server's export list`,
+            title: `Show server's NFS export list`,
             command: `${bold.green('showmount')} -a ${bold.cyan('$RHOST')}`
         },
         {
-            title: 'Run nmap scripts',
+            title: 'Run NFS nmap scripts',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script "nfs-*"${GIBU_TIP}`
         }
     ],
@@ -116,21 +116,21 @@ const suggestions = {
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} -p ${bold.cyan('$RPORT')} --script smb-enum-shares${GIBU_TIP}`
         },
         {
-            title: 'Enumerate with enum4linux',
+            title: 'Enumerate SMB with enum4linux',
             command: `${bold.green('enum4linux')} -a ${bold.cyan('$RHOST')}`
         },
         {
-            title: 'List shares and connect to one',
+            title: 'List SMB shares and connect to one',
             command: `${bold.green('smbclient')} -U ${bold.cyan('user')} -L ${bold.cyan('//$RHOST')}\n${INDENT}${bold.green('smbclient')} -U ${bold.cyan('user')} ${bold.cyan('//$RHOST/path/to/share')}`
         },
         {
-            title: 'Attempt null connect',
+            title: 'Attempt SMB null connect',
             command: `${bold.green('rpcclient')} -U "" ${bold.cyan('$RHOST')}`
         }
     ],
     oracle: [
         {
-            title: 'Enumerate server information with oscanner',
+            title: 'Enumerate Oracle server information with oscanner',
             command: `${bold.green('oscanner')} -s ${bold.cyan('$RHOST')} -P ${bold.cyan('$RPORT')}`
         },
         {
@@ -138,11 +138,11 @@ const suggestions = {
             command: `${bold.green('tnscmd10g')} version -h ${bold.cyan('$RHOST')}${note('the default port is 1521/tcp')}`
         },
         {
-            title: 'Brute force the SID with hydra',
+            title: 'Brute force the Oracle SID with hydra',
             command: `${bold.green('hydra')} -L /usr/share/oscanner/lib/services.txt -s 1521 ${bold.cyan('$RHOST')} oracle-sid`
         },
         {
-            title: 'Run nmap scans',
+            title: 'Enumerate Oracle users with nmap',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script oracle-enum-users${GIBU_TIP}`
         }
     ],
@@ -156,13 +156,13 @@ const suggestions = {
             command: `${bold.green('smtp-user-enum')} -M ${bold.cyan('COMMAND')} -U ${bold.cyan('/path/to/users')} -t ${bold.cyan('$RHOST')}`
         },
         {
-            title: 'Scan for vulnerabilties with nmap',
+            title: 'Scan for SMTP vulnerabilties with nmap',
             command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script "smtp-vuln-*"${GIBU_TIP}`
         }
     ],
     snmp: [ // Simple Network Management Protocol
         {
-            title: 'Brute force community strings',
+            title: 'Brute force SNMP community strings',
             command: `${bold.green('onesixtyone')} -i ${bold.cyan('/path/to/hosts')} -c ${bold.cyan('/path/to/strings')}`
         },
         {
@@ -176,7 +176,7 @@ const suggestions = {
     ],
     ssh: [
         {
-            title: 'Brute force login password with hydra',
+            title: 'Brute force SSH login with hydra',
             command: `${bold.green('hydra')} -l ${bold.cyan('user')} -P ${bold.cyan('/path/to/password/list')} -f -V ${bold.cyan('$RHOST')}`
         },
         {
@@ -186,7 +186,7 @@ const suggestions = {
     ],
     'ssl/https': [
         {
-            title: 'Enumerate configuration, check for heartbleed vulnerability, and determine supported ciphers with sslscan',
+            title: 'Enumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan',
             command: `${bold.green('sslscan')} ${bold.cyan('$RHOST')}`
         },
         {
