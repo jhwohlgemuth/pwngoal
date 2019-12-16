@@ -22,7 +22,7 @@ const getTableData = (store, value) => {
     });
 };
 const Cell = ({children}) => {
-    const hasError = children.some(val => val.toLowerCase().includes('error'));
+    const hasError = children.some(val => val.includes('ERROR'));
     return hasError ? <Color bold red>{children}</Color> : <Text>{children}</Text>;
 };
 const NoResults = ({ip}) => {
@@ -41,8 +41,8 @@ const Note = ({message}) => <Box marginBottom={2} marginLeft={1}>
     ↳ <Color dim>{message}</Color>
 </Box>;
 const DisplayTable = ({data, title}) => <Fragment>
-    <InkBox padding={{left: 1, right: 1}} borderColor="cyan">
-        <Color bold cyan>{title}</Color>
+    <InkBox padding={{left: 1, right: 1}} borderColor="gray" dimBorder>
+        <Color dim>{title}</Color>
     </InkBox>
     <Table data={data} cell={Cell}/>
     <Note message={'Try "pwngoal suggest" to get some suggestions on what to do next'}/>
