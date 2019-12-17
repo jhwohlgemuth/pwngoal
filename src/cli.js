@@ -35,7 +35,7 @@ export const help = `
         --ignore-warnings,      Ignore warning messages [Default: false]
         --debug                 Show debug data [Default: false]
         --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
-        --ip,               -i  IP address
+        --ip,               -i  IP address of target, sometimes referred to as RHOST
         --port,             -p  Port [Default: 80]
         --network-interface -I  Network interface (like eth0 or fxp1) [Default: tap0]
         --service,          -s  Service
@@ -63,7 +63,7 @@ export const help = `
         ${cyan('>')} ${projectName} copy [-i IP | -p PORT | --user USER | --group GROUP | --escaped]
 
         ${dim('View suggestions for PWNing http')}
-        ${cyan('>')} ${projectName} suggest -s http
+        ${cyan('>')} ${projectName} suggest -s http [-i HOST | -p PORT | --user USER | --group GROUP]
 
         ${dim('Display scan results in a neatly organized table, right in your terminal')}
         ${cyan('>')} ${projectName} show [-i IP]

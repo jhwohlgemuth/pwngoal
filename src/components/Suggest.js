@@ -23,11 +23,11 @@ const getTableData = (store, value) => {
         });
     });
 };
-const Suggestion = ({command, title}) => <Box flexDirection="column" marginBottom={1}>
+const Suggestion = ({command, options, title}) => <Box flexDirection="column" marginBottom={1}>
     <Text>{bold.blue('TRY')} {dim.blue(arrowRight)} {dim(title)}</Text>
-    <Text>  {dim.blue('↳')} {command}</Text>
+    <Text>  {dim.blue('↳')} {typeof command === 'function' ? command(options) : command}</Text>
 </Box>;
-const DisplaySuggestions = ({items}) => {
+const DisplaySuggestions = ({items, options}) => {
     const lookup = dict(mindmap);
     const services = items.map(({label}) => label);
     const data = items
@@ -47,27 +47,26 @@ const DisplaySuggestions = ({items}) => {
             <Text>Sorry, no suggestions for {format(services)}...</Text> :
             data.map((suggestions, index) => <Fragment key={index}>
                 <Box flexDirection="column" marginLeft={1}>
-                    {suggestions.map(({command, title}, index) => <Suggestion title={title} command={command} key={index}/>)}
+                    {suggestions.map(({command, title}, index) => <Suggestion options={options} title={title} command={command} key={index}/>)}
                 </Box>
             </Fragment>)}
     </Box>;
 };
 const NoResults = ({ip}) => {
     const isValid = value => (typeof value === 'string') && value.length > 0;
-    return <Box flexDirection={'column'}>
+    return <Box flexDirection={'column'} margin={1}>
         <Box>
             <Text>No suggestions for </Text>
             <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
         </Box>
         {isValid(ip) ?
             <Fragment></Fragment> :
-            <Note message={'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}/>}
+            <Box marginLeft={1}>
+                ↳ <Color dim>{'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}</Color>
+            </Box>}
     </Box>;
 };
-const Note = ({message}) => <Box marginBottom={2} marginLeft={1}>
-    ↳ <Color dim>{message}</Color>
-</Box>;
-const SelectTarget = ({descriptions, fallback, store}) => {
+const SelectTarget = ({descriptions, fallback, options = {}, store}) => {
     const [title, setTitle] = useState('');
     const [target, setTarget] = useState(undefined);
     const items = [...store]
@@ -84,14 +83,14 @@ const SelectTarget = ({descriptions, fallback, store}) => {
     };
     return items.length > 0 ?
         target ?
-            <SelectService data={target} descriptions={descriptions} title={title}/> :
+            <SelectService data={target} descriptions={descriptions} options={{...options, ip: title}} title={title}/> :
             <SubCommandSelect
                 descriptions={Object.assign(descriptions, {default: fallback})}
                 items={items}
                 onSelect={onSelect}/> :
         <NoResults/>;
 };
-const SelectService = ({data, descriptions}) => {
+const SelectService = ({data, descriptions, options = {}}) => {
     const [services, setServices] = useState([]);
     const isKnownService = name => !(name.endsWith('?') || name.includes('unknown') || name.includes('ERROR'));
     const items = data
@@ -104,43 +103,47 @@ const SelectService = ({data, descriptions}) => {
     };
     return items.length > 0 ?
         services.length > 0 ?
-            <DisplaySuggestions items={services}/> :
+            <DisplaySuggestions items={services} options={options}/> :
             <SubCommandMultiSelect
                 descriptions={Object.assign(descriptions, {default: service => `Show suggestions for ${service}`})}
                 items={items}
                 onSubmit={onSubmit}/> :
         <NoResults/>;
 };
-const SuggestCommand = ({descriptions, options, store, terms}) => {
-    const {ip, service = ''} = options;
+const SuggestCommand = ({descriptions, options = {}, store, terms}) => {
+    const {ip, port = '$RPORT', service = '', user = 'user'} = options;
     const [firstTerm] = terms;
     const target = firstTerm || ip;
     const data = getTableData(store, target);
     const items = service.split(',').map(value => ({label: value, value}));
     return service ?
-        <DisplaySuggestions items={items}/> :
+        <DisplaySuggestions items={items} options={{ip: ip || '$RHOST', port, user}}/> :
         (firstTerm === undefined && ip === '') ?
-            <SelectTarget store={store} descriptions={descriptions} fallback={target => `Select service for ${target}`}/> :
+            <SelectTarget
+                store={store}
+                descriptions={descriptions}
+                fallback={target => `Select service for ${target}`}
+                options={{...options, ip: target || '$RHOST', port}}/> :
             data.length === 0 ?
                 <NoResults ip={target}/> :
-                <SelectService data={data} descriptions={descriptions} title={target}/>;
+                <SelectService data={data} descriptions={descriptions} options={{...options, ip: target, port}} title={target}/>;
 };
 DisplaySuggestions.propTypes = {
-    items: PropTypes.array
+    items: PropTypes.array,
+    options: PropTypes.object
 };
 NoResults.propTypes = {
     ip: PropTypes.string
 };
-Note.propTypes = {
-    message: PropTypes.string
-};
 SelectService.propTypes = {
     data: PropTypes.array,
-    descriptions: PropTypes.object
+    descriptions: PropTypes.object,
+    options: PropTypes.object
 };
 SelectTarget.propTypes = {
     descriptions: PropTypes.object,
     fallback: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    options: PropTypes.object,
     store: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
 };
 SuggestCommand.propTypes = {
@@ -150,7 +153,8 @@ SuggestCommand.propTypes = {
     terms: PropTypes.array
 };
 Suggestion.propTypes = {
-    command: PropTypes.string,
+    command: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+    options: PropTypes.object,
     title: PropTypes.string
 };
 export default SuggestCommand;

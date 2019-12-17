@@ -224,6 +224,27 @@ describe('pwngoal', () => {
                 expect(lastFrame()).toMatchSnapshot();
             });
         });
+        it('will interpolate suggestions with passed options (ip, port, user)', () => {
+            const terms = [];
+            const options = {
+                ip: 'IP',
+                port: 'PORT',
+                service: 'http',
+                user: 'LEROY',
+                group: 'JENKINS'
+            };
+            const services = Object.keys(mindmap);
+            services.forEach(service => {
+                const {lastFrame} = render(<UI
+                    commands={commands}
+                    descriptions={descriptions}
+                    flags={{...options, service}}
+                    input={[command, ...terms]}
+                    store={store}
+                    customCommands={customCommands}/>);
+                expect(lastFrame()).toMatchSnapshot();
+            });
+        })
         it('can handle services with no suggestions', () => {
             const terms = [];
             const options = {ip: ''};

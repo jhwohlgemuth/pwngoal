@@ -28,24 +28,25 @@ const Cell = ({children}) => {
 const NoResults = ({ip}) => {
     const isValid = value => (typeof value === 'string') && value.length > 0;
     return <Box flexDirection={'column'}>
-        <Box marginTop={1} marginLeft={1}>
+        <Box marginTop={1} marginLeft={1} marginBottom={1}>
             <Text>No results for </Text>
             <Color bold red>{isValid(ip) ? ip : 'nothing'}</Color>
         </Box>
         {isValid(ip) ?
             <Fragment></Fragment> :
-            <Note message={'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}/>}
+            <Box marginBottom={2} marginLeft={1}>
+                ↳ <Color dim>{'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}</Color>
+            </Box>}
     </Box>;
 };
-const Note = ({message}) => <Box marginBottom={2} marginLeft={1}>
-    ↳ <Color dim>{message}</Color>
-</Box>;
 const DisplayTable = ({data, title}) => <Fragment>
     <InkBox padding={{left: 1, right: 1}} borderColor="gray" dimBorder>
         <Color dim>{title}</Color>
     </InkBox>
     <Table data={data} cell={Cell}/>
-    <Note message={'Try "pwngoal suggest" to get some suggestions on what to do next'}/>
+    <Box marginBottom={2} marginLeft={1}>
+        ↳ <Color dim>{'Try "pwngoal suggest" to get some suggestions on what to do next'}</Color>
+    </Box>
 </Fragment>;
 const SelectTarget = ({descriptions, fallback, store}) => {
     const [title, setTitle] = useState('');
@@ -91,9 +92,6 @@ DisplayTable.propTypes = {
 };
 NoResults.propTypes = {
     ip: PropTypes.string
-};
-Note.propTypes = {
-    message: PropTypes.string
 };
 SelectTarget.propTypes = {
     descriptions: PropTypes.object,
