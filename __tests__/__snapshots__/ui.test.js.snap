@@ -221,6 +221,9 @@ exports[`pwngoal suggest can display suggestions for various services 3`] = `
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Wordpress site with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url http://[1m[36m$RHOST[39m[22m
 
+  [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with wpscan[22m
+    [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url [1m[36m$RHOST[39m[22m --password-attack wp-login --passwords [1m[36m/path/to/passwords[39m[22m
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Drupal site with droopescan[22m
     [2m[34m↳[39m[22m [1m[32mdroopescan[39m[22m scan -u [1m[36m$RHOST[39m[22m
 
@@ -507,6 +510,9 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Wordpress site with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url http://[1m[36mIP[39m[22m
+
+  [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with wpscan[22m
+    [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url [1m[36mIP[39m[22m --password-attack wp-login --passwords [1m[36m/path/to/passwords[39m[22m
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Drupal site with droopescan[22m
     [2m[34m↳[39m[22m [1m[32mdroopescan[39m[22m scan -u [1m[36mIP[39m[22m

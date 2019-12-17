@@ -82,6 +82,10 @@ const suggestions = {
             command: ({ip}) => `${bold.green('wpscan')} --url http://${bold.cyan(ip)}`
         },
         {
+            title: 'Brute force Wordpress login page with wpscan',
+            command: ({ip}) => `${bold.green('wpscan')} --url ${bold.cyan(ip)} --password-attack wp-login --passwords ${bold.cyan('/path/to/passwords')}`
+        },
+        {
             title: 'Enumerate Drupal site with droopescan',
             command: ({ip}) => `${bold.green('droopescan')} scan -u ${bold.cyan(ip)}`
         }
