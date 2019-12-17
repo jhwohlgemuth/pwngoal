@@ -157,11 +157,14 @@ exports[`pwngoal show will render with no terms or options 1`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 1`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"standard\\" DNS scan and brute force hostnames with a dictionary[22m
     [2m[34m↳[39m[22m [1m[32mdnsrecon[39m[22m -d [1m[36m$RHOST[39m[22m -D /usr/share/wordlists/dnsmap.txt -t std
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate DNS information with dnsenum[22m
     [2m[34m↳[39m[22m [1m[32mdnsenum[39m[22m [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for DNS vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script \\"dns-*\\"
@@ -173,6 +176,7 @@ exports[`pwngoal suggest can display suggestions for various services 1`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 2`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mCheck for anonymous FTP login (username: \\"anonymous\\", password: <nothing>)[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script ftp-anon
 
@@ -181,48 +185,63 @@ exports[`pwngoal suggest can display suggestions for various services 2`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 3`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web site for vulnerabilties with nikto[22m
     [2m[34m↳[39m[22m [1m[32mnikto[39m[22m -host [1m[36m$RHOST[39m[22m -port [1m[36m$RPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web server directories with gobuster[22m
     [2m[34m↳[39m[22m [1m[32mgobuster[39m[22m dir -w [1m[36m/path/to/wordlist[39m[22m -u http://[1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web server directories with dirb[22m
     [2m[34m↳[39m[22m [1m[32mdirb[39m[22m http://[1m[36m$RHOST[39m[22m [1m[36m/path/to/wordlist[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"quicklook\\" at the website content in your terminal[22m
     [2m[34m↳[39m[22m [1m[32mcurl[39m[22m -s http://[1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m | [1m[32mhtml2text[39m[22m -style pretty
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mView colorized header data and website content with httpie[22m
     [2m[34m↳[39m[22m [1m[32mhttp[39m[22m [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mFingerprint web server with whatweb[22m
     [2m[34m↳[39m[22m [1m[32mwhatweb[39m[22m -a 3 [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mTake screenshot of server web page and identify default credentials with EyeWitness[22m
     [2m[34m↳[39m[22m [1m[32m./EyeWitness.py[39m[22m -f [1m[36m/path/to/hosts[39m[22m
       [1m[32m./EyeWitness.py[39m[22m --single [1m[36m$RHOST[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force .htaccess directory with medusa[22m
     [2m[34m↳[39m[22m [1m[32mmedusa[39m[22m -h [1m[36m$RHOST[39m[22m -u [1m[36muser[39m[22m -P [1m[36m/path/to/passwords[39m[22m -M http -m DIR:/[1m[36mdirectory[39m[22m -T 10
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36muser[39m[22m -P [1m[36m/path/to/passwords[39m[22m [1m[36m$RHOST[39m[22m -V http-form-post '/wp-login.php:[1m[36mPOST header with ^USER^ and ^PASS^[39m[22m:F=login_error'
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mDetect WebDAV installations[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script http-webdav-scan
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for an IIS 5.1/6.0 WebDAV vulnerability[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script http-iis-webdav-vuln
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mDetermine if enabled DAV services are exploitable[22m
     [2m[34m↳[39m[22m [1m[32mdavtest[39m[22m -url http://[1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Wordpress site with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url http://[1m[36m$RHOST[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url [1m[36m$RHOST[39m[22m --password-attack wp-login --passwords [1m[36m/path/to/passwords[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Drupal site with droopescan[22m
     [2m[34m↳[39m[22m [1m[32mdroopescan[39m[22m scan -u [1m[36m$RHOST[39m[22m
@@ -232,6 +251,7 @@ exports[`pwngoal suggest can display suggestions for various services 3`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 4`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate RPC shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script msrpc-enum
 
@@ -240,11 +260,14 @@ exports[`pwngoal suggest can display suggestions for various services 4`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 5`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate NFS with rpcinfo[22m
     [2m[34m↳[39m[22m [1m[32mrpcinfo[39m[22m -p [1m[36m$RHOST[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mShow server's NFS export list[22m
     [2m[34m↳[39m[22m [1m[32mshowmount[39m[22m -a [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mRun NFS nmap scripts[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script \\"nfs-*\\"
@@ -256,20 +279,25 @@ exports[`pwngoal suggest can display suggestions for various services 5`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 6`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script smb-enum-users
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script smb-enum-shares
 
       [1m[35mTIP[39m[22m [1m[35m→[39m[22m [2mfind other NSE scripts with [1mgibu /usr/share/nmap/scripts -fr[2m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB with enum4linux[22m
     [2m[34m↳[39m[22m [1m[32menum4linux[39m[22m -a [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mList SMB shares and connect to one[22m
     [2m[34m↳[39m[22m [1m[32msmbclient[39m[22m -U [1m[36muser[39m[22m -L [1m[36m//$RHOST[39m[22m
       [1m[32msmbclient[39m[22m -U [1m[36muser[39m[22m [1m[36m//$RHOST/path/to/share[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAttempt SMB null connect[22m
     [2m[34m↳[39m[22m [1m[32mrpcclient[39m[22m -U \\"\\" [1m[36m$RHOST[39m[22m
@@ -279,16 +307,20 @@ exports[`pwngoal suggest can display suggestions for various services 6`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 7`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Oracle server information with oscanner[22m
     [2m[34m↳[39m[22m [1m[32moscanner[39m[22m -s [1m[36m$RHOST[39m[22m -P [1m[36m$RPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mGet information from the Oracle TNS listener[22m
     [2m[34m↳[39m[22m [1m[32mtnscmd10g[39m[22m version -h [1m[36m$RHOST[39m[22m
 
       [1mNOTE[22m [1m[2m→[1m[22m [2mthe default port is 1521/tcp[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force the Oracle SID with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -L /usr/share/oscanner/lib/services.txt -s 1521 [1m[36m$RHOST[39m[22m oracle-sid
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Oracle users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script oracle-enum-users
@@ -300,11 +332,14 @@ exports[`pwngoal suggest can display suggestions for various services 7`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 8`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mCheck for available SMTP commands[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script smtp-commands
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate users with smtp-enum-users and various SMTP commands (VRFY, EXPN, RCPT, etc...)[22m
     [2m[34m↳[39m[22m [1m[32msmtp-user-enum[39m[22m -M [1m[36mCOMMAND[39m[22m -U [1m[36m/path/to/users[39m[22m -t [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for SMTP vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script \\"smtp-vuln-*\\"
@@ -316,11 +351,14 @@ exports[`pwngoal suggest can display suggestions for various services 8`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 9`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SNMP community strings[22m
     [2m[34m↳[39m[22m [1m[32monesixtyone[39m[22m -i [1m[36m/path/to/hosts[39m[22m -c [1m[36m/path/to/strings[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate with snmp-check[22m
     [2m[34m↳[39m[22m [1m[32msnmp-check[39m[22m [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Windows information with snmpwalk[22m
     [2m[34m↳[39m[22m [1m[32msnmpwalk[39m[22m -c [1m[36mcommunity[39m[22m -v1 [1m[36m$RHOST[39m[22m [1m[36moid[39m[22m
@@ -330,8 +368,10 @@ exports[`pwngoal suggest can display suggestions for various services 9`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 10`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SSH login with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36muser[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mSearch for exploits that apply to the SSH server version[22m
     [2m[34m↳[39m[22m [1m[32msearchsploit[39m[22m [1m[36mversion[39m[22m
@@ -341,14 +381,18 @@ exports[`pwngoal suggest can display suggestions for various services 10`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 11`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
     [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
     [2m[34m↳[39m[22m [1m[32mtlssled[39m[22m [1m[36m$RHOST[39m[22m [1m[36m$RPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
     [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script ssl-enum-ciphers
@@ -360,11 +404,14 @@ exports[`pwngoal suggest can display suggestions for various services 11`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 12`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"standard\\" DNS scan and brute force hostnames with a dictionary[22m
     [2m[34m↳[39m[22m [1m[32mdnsrecon[39m[22m -d [1m[36m$RHOST[39m[22m -D /usr/share/wordlists/dnsmap.txt -t std
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate DNS information with dnsenum[22m
     [2m[34m↳[39m[22m [1m[32mdnsenum[39m[22m [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for DNS vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script \\"dns-*\\"
@@ -376,20 +423,25 @@ exports[`pwngoal suggest can display suggestions for various services 12`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 13`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script smb-enum-users
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script smb-enum-shares
 
       [1m[35mTIP[39m[22m [1m[35m→[39m[22m [2mfind other NSE scripts with [1mgibu /usr/share/nmap/scripts -fr[2m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB with enum4linux[22m
     [2m[34m↳[39m[22m [1m[32menum4linux[39m[22m -a [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mList SMB shares and connect to one[22m
     [2m[34m↳[39m[22m [1m[32msmbclient[39m[22m -U [1m[36muser[39m[22m -L [1m[36m//$RHOST[39m[22m
       [1m[32msmbclient[39m[22m -U [1m[36muser[39m[22m [1m[36m//$RHOST/path/to/share[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAttempt SMB null connect[22m
     [2m[34m↳[39m[22m [1m[32mrpcclient[39m[22m -U \\"\\" [1m[36m$RHOST[39m[22m
@@ -399,14 +451,18 @@ exports[`pwngoal suggest can display suggestions for various services 13`] = `
 
 exports[`pwngoal suggest can display suggestions for various services 14`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
     [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
     [2m[34m↳[39m[22m [1m[32mtlssled[39m[22m [1m[36m$RHOST[39m[22m [1m[36m$RPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
     [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m -p [1m[36m$RPORT[39m[22m --script ssl-enum-ciphers
@@ -447,11 +503,14 @@ exports[`pwngoal suggest will display service select menu when passed IP term 1`
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 1`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"standard\\" DNS scan and brute force hostnames with a dictionary[22m
     [2m[34m↳[39m[22m [1m[32mdnsrecon[39m[22m -d [1m[36mIP[39m[22m -D /usr/share/wordlists/dnsmap.txt -t std
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate DNS information with dnsenum[22m
     [2m[34m↳[39m[22m [1m[32mdnsenum[39m[22m [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for DNS vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m --script \\"dns-*\\"
@@ -463,6 +522,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 2`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mCheck for anonymous FTP login (username: \\"anonymous\\", password: <nothing>)[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script ftp-anon
 
@@ -471,48 +531,63 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 3`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web site for vulnerabilties with nikto[22m
     [2m[34m↳[39m[22m [1m[32mnikto[39m[22m -host [1m[36mIP[39m[22m -port [1m[36mPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web server directories with gobuster[22m
     [2m[34m↳[39m[22m [1m[32mgobuster[39m[22m dir -w [1m[36m/path/to/wordlist[39m[22m -u http://[1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan web server directories with dirb[22m
     [2m[34m↳[39m[22m [1m[32mdirb[39m[22m http://[1m[36mIP[39m[22m [1m[36m/path/to/wordlist[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"quicklook\\" at the website content in your terminal[22m
     [2m[34m↳[39m[22m [1m[32mcurl[39m[22m -s http://[1m[36mIP[39m[22m:[1m[36mPORT[39m[22m | [1m[32mhtml2text[39m[22m -style pretty
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mView colorized header data and website content with httpie[22m
     [2m[34m↳[39m[22m [1m[32mhttp[39m[22m [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mFingerprint web server with whatweb[22m
     [2m[34m↳[39m[22m [1m[32mwhatweb[39m[22m -a 3 [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mTake screenshot of server web page and identify default credentials with EyeWitness[22m
     [2m[34m↳[39m[22m [1m[32m./EyeWitness.py[39m[22m -f [1m[36m/path/to/hosts[39m[22m
       [1m[32m./EyeWitness.py[39m[22m --single [1m[36mIP[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force .htaccess directory with medusa[22m
     [2m[34m↳[39m[22m [1m[32mmedusa[39m[22m -h [1m[36mIP[39m[22m -u [1m[36mLEROY[39m[22m -P [1m[36m/path/to/passwords[39m[22m -M http -m DIR:/[1m[36mdirectory[39m[22m -T 10
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36mLEROY[39m[22m -P [1m[36m/path/to/passwords[39m[22m [1m[36mIP[39m[22m -V http-form-post '/wp-login.php:[1m[36mPOST header with ^USER^ and ^PASS^[39m[22m:F=login_error'
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mDetect WebDAV installations[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script http-webdav-scan
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for an IIS 5.1/6.0 WebDAV vulnerability[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script http-iis-webdav-vuln
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mDetermine if enabled DAV services are exploitable[22m
     [2m[34m↳[39m[22m [1m[32mdavtest[39m[22m -url http://[1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Wordpress site with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url http://[1m[36mIP[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force Wordpress login page with wpscan[22m
     [2m[34m↳[39m[22m [1m[32mwpscan[39m[22m --url [1m[36mIP[39m[22m --password-attack wp-login --passwords [1m[36m/path/to/passwords[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Drupal site with droopescan[22m
     [2m[34m↳[39m[22m [1m[32mdroopescan[39m[22m scan -u [1m[36mIP[39m[22m
@@ -522,6 +597,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 4`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate RPC shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m --script msrpc-enum
 
@@ -530,11 +606,14 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 5`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate NFS with rpcinfo[22m
     [2m[34m↳[39m[22m [1m[32mrpcinfo[39m[22m -p [1m[36mIP[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mShow server's NFS export list[22m
     [2m[34m↳[39m[22m [1m[32mshowmount[39m[22m -a [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mRun NFS nmap scripts[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m --script \\"nfs-*\\"
@@ -546,20 +625,25 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 6`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script smb-enum-users
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script smb-enum-shares
 
       [1m[35mTIP[39m[22m [1m[35m→[39m[22m [2mfind other NSE scripts with [1mgibu /usr/share/nmap/scripts -fr[2m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB with enum4linux[22m
     [2m[34m↳[39m[22m [1m[32menum4linux[39m[22m -a [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mList SMB shares and connect to one[22m
     [2m[34m↳[39m[22m [1m[32msmbclient[39m[22m -U [1m[36mLEROY[39m[22m -L [1m[36m//IP[39m[22m
       [1m[32msmbclient[39m[22m -U [1m[36mLEROY[39m[22m [1m[36m//IP/path/to/share[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAttempt SMB null connect[22m
     [2m[34m↳[39m[22m [1m[32mrpcclient[39m[22m -U \\"\\" [1m[36mIP[39m[22m
@@ -569,16 +653,20 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 7`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Oracle server information with oscanner[22m
     [2m[34m↳[39m[22m [1m[32moscanner[39m[22m -s [1m[36mIP[39m[22m -P [1m[36mPORT[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mGet information from the Oracle TNS listener[22m
     [2m[34m↳[39m[22m [1m[32mtnscmd10g[39m[22m version -h [1m[36mIP[39m[22m
 
       [1mNOTE[22m [1m[2m→[1m[22m [2mthe default port is 1521/tcp[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force the Oracle SID with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -L /usr/share/oscanner/lib/services.txt -s 1521 [1m[36mIP[39m[22m oracle-sid
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Oracle users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36m$RHOST[39m[22m --script oracle-enum-users
@@ -590,11 +678,14 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 8`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mCheck for available SMTP commands[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script smtp-commands
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate users with smtp-enum-users and various SMTP commands (VRFY, EXPN, RCPT, etc...)[22m
     [2m[34m↳[39m[22m [1m[32msmtp-user-enum[39m[22m -M [1m[36mCOMMAND[39m[22m -U [1m[36m/path/to/users[39m[22m -t [1m[36m$RHOST[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for SMTP vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m --script \\"smtp-vuln-*\\"
@@ -606,11 +697,14 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 9`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SNMP community strings[22m
     [2m[34m↳[39m[22m [1m[32monesixtyone[39m[22m -i [1m[36m/path/to/hosts[39m[22m -c [1m[36m/path/to/strings[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate with snmp-check[22m
     [2m[34m↳[39m[22m [1m[32msnmp-check[39m[22m [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate Windows information with snmpwalk[22m
     [2m[34m↳[39m[22m [1m[32msnmpwalk[39m[22m -c [1m[36mcommunity[39m[22m -v1 [1m[36mIP[39m[22m [1m[36moid[39m[22m
@@ -620,8 +714,10 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 10`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SSH login with hydra[22m
     [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36mLEROY[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mSearch for exploits that apply to the SSH server version[22m
     [2m[34m↳[39m[22m [1m[32msearchsploit[39m[22m [1m[36mversion[39m[22m
@@ -631,14 +727,18 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 11`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
     [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
     [2m[34m↳[39m[22m [1m[32mtlssled[39m[22m [1m[36mIP[39m[22m [1m[36mPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
     [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script ssl-enum-ciphers
@@ -650,11 +750,14 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 12`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mPerform a \\"standard\\" DNS scan and brute force hostnames with a dictionary[22m
     [2m[34m↳[39m[22m [1m[32mdnsrecon[39m[22m -d [1m[36mIP[39m[22m -D /usr/share/wordlists/dnsmap.txt -t std
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate DNS information with dnsenum[22m
     [2m[34m↳[39m[22m [1m[32mdnsenum[39m[22m [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mScan for DNS vulnerabilties with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m --script \\"dns-*\\"
@@ -666,20 +769,25 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 13`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB users with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script smb-enum-users
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB shares with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script smb-enum-shares
 
       [1m[35mTIP[39m[22m [1m[35m→[39m[22m [2mfind other NSE scripts with [1mgibu /usr/share/nmap/scripts -fr[2m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SMB with enum4linux[22m
     [2m[34m↳[39m[22m [1m[32menum4linux[39m[22m -a [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mList SMB shares and connect to one[22m
     [2m[34m↳[39m[22m [1m[32msmbclient[39m[22m -U [1m[36mLEROY[39m[22m -L [1m[36m//IP[39m[22m
       [1m[32msmbclient[39m[22m -U [1m[36mLEROY[39m[22m [1m[36m//IP/path/to/share[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAttempt SMB null connect[22m
     [2m[34m↳[39m[22m [1m[32mrpcclient[39m[22m -U \\"\\" [1m[36mIP[39m[22m
@@ -689,14 +797,18 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 exports[`pwngoal suggest will interpolate suggestions with passed options (ip, port, user) 14`] = `
 "
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
     [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
     [2m[34m↳[39m[22m [1m[32mtlssled[39m[22m [1m[36mIP[39m[22m [1m[36mPORT[39m[22m
 
+
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
     [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m
+
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
     [2m[34m↳[39m[22m [1m[32mnmap[39m[22m [1m[36mIP[39m[22m -p [1m[36mPORT[39m[22m --script ssl-enum-ciphers

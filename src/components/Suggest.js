@@ -23,7 +23,7 @@ const getTableData = (store, value) => {
         });
     });
 };
-const Suggestion = ({command, options, title}) => <Box flexDirection="column" marginBottom={1}>
+const Suggestion = ({command, options, title}) => <Box flexDirection="column" marginTop={1} marginBottom={1}>
     <Text>{bold.blue('TRY')} {dim.blue(arrowRight)} {dim(title)}</Text>
     <Text>  {dim.blue('↳')} {typeof command === 'function' ? command(options) : command}</Text>
 </Box>;
