@@ -191,7 +191,7 @@ const suggestions = {
     'ssl/https': [
         {
             title: 'Enumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan',
-            command: ({ip}) => `${bold.green('sslscan')} ${bold.cyan(ip)}`
+            command: ({ip, port}) => `${bold.green('sslscan')} ${bold.cyan(ip)}:${bold.cyan(port)}`
         },
         {
             title: 'Evaluate the web server SSL/TLS (HTTPS) security with tlssled',
@@ -199,7 +199,7 @@ const suggestions = {
         },
         {
             title: 'Analyze server SSL configuration with "regular" sslyze scan',
-            command: ({ip}) => `${bold.green('sslyze')} --regular ${bold.cyan(ip)}`
+            command: ({ip, port}) => `${bold.green('sslyze')} --regular ${bold.cyan(ip)}:${bold.cyan(port)}`
         },
         {
             title: 'Enumerate SSL ciphers with nmap',

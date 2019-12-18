@@ -383,7 +383,7 @@ exports[`pwngoal suggest can display suggestions for various services 11`] = `
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
-    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
@@ -391,7 +391,7 @@ exports[`pwngoal suggest can display suggestions for various services 11`] = `
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
-    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
@@ -453,7 +453,7 @@ exports[`pwngoal suggest can display suggestions for various services 14`] = `
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
-    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
@@ -461,7 +461,7 @@ exports[`pwngoal suggest can display suggestions for various services 14`] = `
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
-    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36m$RHOST[39m[22m:[1m[36m$RPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
@@ -729,7 +729,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
-    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
@@ -737,7 +737,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
-    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
@@ -799,7 +799,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan[22m
-    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslscan[39m[22m [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEvaluate the web server SSL/TLS (HTTPS) security with tlssled[22m
@@ -807,7 +807,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mAnalyze server SSL configuration with \\"regular\\" sslyze scan[22m
-    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m
+    [2m[34m↳[39m[22m [1m[32msslyze[39m[22m --regular [1m[36mIP[39m[22m:[1m[36mPORT[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mEnumerate SSL ciphers with nmap[22m
