@@ -67,7 +67,7 @@ export default {/* eslint-disable max-len */
         {
             text: 'Copy command to clipboard',
             task: async ({escaped}) => {
-                const cmd = `python -c 'import pty;pty.spawn("/bin/bash")`;
+                const cmd = `python -c 'import pty;pty.spawn("/bin/bash")'`;
                 await clipboard.write(escaped ? wrapWithQuotes(cmd) : cmd);
             },
             condition: () => true

