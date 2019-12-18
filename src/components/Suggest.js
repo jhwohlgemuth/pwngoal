@@ -111,7 +111,7 @@ const SelectService = ({data, descriptions, options = {}}) => {
         <NoResults/>;
 };
 const SuggestCommand = ({descriptions, options = {}, store, terms}) => {
-    const {ip, port = '$RPORT', service = '', user = 'user'} = options;
+    const {ip, port, service = '', user = 'user'} = options;
     const [firstTerm] = terms;
     const target = firstTerm || ip;
     const data = getTableData(store, target);

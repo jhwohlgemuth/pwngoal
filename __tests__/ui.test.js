@@ -211,7 +211,10 @@ describe('pwngoal', () => {
         });
         it('can display suggestions for various services', () => {
             const terms = [];
-            const options = {ip: ''};
+            const options = {
+                ip: '',
+                port: '$RPORT'
+            };
             const services = Object.keys(mindmap);
             services.forEach(service => {
                 const {lastFrame} = render(<UI

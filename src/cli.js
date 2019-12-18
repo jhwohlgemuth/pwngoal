@@ -36,7 +36,7 @@ export const help = `
         --debug                 Show debug data [Default: false]
         --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
         --ip,               -i  IP address of target, sometimes referred to as RHOST
-        --port,             -p  Port [Default: 80]
+        --port,             -p  Port [Default: $RPORT]
         --network-interface -I  Network interface (like eth0 or fxp1) [Default: tap0]
         --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
@@ -105,7 +105,7 @@ export const options = {
         },
         port: {
             type: 'number',
-            default: 80,
+            default: '$RPORT',
             alias: 'p'
         },
         networkInterface: {

@@ -18,7 +18,7 @@
         --debug                 Show debug data [Default: false]
         --escaped           -e  Wrap copy command in quotes, escape internal quotes [Default: false]
         --ip,               -i  IP address of target, sometimes referred to as RHOST
-        --port,             -p  Port [Default: 80]
+        --port,             -p  Port [Default: $RPORT]
         --network-interface -I  Network interface (like eth0 or fxp1) [Default: tap0]
         --service,          -s  Service
         --udp               -u  Include UDP ports in scan [Default: false]
@@ -53,4 +53,4 @@
         ${_chalk.bold.magenta("TIP:")} pwngoal works well with ${(0,_chalk.bold)("gibu")}, ${(0,_chalk.cyan)("https://github.com/jhwohlgemuth/gibu")}
 
 
-`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:80,alias:"p"},networkInterface:{type:"string",default:"tap0",alias:"I"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},nmapOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
+`;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"number",default:"$RPORT",alias:"p"},networkInterface:{type:"string",default:"tap0",alias:"I"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},nmapOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
