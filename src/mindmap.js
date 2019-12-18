@@ -190,7 +190,7 @@ const suggestions = {
     ],
     'ssl/https': [
         {
-            title: 'Enumerate SSL configuration, check for heartbleed vulnerability, and determine supported SSL ciphers with sslscan',
+            title: 'Enumerate SSL configuration (and check for heartbleed) with sslscan',
             command: ({ip, port}) => `${bold.green('sslscan')} ${bold.cyan(ip)}:${bold.cyan(port)}`
         },
         {
