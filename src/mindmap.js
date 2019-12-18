@@ -181,7 +181,7 @@ const suggestions = {
     ssh: [
         {
             title: 'Brute force SSH login with hydra',
-            command: ({ip, user}) => `${bold.green('hydra')} -l ${bold.cyan(user)} -P ${bold.cyan('/path/to/password/list')} -f -V ${bold.cyan(ip)}`
+            command: ({ip, user}) => `${bold.green('hydra')} -l ${bold.cyan(user)} -P ${bold.cyan('/path/to/password/list')} -f -V ssh://${bold.cyan(ip)}`
         },
         {
             title: 'Search for exploits that apply to the SSH server version',

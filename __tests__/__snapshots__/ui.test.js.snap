@@ -370,7 +370,7 @@ exports[`pwngoal suggest can display suggestions for various services 10`] = `
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SSH login with hydra[22m
-    [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36muser[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V [1m[36m$RHOST[39m[22m
+    [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36muser[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V ssh://[1m[36m$RHOST[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mSearch for exploits that apply to the SSH server version[22m
@@ -716,7 +716,7 @@ exports[`pwngoal suggest will interpolate suggestions with passed options (ip, p
 "
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mBrute force SSH login with hydra[22m
-    [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36mLEROY[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V [1m[36mIP[39m[22m
+    [2m[34m↳[39m[22m [1m[32mhydra[39m[22m -l [1m[36mLEROY[39m[22m -P [1m[36m/path/to/password/list[39m[22m -f -V ssh://[1m[36mIP[39m[22m
 
 
   [1m[34mTRY[39m[22m [2m[34m→[39m[22m [2mSearch for exploits that apply to the SSH server version[22m
