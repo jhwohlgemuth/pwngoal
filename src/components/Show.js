@@ -45,7 +45,7 @@ const DisplayTable = ({data, title}) => <Fragment>
     </InkBox>
     <Table data={data} cell={Cell}/>
     <Box marginBottom={2} marginLeft={1}>
-        ↳ <Color dim>{'Try "pwngoal suggest" to get some suggestions on what to do next'}</Color>
+        ↳ <Color dim>{`Try "pwngoal suggest ${title}" to get some suggestions on what to do next`}</Color>
     </Box>
 </Fragment>;
 const SelectTarget = ({descriptions, fallback, store}) => {
