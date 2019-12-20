@@ -63,6 +63,10 @@ export default {/* eslint-disable max-len */
             condition: () => true
         }
     ],
+    /**
+     * Download standalone binary
+     * @see https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/socat
+     */
     'reverse shell (socat)': [
         {
             text: 'Copy command to clipboard',
