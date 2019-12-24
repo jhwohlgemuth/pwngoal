@@ -1,10 +1,6 @@
-import {homedir, EOL} from 'os';
-import {join} from 'path';
-import {promisify} from 'util';
-import {appendFile, mkdirp} from 'fs-extra';
+import {EOL} from 'os';
 import execa from 'execa';
-import {format} from 'tomo-cli';
-const append = promisify(appendFile);
+import {debug} from 'tomo-cli';
 
 const includes = str => line => line.includes(str);
 const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
@@ -12,21 +8,6 @@ const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
 export const byIpAddress = () => {
     const format = val => Number(val.split('.').map(num => (`000${num}`).slice(-3)).join('')); // eslint-disable-line no-magic-numbers
     return (a, b) => format(a) - format(b);
-};
-export const debug = async (data, title = '') => {
-    const name = 'pwngoal';
-    const savepath = join(homedir(), `.${name}`);
-    const [date] = (new Date()).toISOString().split('T');
-    const time = new Date().toLocaleTimeString('en-US', {hour12: false});
-    const timestamp = `${date} ${time}`;
-    try {
-        await mkdirp(savepath);
-        await append(`${savepath}/debug`, `[${timestamp}] ${title}${EOL}`);
-        await append(`${savepath}/debug`, format(data));
-        await append(`${savepath}/debug`, `${EOL}`);
-    } catch (_) {
-        /* do nothing */
-    }
 };
 export const enumerate = async (ip, ports, type = 'tcp') => {
     const data = [];

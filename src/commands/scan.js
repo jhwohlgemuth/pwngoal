@@ -3,8 +3,8 @@ import isElevated from 'is-elevated';
 import execa from 'execa';
 import Conf from 'conf';
 import commandExists from 'command-exists';
+import {debug} from 'tomo-cli';
 import {
-    debug,
     enumerate,
     getOpenPortsWithNmap,
     getOpenPortsWithMasscan,

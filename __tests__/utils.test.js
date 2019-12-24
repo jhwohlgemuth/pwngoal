@@ -23,7 +23,6 @@ jest.mock('../src/utils', () => {
         __esModule: true,
         byIpAddress,
         enumerate,
-        debug: jest.fn(),
         getElapsedTime,
         getGateway: jest.fn(() => 'something something 10.11.0.1 via tap0'),
         getOpenPortsWithMasscan,

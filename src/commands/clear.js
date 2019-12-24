@@ -1,5 +1,5 @@
 import Conf from 'conf';
-import {debug} from '../utils';
+import {debug} from 'tomo-cli';
 import {projectName} from '../cli';
 
 const store = new Conf({projectName});
