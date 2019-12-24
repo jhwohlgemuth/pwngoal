@@ -1,5 +1,6 @@
 import React, {Component, Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
+import Conf from 'conf';
 import {play} from 'figures';
 import {is} from 'ramda';
 import {Box, Color, Text} from 'ink';
@@ -12,9 +13,49 @@ import {
     dict,
     getElapsedSeconds,
     getElapsedTime,
-    getIntendedInput
+    getIntendedInput,
+    getProjectName
 } from 'tomo-cli';
 
+const appendTo = (store, key, value) => {
+    const unsafe = store.get(key);
+    Array.isArray(unsafe) || store.set(key, []);
+    const safe = store.get(key);
+    store.set(key, safe.concat(value));
+};
+const AnimatedIndicator = ({complete, elapsed}) => {
+    const Active = () => <Color cyan>{play}</Color>;
+    const Inactive = () => <Color dim>{play}</Color>;
+    const gate = Number(elapsed.split(':')[2]) % 3;
+    return complete ? <Color dim>runtime</Color> : <Box>
+        {gate === 0 ? <Active /> : <Inactive />}
+        {gate === 1 ? <Active /> : <Inactive />}
+        {gate === 2 ? <Active /> : <Inactive />}
+    </Box>;
+};
+const Timer = ({options}) => {
+    const {store} = options;
+    const [start] = process.hrtime();
+    const [complete, setComplete] = useState(false);
+    const [elapsed, setElapsed] = useState('00:00:00');
+    useEffect(() => {
+        const id = setInterval(() => {
+            setElapsed(getElapsedTime(start));
+        }, 1000); // eslint-disable-line no-magic-numbers
+        global._tomo_tasklist_callback = () => {// eslint-disable-line camelcase
+            const tcp = store.get('tcp.ports') || [];
+            const udp = store.get('udp.ports') || [];
+            const runtime = getElapsedSeconds(getElapsedTime(start));
+            runtime > 1 && appendTo(store, 'stats', {tcp, udp, runtime});
+            setComplete(true);
+            clearInterval(id);
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return <Box marginTop={1} marginLeft={1}>
+        <AnimatedIndicator elapsed={elapsed} complete={complete}/>
+        <Text> {elapsed}</Text>
+    </Box>;
+};
 /**
  * Main tomo UI component
  * @param {Object} props Component props
@@ -38,6 +79,7 @@ export default class UI extends Component {
             {intendedCommand: command, intendedTerms: terms};
         const compare = (term, index) => (term !== terms[index]);
         const showWarning = ((command !== intendedCommand) || (hasTerms && intendedTerms.map(compare).some(Boolean))) && !ignoreWarnings;
+        this.store = new Conf({projectName: getProjectName()});
         this.state = {
             hasTerms,
             hasCommand,
@@ -50,8 +92,10 @@ export default class UI extends Component {
         this.updateTerms = this.updateTerms.bind(this);
     }
     render() {
-        const {commands, descriptions, done, flags, store, customCommands} = this.props;
-        const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = this.state;
+        const self = this;
+        const {commands, descriptions, done, flags, customCommands} = self.props;
+        const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = self.state;
+        const store = self.props.store || self.store;
         const CustomCommand = () => {
             const lookup = dict(customCommands || {});
             const Command = lookup.has(intendedCommand) ? lookup.get(intendedCommand) : UnderConstruction;
@@ -62,48 +106,6 @@ export default class UI extends Component {
                 store={store}
                 terms={intendedTerms}/>;
         };
-        const Timer = () => {
-            const [start] = process.hrtime();
-            const [complete, setComplete] = useState(false);
-            const [elapsed, setElapsed] = useState('00:00:00');
-            const AnimatedIndicator = ({complete, elapsed}) => {
-                const Active = () => <Color cyan>{play}</Color>;
-                const Inactive = () => <Color dim>{play}</Color>;
-                const gate = Number(elapsed.split(':')[2]) % 3;
-                return complete ? <Color dim>runtime</Color> : <Box>
-                    {gate === 0 ? <Active /> : <Inactive />}
-                    {gate === 1 ? <Active /> : <Inactive />}
-                    {gate === 2 ? <Active /> : <Inactive />}
-                </Box>;
-            };
-            AnimatedIndicator.propTypes = {
-                complete: PropTypes.bool,
-                elapsed: PropTypes.string
-            };
-            useEffect(() => {
-                const id = setInterval(() => {
-                    setElapsed(getElapsedTime(start));
-                }, 1000); // eslint-disable-line no-magic-numbers
-                global._pwngoal_callback = () => {// eslint-disable-line camelcase
-                    const appendTo = (store, key, value) => {
-                        const unsafe = store.get(key);
-                        Array.isArray(unsafe) || store.set(key, []);
-                        const safe = store.get(key);
-                        store.set(key, safe.concat(value));
-                    };
-                    const tcp = store.get('tcp.ports') || [];
-                    const udp = store.get('udp.ports') || [];
-                    const runtime = getElapsedSeconds(getElapsedTime(start));
-                    runtime > 1 && appendTo(store, 'stats', {tcp, udp, runtime});
-                    setComplete(true);
-                    clearInterval(id);
-                };
-            }, []); // eslint-disable-line react-hooks/exhaustive-deps
-            return <Box marginTop={1} marginLeft={1}>
-                <AnimatedIndicator elapsed={elapsed} complete={complete}/>
-                <Text> {elapsed}</Text>
-            </Box>;
-        };
         return <ErrorBoundary>
             {showWarning ?
                 <Warning callback={this.updateWarning}>
@@ -113,7 +115,7 @@ export default class UI extends Component {
                     isTerminalCommand ?
                         <CustomCommand/> :
                         (<Fragment>
-                            <Timer/>
+                            <Timer callback={done} options={{store}}/>
                             <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={flags} done={done}></TaskList>
                         </Fragment>) :
                     hasCommand ?
@@ -149,6 +151,14 @@ export default class UI extends Component {
         });
     }
 }
+AnimatedIndicator.propTypes = {
+    complete: PropTypes.bool,
+    elapsed: PropTypes.string
+};
+Timer.propTypes = {
+    callback: PropTypes.func,
+    options: PropTypes.object
+};
 UI.propTypes = {
     commands: PropTypes.object,
     descriptions: PropTypes.object,

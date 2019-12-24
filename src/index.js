@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import React, {Fragment} from 'react';
-import Conf from 'conf';
 import meow from 'meow';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
@@ -8,7 +7,7 @@ import {render} from 'ink';
 import {showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
-import {descriptions, options, projectName} from './cli';
+import {descriptions, options} from './cli';
 import Backup from './components/Backup';
 import Show from './components/Show';
 import Suggest from './components/Suggest';
@@ -26,9 +25,8 @@ const customCommands = {
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
 (async () => {
-    const done = () => typeof global._pwngoal_callback === 'function' && global._pwngoal_callback();
+    const done = () => typeof global._tomo_tasklist_callback === 'function' && global._tomo_tasklist_callback();
     const stdin = await getStdin();
-    const store = new Conf({projectName});
     const Main = () => <Fragment>
         <UI
             commands={commands}
@@ -37,7 +35,6 @@ const {input, flags} = meow(options);
             flags={flags}
             input={input}
             stdin={stdin}
-            store={store}
             customCommands={customCommands}/>
     </Fragment>;
     render(<Main/>, {exitOnCtrlC: true});

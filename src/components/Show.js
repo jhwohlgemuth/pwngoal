@@ -35,7 +35,8 @@ const NoResults = ({ip}) => {
         {isValid(ip) ?
             <Fragment></Fragment> :
             <Box marginBottom={2} marginLeft={1}>
-                ↳ <Color dim>{'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}</Color>
+                <Text> ↳ </Text>
+                <Color dim>{'Try "pwngoal scan ports --ip <IP> [--udp|--udpOnly]" to get some data to show'}</Color>
             </Box>}
     </Box>;
 };
@@ -45,7 +46,8 @@ const DisplayTable = ({data, title}) => <Fragment>
     </InkBox>
     <Table data={data} cell={Cell}/>
     <Box marginBottom={2} marginLeft={1}>
-        ↳ <Color dim>{`Try "pwngoal suggest ${title}" to get some suggestions on what to do next`}</Color>
+        <Text> ↳ </Text>
+        <Color dim>{`Try "pwngoal suggest ${title}" to get some suggestions on what to do next`}</Color>
     </Box>
 </Fragment>;
 const SelectTarget = ({descriptions, fallback, store}) => {
