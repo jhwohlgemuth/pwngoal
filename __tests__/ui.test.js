@@ -34,6 +34,7 @@ const SCAN_DATA = {
         {version: 'version', protocol: 'protocol', service: 'service'}
     ]
 };
+const namespace = 'pwngoal-testing';
 const store = new Map(Object.entries(SCAN_DATA));
 
 describe('pwngoal', () => {
@@ -48,6 +49,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 input={[command, ...terms]}
                 flags={options}
+                namespace={namespace}
                 store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
@@ -62,6 +64,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 input={[command, ...terms]}
                 flags={options}
+                namespace={namespace}
                 store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
@@ -77,6 +80,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 input={[command, ...terms]}
                 flags={options}
+                namespace={namespace}
                 store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
@@ -86,8 +90,9 @@ describe('pwngoal', () => {
             const {lastFrame} = render(<UI
                 commands={commands}
                 descriptions={descriptions}
-                input={[command, ...terms]}
                 flags={options}
+                input={[command, ...terms]}
+                namespace={namespace}
                 store={store}/>);
             expect(lastFrame()).toMatchSnapshot();
         });
@@ -105,6 +110,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -119,6 +125,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -131,6 +138,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -145,6 +153,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -159,6 +168,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -173,6 +183,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -191,6 +202,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -205,6 +217,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={options}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();
@@ -222,6 +235,7 @@ describe('pwngoal', () => {
                     descriptions={descriptions}
                     flags={{...options, service}}
                     input={[command, ...terms]}
+                    namespace={namespace}
                     store={store}
                     customCommands={customCommands}/>);
                 expect(lastFrame()).toMatchSnapshot();
@@ -243,6 +257,7 @@ describe('pwngoal', () => {
                     descriptions={descriptions}
                     flags={{...options, service}}
                     input={[command, ...terms]}
+                    namespace={namespace}
                     store={store}
                     customCommands={customCommands}/>);
                 expect(lastFrame()).toMatchSnapshot();
@@ -256,6 +271,7 @@ describe('pwngoal', () => {
                 descriptions={descriptions}
                 flags={{...options, service: 'does-not-exist'}}
                 input={[command, ...terms]}
+                namespace={namespace}
                 store={store}
                 customCommands={customCommands}/>);
             expect(lastFrame()).toMatchSnapshot();

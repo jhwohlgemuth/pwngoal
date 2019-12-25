@@ -1,6 +1,7 @@
 import {EOL} from 'os';
 import execa from 'execa';
 import {debug} from 'tomo-cli';
+import {namespace} from '../cli';
 
 const includes = str => line => line.includes(str);
 const getPort = line => /\d*?(?=\/)/i.exec(line)[0];
@@ -16,7 +17,10 @@ export const enumerate = async (ip, ports, type = 'tcp') => {
         const args = [ip, '-p', port, '-sV'].concat(protocol === 'UDP' ? '-sU' : []);
         try {
             const {stdout} = await execa('nmap', args);
-            await debug(stdout, `nmap ${args.join(' ')}`);
+            await debug(stdout, {
+                title: `nmap ${args.join(' ')}`,
+                filename: namespace
+            });
             stdout
                 .split(EOL)
                 .filter(includes(`/${type}`))
@@ -26,7 +30,10 @@ export const enumerate = async (ip, ports, type = 'tcp') => {
                     data.push({protocol, port, service, version});
                 });
         } catch (err) {
-            await debug(err, `Error during "nmap ${args.join(' ')}"`);
+            await debug(err, {
+                title: `Error during "nmap ${args.join(' ')}"`,
+                filename: namespace
+            });
             const service = 'ERROR';
             const version = 'Read debug log for details';
             data.push({protocol, port, service, version});
@@ -37,7 +44,10 @@ export const enumerate = async (ip, ports, type = 'tcp') => {
 export const getGateway = async (networkInterface = 'tap0') => {
     const args = ['route'];
     const {stdout} = await execa('ip', args);
-    await debug(stdout, `ip ${args.join(' ')}`);
+    await debug(stdout, {
+        title: `ip ${args.join(' ')}`,
+        filename: namespace
+    });
     const [gateway] = (stdout || '')
         .split(EOL)
         .filter(includes('via'))
@@ -48,7 +58,10 @@ export const getGateway = async (networkInterface = 'tap0') => {
 export const getOpenPortsWithNmap = async ip => {
     const args = [ip, '--open', '-p', '0-65535'];
     const {stdout} = await execa('nmap', args);
-    await debug(stdout, `nmap ${args.join(' ')}`);
+    await debug(stdout, {
+        title: `nmap ${args.join(' ')}`,
+        filename: namespace
+    });
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
@@ -58,7 +71,10 @@ export const getOpenPortsWithNmap = async ip => {
 export const getOpenUdpPortsWithNmap = async ip => {
     const args = [ip, '--open', '-sU', '-T4', '--max-retries', 1];
     const {stdout} = await execa('nmap', args);
-    await debug(stdout, `nmap ${args.join(' ')}`);
+    await debug(stdout, {
+        title: `nmap ${args.join(' ')}`,
+        filename: namespace
+    });
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/udp'))
@@ -68,16 +84,22 @@ export const getOpenUdpPortsWithNmap = async ip => {
 export const getOpenPortsWithMasscan = async (ip, networkInterface = 'tap0') => {
     const rate = 500;
     const gateway = await getGateway(networkInterface);
-    await debug({ip, rate, networkInterface, gateway});
+    await debug({ip, rate, networkInterface, gateway}, {filename: namespace});
     const args = [ip, '-e', networkInterface, '--router-ip', gateway, '-p', '0-65535', '--rate', rate];
     const {stdout} = await execa('masscan', args);
-    await debug(stdout, `masscan ${args.join(' ')}`);
+    await debug(stdout, {
+        title: `masscan ${args.join(' ')}`,
+        filename: namespace
+    });
     const ports = (stdout || '')
         .split(EOL)
         .filter(includes('/tcp'))
         .map(getPort)
         .sort((a, b) => a - b);
-    await debug({ports}, 'TCP ports found with masscan');
+    await debug({ports}, {
+        title: 'TCP ports found with masscan',
+        filename: namespace
+    });
     return ports;
 };
 export const shouldScanWithAmap = ({service, version}) => {

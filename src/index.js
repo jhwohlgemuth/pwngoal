@@ -7,7 +7,7 @@ import {render} from 'ink';
 import {showVersion} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
-import {descriptions, options} from './cli';
+import {descriptions, namespace, options} from './cli';
 import Backup from './components/Backup';
 import Show from './components/Show';
 import Suggest from './components/Suggest';
@@ -34,6 +34,7 @@ const {input, flags} = meow(options);
             done={done}
             flags={flags}
             input={input}
+            namespace={namespace}
             stdin={stdin}
             customCommands={customCommands}/>
     </Fragment>;

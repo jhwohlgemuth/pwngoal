@@ -1,6 +1,6 @@
 import {cyan, dim, bold} from 'chalk';
 
-export const projectName = 'pwngoal';
+export const namespace = 'pwngoal';
 export const descriptions = {
     default: item => `Execute for ${item}`,
     enum: 'Enumerate stuff',
@@ -19,7 +19,7 @@ export const descriptions = {
 export const help = `
     ${dim.bold('Usage')}
 
-        ${cyan('>')} ${projectName} [commands] [terms] [options]
+        ${cyan('>')} ${namespace} [commands] [terms] [options]
 
         ${cyan('>')} pwn [commands] [terms] [options]
 
@@ -51,22 +51,22 @@ export const help = `
     ${dim.bold('Examples')}
 
         ${dim('Scan open TCP ports, enumerate services')}
-        ${cyan('>')} ${projectName} scan ports -i IP [--nmap-only]
+        ${cyan('>')} ${namespace} scan ports -i IP [--nmap-only]
 
         ${dim('Scan open TCP and UDP ports, enumerate services')}
-        ${cyan('>')} ${projectName} scan ports -i IP --udp
+        ${cyan('>')} ${namespace} scan ports -i IP --udp
 
         ${dim('Scan open UDP ports only, enumerate services')}
-        ${cyan('>')} ${projectName} scan ports -i IP --udp-only
+        ${cyan('>')} ${namespace} scan ports -i IP --udp-only
 
         ${dim('Select a command to be copied to your clipboard')}
-        ${cyan('>')} ${projectName} copy [-i IP | -p PORT | --user USER | --group GROUP | --escaped]
+        ${cyan('>')} ${namespace} copy [-i IP | -p PORT | --user USER | --group GROUP | --escaped]
 
         ${dim('View suggestions for PWNing http')}
-        ${cyan('>')} ${projectName} suggest -s http [-i HOST | -p PORT | --user USER | --group GROUP]
+        ${cyan('>')} ${namespace} suggest -s http [-i HOST | -p PORT | --user USER | --group GROUP]
 
         ${dim('Display scan results in a neatly organized table, right in your terminal')}
-        ${cyan('>')} ${projectName} show [-i IP]
+        ${cyan('>')} ${namespace} show [-i IP]
 
         ${bold.magenta('TIP:')} pwngoal works well with ${bold('gibu')}, ${cyan('https://github.com/jhwohlgemuth/gibu')}
 

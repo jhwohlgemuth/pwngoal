@@ -1,7 +1,6 @@
 import {EOL} from 'os';
 import isElevated from 'is-elevated';
 import execa from 'execa';
-import Conf from 'conf';
 import commandExists from 'command-exists';
 import {debug} from 'tomo-cli';
 import {
@@ -11,13 +10,12 @@ import {
     getOpenUdpPortsWithNmap,
     shouldScanWithAmap
 } from '../utils';
-import {projectName} from '../cli';
+import {namespace} from '../cli';
 
-const store = new Conf({projectName});
 const PRIMARY_SCANNER = 'masscan';
 const SECONDARY_SCANNER = 'nmap';
 const makeKey = ip => ip.split('.').join('_');
-const shouldPerformEnumeration = () => {
+const shouldPerformEnumeration = store => {
     const tcp = store.get('tcp.ports') || [];
     const udp = store.get('udp.ports') || [];
     return [...tcp, ...udp].length > 0;
@@ -44,7 +42,7 @@ export default {
     ports: [
         {
             text: 'Clear saved data',
-            task: async ({ip}) => {
+            task: async ({ip, store}) => {
                 store.delete(makeKey(ip));
                 store.delete('tcp.ports');
                 store.delete('udp.ports');
@@ -53,9 +51,12 @@ export default {
         },
         {
             text: `Find open TCP ports with ${PRIMARY_SCANNER}`,
-            task: async ({ip, networkInterface}) => {
+            task: async ({ip, networkInterface, store}) => {
                 const ports = await getOpenPortsWithMasscan(ip, networkInterface);
-                await debug({ports}, `TCP ports from ${PRIMARY_SCANNER}`);
+                await debug({ports}, {
+                    title: `TCP ports from ${PRIMARY_SCANNER}`,
+                    filename: namespace
+                });
                 store.set('tcp.ports', ports);
             },
             condition: ({nmapOnly, udpOnly}) => !nmapOnly && !udpOnly && commandExists.sync(PRIMARY_SCANNER),
@@ -63,9 +64,12 @@ export default {
         },
         {
             text: `Find open TCP ports with ${SECONDARY_SCANNER}`,
-            task: async ({ip}) => {
+            task: async ({ip, store}) => {
                 const ports = await getOpenPortsWithNmap(ip);
-                await debug({ports}, `TCP ports from ${SECONDARY_SCANNER}`);
+                await debug({ports}, {
+                    title: `TCP ports from ${SECONDARY_SCANNER}`,
+                    filename: namespace
+                });
                 store.set('tcp.ports', ports);
             },
             condition: ({udpOnly}) => !udpOnly && commandExists.sync(SECONDARY_SCANNER) && !commandExists.sync(PRIMARY_SCANNER),
@@ -73,9 +77,12 @@ export default {
         },
         {
             text: `Find open UDP ports with nmap`,
-            task: async ({ip}) => {
+            task: async ({ip, store}) => {
                 const ports = await getOpenUdpPortsWithNmap(ip);
-                await debug({ports}, `UDP ports from nmap`);
+                await debug({ports}, {
+                    title: 'UDP ports from nmap',
+                    filename: namespace
+                });
                 store.set('udp.ports', ports);
             },
             condition: ({udp, udpOnly}) => (udp || udpOnly) && commandExists.sync('nmap') && isElevated(),
@@ -83,25 +90,38 @@ export default {
         },
         {
             text: 'Enumerate services with nmap and amap',
-            task: async ({ip, udp, udpOnly}) => {
+            task: async ({ip, store, udp, udpOnly}) => {
                 let data = [];
                 if (!udpOnly) {
                     const ports = store.get(`tcp.ports`) || [];
-                    await debug({ports}, 'TCP ports passed to enumeration');
+                    await debug({ports}, {
+                        title: 'TCP ports passed to enumeration',
+                        filename: namespace
+                    });
                     const details = await enumerate(ip, ports);
                     data = [...data, ...details];
                 }
                 if ((udp || udpOnly) && await isElevated()) {
                     const ports = store.get('udp.ports') || [];
-                    await debug({ports}, 'UDP ports passed to enumeration');
+                    await debug({ports}, {
+                        title: 'UDP ports passed to enumeration',
+                        filename: namespace
+                    });
                     const details = await enumerate(ip, ports, 'udp');
                     data = [...data, ...details];
                 }
-                if (await commandExists('amap')) {
+                try {
+                    await commandExists('amap');
                     for (const {port, protocol} of data.filter(shouldScanWithAmap)) {
                         const {stdout} = await execa('amap', ['-q', ip, port]);
-                        await debug({port, protocol}, 'Port to scan with amap');
-                        await debug(stdout, `amap -q ${ip} ${port}`);
+                        await debug({port, protocol}, {
+                            title: 'Port to scan with amap',
+                            filename: namespace
+                        });
+                        await debug(stdout, {
+                            title: `amap -q ${ip} ${port}`,
+                            filename: namespace
+                        });
                         const index = data.findIndex(row => row.port === port && row.protocol === protocol);
                         const version = stdout
                             .split(EOL)
@@ -111,12 +131,19 @@ export default {
                             .join(' | ');
                         data[index].version = version || '???';
                     }
+                } catch (_) {
+                    await debug('amap not installed', {
+                        filename: namespace
+                    });
                 }
                 const key = makeKey(ip);
-                await debug({data}, `Results of enumeration for ${key}`);
+                await debug({data}, {
+                    title: `Results of enumeration for ${key}`,
+                    filename: namespace
+                });
                 store.set(key, data);
             },
-            condition: () => commandExists.sync('nmap') && shouldPerformEnumeration(),
+            condition: ({store}) => commandExists.sync('nmap') && shouldPerformEnumeration(store),
             optional: () => commandExists.sync('nmap')
         },
         {
