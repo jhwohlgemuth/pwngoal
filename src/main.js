@@ -11,17 +11,10 @@ import {
     UnderConstruction,
     Warning,
     dict,
-    getElapsedSeconds,
     getElapsedTime,
     getIntendedInput
 } from 'tomo-cli';
 
-const appendTo = (store, key, value) => {
-    const unsafe = store.get(key);
-    Array.isArray(unsafe) || store.set(key, []);
-    const safe = store.get(key);
-    store.set(key, safe.concat(value));
-};
 const AnimatedIndicator = ({complete, elapsed}) => {
     const Active = () => <Color cyan>{play} </Color>;
     const Inactive = () => <Color dim>{play} </Color>;
@@ -32,7 +25,7 @@ const AnimatedIndicator = ({complete, elapsed}) => {
         {gate === 2 ? <Active /> : <Inactive />}
     </Box>;
 };
-const Timer = ({options}) => {
+const Timer = ({onComplete, options}) => {
     const {store} = options;
     const [start] = process.hrtime();
     const [complete, setComplete] = useState(false);
@@ -42,10 +35,7 @@ const Timer = ({options}) => {
             setElapsed(getElapsedTime(start));
         }, 1000); // eslint-disable-line no-magic-numbers
         global._tomo_tasklist_callback = () => {// eslint-disable-line camelcase
-            const tcp = store.get('tcp.ports') || [];
-            const udp = store.get('udp.ports') || [];
-            const runtime = getElapsedSeconds(getElapsedTime(start));
-            runtime > 1 && appendTo(store, 'stats', {tcp, udp, runtime});
+            typeof onComplete === 'function' && onComplete(store, start);
             setComplete(true);
             clearInterval(id);
         };
@@ -92,7 +82,7 @@ export default class UI extends Component {
     }
     render() {
         const self = this;
-        const {commands, descriptions, done, flags, customCommands} = self.props;
+        const {commands, descriptions, done, onComplete, flags, customCommands} = self.props;
         const {hasCommand, hasTerms, intendedCommand, intendedTerms, isTerminalCommand, showWarning} = self.state;
         const store = self.props.store || self.store;
         const CustomCommand = () => {
@@ -114,8 +104,14 @@ export default class UI extends Component {
                     isTerminalCommand ?
                         <CustomCommand/> :
                         (<Fragment>
-                            <Timer callback={done} options={{store}}/>
-                            <TaskList commands={commands} command={intendedCommand} terms={intendedTerms} options={{...flags, store}} done={done}></TaskList>
+                            <Timer onComplete={onComplete} options={{store}}/>
+                            <TaskList
+                                commands={commands}
+                                command={intendedCommand}
+                                terms={intendedTerms}
+                                options={{...flags, store}}
+                                done={done}>
+                            </TaskList>
                         </Fragment>) :
                     hasCommand ?
                         (isTerminalCommand ?
@@ -155,7 +151,7 @@ AnimatedIndicator.propTypes = {
     elapsed: PropTypes.string
 };
 Timer.propTypes = {
-    callback: PropTypes.func,
+    onComplete: PropTypes.func,
     options: PropTypes.object
 };
 UI.propTypes = {

@@ -4,7 +4,11 @@ import meow from 'meow';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
 // import updateNotifier from 'update-notifier';
-import {showVersion} from 'tomo-cli';
+import {
+    getElapsedSeconds,
+    getElapsedTime,
+    showVersion
+} from 'tomo-cli';
 import UI from './main';
 import commands from './commands';
 import {descriptions, namespace, options} from './cli';
@@ -22,6 +26,18 @@ const customCommands = {
     suggest: Suggest,
     wat: Suggest
 };
+const appendTo = (store, key, value) => {
+    const unsafe = store.get(key);
+    Array.isArray(unsafe) || store.set(key, []);
+    const safe = store.get(key);
+    store.set(key, safe.concat(value));
+};
+const onComplete = (store, start) => {
+    const tcp = store.get('tcp.ports') || [];
+    const udp = store.get('udp.ports') || [];
+    const runtime = getElapsedSeconds(getElapsedTime(start));
+    runtime > 1 && appendTo(store, 'stats', {tcp, udp, runtime});
+};
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
 (async () => {
@@ -32,6 +48,7 @@ const {input, flags} = meow(options);
             commands={commands}
             descriptions={descriptions}
             done={done}
+            onComplete={onComplete}
             flags={flags}
             input={input}
             namespace={namespace}

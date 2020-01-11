@@ -262,7 +262,7 @@ describe('pwngoal', () => {
                     customCommands={customCommands}/>);
                 expect(lastFrame()).toMatchSnapshot();
             });
-        })
+        });
         it('can handle services with no suggestions', () => {
             const terms = [];
             const options = {ip: ''};
