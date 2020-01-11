@@ -23,8 +23,8 @@ const appendTo = (store, key, value) => {
     store.set(key, safe.concat(value));
 };
 const AnimatedIndicator = ({complete, elapsed}) => {
-    const Active = () => <Color cyan>{play}</Color>;
-    const Inactive = () => <Color dim>{play}</Color>;
+    const Active = () => <Color cyan>{play} </Color>;
+    const Inactive = () => <Color dim>{play} </Color>;
     const gate = Number(elapsed.split(':')[2]) % 3;
     return complete ? <Color dim>runtime</Color> : <Box>
         {gate === 0 ? <Active /> : <Inactive />}
