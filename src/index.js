@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import React, {Fragment} from 'react';
+import React from 'react';
 import meow from 'meow';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
@@ -9,7 +9,7 @@ import {
     getElapsedTime,
     showVersion
 } from 'tomo-cli';
-import UI from './main';
+import Main from './main';
 import commands from './commands';
 import {descriptions, namespace, options} from './cli';
 import Backup from './components/Backup';
@@ -41,19 +41,7 @@ const onComplete = (store, start) => {
 const {input, flags} = meow(options);
 (input[0] === 'version' || flags.version) && showVersion();
 (async () => {
-    const done = () => typeof global._tomo_tasklist_callback === 'function' && global._tomo_tasklist_callback();
     const stdin = await getStdin();
-    const Main = () => <Fragment>
-        <UI
-            commands={commands}
-            descriptions={descriptions}
-            done={done}
-            onComplete={onComplete}
-            flags={flags}
-            input={input}
-            namespace={namespace}
-            stdin={stdin}
-            customCommands={customCommands}/>
-    </Fragment>;
-    render(<Main/>, {exitOnCtrlC: true});
+    const properties = {commands, customCommands, descriptions, onComplete, flags, input, namespace, stdin};
+    render(<Main {...properties}/>, {exitOnCtrlC: true});
 })();
