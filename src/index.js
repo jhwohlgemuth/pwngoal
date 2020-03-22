@@ -3,7 +3,7 @@ import React from 'react';
 import meow from 'meow';
 import getStdin from 'get-stdin';
 import {render} from 'ink';
-// import updateNotifier from 'update-notifier';
+import updateNotifier from 'update-notifier';
 import {
     getElapsedSeconds,
     getElapsedTime,
@@ -17,8 +17,8 @@ import Show from './components/Show';
 import Suggest from './components/Suggest';
 
 // Notify updater
-// const pkg = require(`../package.json`);
-// updateNotifier({pkg}).notify();
+const pkg = require(`../package.json`);
+updateNotifier({pkg}).notify();
 
 const customCommands = {
     backup: Backup,
