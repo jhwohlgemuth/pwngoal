@@ -13,9 +13,9 @@ exports[`pwngoal copy will auto-suggest terms 1`] = `
 
 exports[`pwngoal copy will prompt for term when not provided 1`] = `
 "
- [36mCopy one-line reverse shell written in [1m[33mPython[36m[22m[39m
+ [36mCopy one-line reverse shell written in [1m[33mPython[39m[36m[22m[39m
 
- [36m[1m→[22m[39m [39m[36m[1mreverse shell (python)[22m[39m[39m
+ [36m[1m→[22m[39m [36m[1mreverse shell (python)[22m[39m
    reverse shell (php)
    reverse shell (perl)
    reverse shell (ruby)
@@ -42,7 +42,7 @@ exports[`pwngoal scan will prompt for term when not provided 1`] = `
 "
  [36mScan a port with nmap[39m
 
- [36m[1m→[22m[39m [39m[36m[1mport[22m[39m[39m
+ [36m[1m→[22m[39m [36m[1mport[22m[39m
    ports
 "
 `;
@@ -149,7 +149,7 @@ exports[`pwngoal show will render with no terms or options 1`] = `
 "
  [36mShow scan results for 10.11.0.1[39m
 
- [36m[1m→[22m[39m [39m[36m[1m10.11.0.1[22m[39m[39m
+ [36m[1m→[22m[39m [36m[1m10.11.0.1[22m[39m
    127.0.0.1
    192.2.1.41
    192.168.1.42
@@ -486,19 +486,19 @@ exports[`pwngoal suggest will display service select menu when passed IP term 1`
 
  [36mShow suggestions for ftp[39m
 
- [36m[1m→[22m[39m [39m[36m [39m[39m [39m[36m[1mftp[22m[39m[39m
-   [36m [39m [39mssh[39m
-   [36m [39m [39msmtp[39m
-   [36m [39m [39mdns[39m
-   [36m [39m [39mpop3[39m
-   [36m [39m [39mmsrpc[39m
-   [36m [39m [39mimap[39m
-   [36m [39m [39msnmp[39m
-   [36m [39m [39mhttps[39m
-   [36m [39m [39msmb[39m
-   [36m [39m [39mipp[39m
-   [36m [39m [39moracle[39m
-   [36m [39m [39mhttp[39m
+ [36m[1m→[22m[39m [36m [39m [36m[1mftp[22m[39m
+   [36m [39m ssh
+   [36m [39m smtp
+   [36m [39m dns
+   [36m [39m pop3
+   [36m [39m msrpc
+   [36m [39m imap
+   [36m [39m snmp
+   [36m [39m https
+   [36m [39m smb
+   [36m [39m ipp
+   [36m [39m oracle
+   [36m [39m http
 "
 `;
 
@@ -823,7 +823,7 @@ exports[`pwngoal suggest will render with no terms or options 1`] = `
 "
  [36mSelect service for 10.11.0.1[39m
 
- [36m[1m→[22m[39m [39m[36m[1m10.11.0.1[22m[39m[39m
+ [36m[1m→[22m[39m [36m[1m10.11.0.1[22m[39m
    127.0.0.1
    192.2.1.41
    192.168.1.42

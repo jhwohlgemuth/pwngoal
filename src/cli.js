@@ -104,7 +104,7 @@ export const options = {
             alias: 'i'
         },
         port: {
-            type: 'number',
+            type: 'string',
             default: '$RPORT',
             alias: 'p'
         },

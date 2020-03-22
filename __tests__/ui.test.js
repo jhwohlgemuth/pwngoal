@@ -1,9 +1,9 @@
 import React from 'react';
 import {render} from 'ink-testing-library';
+import {Main} from 'tomo-cli';
 import commands from '../src/commands';
 import mindmap from '../src/mindmap';
 import {descriptions} from '../src/cli';
-import UI from '../src/main';
 import Show from '../src/components/Show';
 import Suggest from '../src/components/Suggest';
 
@@ -44,7 +44,7 @@ describe('pwngoal', () => {
         it('will prompt for term when not provided', () => {
             const terms = [];
             const options = {};
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 input={[command, ...terms]}
@@ -59,7 +59,7 @@ describe('pwngoal', () => {
                 user: 'USER',
                 group: 'GROUP'
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 input={[command, ...terms]}
@@ -75,7 +75,7 @@ describe('pwngoal', () => {
         it('will prompt for term when not provided', () => {
             const terms = [];
             const options = {};
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 input={[command, ...terms]}
@@ -87,7 +87,7 @@ describe('pwngoal', () => {
         it('will auto-suggest terms', () => {
             const terms = ['pts'];
             const options = {};
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -105,7 +105,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: '127.0.0.1'
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -120,7 +120,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: ''
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -133,7 +133,7 @@ describe('pwngoal', () => {
         test('doesNotExist', () => {
             const terms = ['doesNotExist'];
             const options = {};
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -148,7 +148,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: '' // '' needed since meow is not applying default values
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -163,7 +163,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: 'doesNotExist'
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -178,7 +178,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: 'ip passed as option'
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -197,7 +197,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: ''
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -212,7 +212,7 @@ describe('pwngoal', () => {
             const options = {
                 ip: ''
             };
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={options}
@@ -230,7 +230,7 @@ describe('pwngoal', () => {
             };
             const services = Object.keys(mindmap);
             services.forEach(service => {
-                const {lastFrame} = render(<UI
+                const {lastFrame} = render(<Main
                     commands={commands}
                     descriptions={descriptions}
                     flags={{...options, service}}
@@ -252,7 +252,7 @@ describe('pwngoal', () => {
             };
             const services = Object.keys(mindmap);
             services.forEach(service => {
-                const {lastFrame} = render(<UI
+                const {lastFrame} = render(<Main
                     commands={commands}
                     descriptions={descriptions}
                     flags={{...options, service}}
@@ -266,7 +266,7 @@ describe('pwngoal', () => {
         it('can handle services with no suggestions', () => {
             const terms = [];
             const options = {ip: ''};
-            const {lastFrame} = render(<UI
+            const {lastFrame} = render(<Main
                 commands={commands}
                 descriptions={descriptions}
                 flags={{...options, service: 'does-not-exist'}}

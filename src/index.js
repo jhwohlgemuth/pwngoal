@@ -5,11 +5,11 @@ import getStdin from 'get-stdin';
 import {render} from 'ink';
 import updateNotifier from 'update-notifier';
 import {
+    Main,
     getElapsedSeconds,
     getElapsedTime,
     showVersion
 } from 'tomo-cli';
-import Main from './main';
 import commands from './commands';
 import {descriptions, namespace, options} from './cli';
 import Backup from './components/Backup';
