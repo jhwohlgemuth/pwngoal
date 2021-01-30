@@ -68,8 +68,6 @@ export const help = `
         ${dim('Display scan results in a neatly organized table, right in your terminal')}
         ${cyan('>')} ${namespace} show [-i IP]
 
-        ${bold.magenta('TIP:')} pwngoal works well with ${bold('gibu')}, ${cyan('https://github.com/jhwohlgemuth/gibu')}
-
 
 `;
 export const options = {

@@ -5,7 +5,6 @@ import {arrowRight} from 'figures';
 const INDENT = '    ';
 const note = message => `\n\n${INDENT}${bold('NOTE')} ${bold.dim(arrowRight)} ${dim(message)}`;
 const tip = message => `\n\n${INDENT}${bold.magenta('TIP')} ${bold.magenta(arrowRight)} ${dim(message)}`;
-const GIBU_TIP = tip(`find other NSE scripts with ${bold('gibu /usr/share/nmap/scripts -fr')}`);
 
 const suggestions = {
     domain: [
@@ -19,7 +18,7 @@ const suggestions = {
         },
         {
             title: 'Scan for DNS vulnerabilties with nmap',
-            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "dns-*"${GIBU_TIP}`
+            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "dns-*"`
         }
     ],
     ftp: [
@@ -107,7 +106,7 @@ const suggestions = {
         },
         {
             title: 'Run NFS nmap scripts',
-            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "nfs-*"${GIBU_TIP}`
+            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "nfs-*"`
         }
     ],
     'netbios-ssn': [
@@ -117,7 +116,7 @@ const suggestions = {
         },
         {
             title: 'Enumerate SMB shares with nmap',
-            command: ({ip, port}) => `${bold.green('nmap')} ${bold.cyan(ip)} -p ${bold.cyan(port)} --script smb-enum-shares${GIBU_TIP}`
+            command: ({ip, port}) => `${bold.green('nmap')} ${bold.cyan(ip)} -p ${bold.cyan(port)} --script smb-enum-shares`
         },
         {
             title: 'Enumerate SMB with enum4linux',
@@ -147,7 +146,7 @@ const suggestions = {
         },
         {
             title: 'Enumerate Oracle users with nmap',
-            command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script oracle-enum-users${GIBU_TIP}`
+            command: `${bold.green('nmap')} ${bold.cyan('$RHOST')} --script oracle-enum-users`
         }
     ],
     smtp: [ // Simple Mail Transfer Protocol
@@ -161,7 +160,7 @@ const suggestions = {
         },
         {
             title: 'Scan for SMTP vulnerabilties with nmap',
-            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "smtp-vuln-*"${GIBU_TIP}`
+            command: ({ip}) => `${bold.green('nmap')} ${bold.cyan(ip)} --script "smtp-vuln-*"`
         }
     ],
     snmp: [ // Simple Network Management Protocol
@@ -203,7 +202,7 @@ const suggestions = {
         },
         {
             title: 'Enumerate SSL ciphers with nmap',
-            command: ({ip, port}) => `${bold.green('nmap')} ${bold.cyan(ip)} -p ${bold.cyan(port)} --script ssl-enum-ciphers${GIBU_TIP}`
+            command: ({ip, port}) => `${bold.green('nmap')} ${bold.cyan(ip)} -p ${bold.cyan(port)} --script ssl-enum-ciphers`
         }
     ]
 };
