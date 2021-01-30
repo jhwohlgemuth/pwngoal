@@ -50,7 +50,5 @@
         ${(0,_chalk.dim)("Display scan results in a neatly organized table, right in your terminal")}
         ${(0,_chalk.cyan)(">")} ${"pwngoal"} show [-i IP]
 
-        ${_chalk.bold.magenta("TIP:")} pwngoal works well with ${(0,_chalk.bold)("gibu")}, ${(0,_chalk.cyan)("https://github.com/jhwohlgemuth/gibu")}
-
 
 `;exports.help=help;const options={help,flags:{version:{type:"boolean",default:!1,alias:"v"},help:{type:"boolean",default:!1,alias:"h"},ignoreWarnings:{type:"boolean",default:!1},debug:{type:"boolean",default:!1},escaped:{type:"boolean",default:!1,alias:"e"},ip:{type:"string",default:"",alias:"i"},port:{type:"string",default:"$RPORT",alias:"p"},networkInterface:{type:"string",default:"tap0",alias:"I"},service:{type:"string",default:"",alias:"s"},udp:{type:"boolean",default:!1,alias:"u"},udpOnly:{type:"boolean",default:!1},nmapOnly:{type:"boolean",default:!1},user:{type:"string",default:"USER"},group:{type:"string",default:"GROUP"},output:{type:"string",default:process.cwd(),alias:"o"}}};exports.options=options;
