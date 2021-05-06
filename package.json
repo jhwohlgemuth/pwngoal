@@ -75,7 +75,7 @@
     "ink-spinner": "3.0.1",
     "ink-table": "^2.0.1",
     "is-elevated": "^3.0.0",
-    "meow": "^6.1.0",
+    "meow": "^8.0.0",
     "prop-types": "15.7.2",
     "ramda": "^0.26.1",
     "react": "^16.13.1",
