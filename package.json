@@ -68,7 +68,7 @@
     "figures": "3.0.0",
     "fs-extra": "8.1.0",
     "get-stdin": "^7.0.0",
-    "ink": "^2.7.1",
+    "ink": "^3.0.0",
     "ink-big-text": "1.0.1",
     "ink-box": "1.0.0",
     "ink-select-input": "3.1.2",
@@ -80,7 +80,7 @@
     "ramda": "^0.26.1",
     "react": "^16.13.1",
     "tomo-cli": "^1.5.9",
-    "update-notifier": "3.0.1"
+    "update-notifier": "4.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.6.2",
