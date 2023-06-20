@@ -62,7 +62,7 @@
     "chalk": "2.4.2",
     "clipboardy": "^2.1.0",
     "command-exists": "^1.2.8",
-    "conf": "^6.2.0",
+    "conf": "^7.0.0",
     "core-js": "^3.1.4",
     "execa": "^3.3.0",
     "figures": "3.0.0",
@@ -75,12 +75,12 @@
     "ink-spinner": "3.0.1",
     "ink-table": "^2.0.1",
     "is-elevated": "^3.0.0",
-    "meow": "^6.1.0",
+    "meow": "^10.0.0",
     "prop-types": "15.7.2",
     "ramda": "^0.26.1",
     "react": "^16.13.1",
-    "tomo-cli": "^1.5.9",
-    "update-notifier": "3.0.1"
+    "tomo-cli": "^1.7.0",
+    "update-notifier": "6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.6.2",
